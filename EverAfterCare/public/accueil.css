@@ -13,10 +13,20 @@ p {
     text-align: justify;
 }
 
-img {
+.images1 {
     border: 1px solid #000;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
     max-width: 100%;
+}
+
+.images2 {
+    border: 1px solid #000;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    width: 900px;
+}
+
+.logo {
+
 }
 
 .container1 {
