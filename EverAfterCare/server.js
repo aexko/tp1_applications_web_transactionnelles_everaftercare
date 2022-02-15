@@ -59,10 +59,10 @@ var con = mysql.createConnection({
 	host: "localhost",
 	user: "root",
 	password: "",
-	database: "mybd"
+	database: "eac"
 });
 
-/**
+/*
 * Global site title and base url
 */
 
@@ -101,22 +101,24 @@ res.render('pages/index',{
 get the event list with select from table 
 */
 	
-	con.query("SELECT * FROM e_events ORDER BY e_start_date DESC", function (err, result){
+	con.query("SELECT * FROM client ORDER BY id DESC", function (err, result){
+		
 		res.render('pages/index',{
 			siteTitle : siteTitle,
-			pageTitle : "Event list",
+			pageTitle : "Clients",
 			items : result
 		});
 	});
 
-}); /* fin de app.get(....)*/
+}); /* 
+fin de app.get(....)*/
 
 /*
 pour generer la page add event 
 */
 
 app.get('/event/add',function (req,res) {
-    con.query("SELECT * FROM e_events ORDER BY e_start_date DESC", function (err, result){
+    con.query("SELECT * FROM client ORDER BY id DESC", function (err, result){
     res.render('pages/add-event.ejs',{
         siteTitle : siteTitle,
         pageTitle : "Add new Event",
@@ -135,12 +137,12 @@ app.post('/event/add',function (req,res) {
 	
 	/* get the record base on ID
 	*/
-	var query = "INSERT INTO e_events (e_name, e_start_date, e_start_end,e_desc,e_location) VALUES (";
-		query += " '"+req.body.e_name+"',";
-		query += " '"+dateFormat(req.body.e_start_date,"yyyy-mm-dd")+"',";
-		query += " '"+dateFormat(req.body.e_start_end,"yyyy-mm-dd")+"',";
-		query += " '"+req.body.e_desc+"',";
-		query += " '"+req.body.e_location+"')";
+	var query = "INSERT INTO client (id, first_name, last_name, email, password) VALUES (";
+	query += getRandomString(3) +",";
+		query += " '"+req.body.first_name+"',";
+		query += " '"+req.body.last_name+"',";
+		query += " '"+req.body.email+"',";
+		query += " '"+req.body.password+"')";
 		
 		con.query(query, function (err, result){
 			if (err) throw err;
@@ -153,19 +155,28 @@ pour editer un event
 */
 
 app.get('/event/edit/:id',function (req,res) {
-    con.query("SELECT * FROM e_events WHERE e_id = '" + req.params.id + "'", function (err, result){
+    con.query("SELECT * FROM client WHERE id = '" + req.params.id + "'", function (err, result){
     
-    result[0].e_start_date = dateFormat(result[0].e_start_date,"yyyy-mm-dd");
-    result[0].e_start_end = dateFormat(result[0].e_end_date,"yyyy-mm-dd");
     
         res.render('pages/edit-event.ejs',{
         siteTitle : siteTitle,
-        pageTitle : "Editing Event : "+ result[0].e_name,
+        pageTitle : "Editing profile : "+ result[0].last_name + " " + result[0].first_name,
         items : result
     });
 });
 
 });
+
+
+function getRandomString(length) {
+	var randomChars = '0123456789';
+	var result = '';
+	for ( var i = 0; i < length; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+	}
+	return result;
+	}
+
 
 /*
 methode post a la bd : modifier un evenement
@@ -175,13 +186,11 @@ app.post('/event/edit/:id',function (req,res) {
 	
 	/* get the record base on ID
 	*/
-	var query = "UPDATE  `e_events` SET";
-        query += " `e_name` = '"+req.body.e_name+"',";
-        query += " `e_start_date` = '"+req.body.e_start_date+"',";
-        query += " `e_start_end` = '"+req.body.e_end_date+"',";
-        query += " `e_desc` = '"+req.body.e_desc+"',";
-        query += " `e_location` = '"+req.body.e_location+"'";
-		query += " WHERE `e_events`.`e_id` = "+req.body.e_id+"";
+	var query = "UPDATE  client SET";
+        query += " first_name = '"+req.body.first_name+"',";
+        query += " last_name = '"+req.body.last_name+"',";
+        query += " email = '"+req.body.email+"'";
+		query += " WHERE id = "+req.body.id+"";
 		
 		con.query(query, function (err, result){
             if (err) throw err;
@@ -195,7 +204,7 @@ pour supprimer un event
 */
 
 app.get('/event/delete/:id',function (req,res) {
-    con.query("DELETE FROM e_events WHERE e_id = '" + req.params.id + "'", function (err, result){
+    con.query("DELETE FROM client WHERE id = '" + req.params.id + "'", function (err, result){
         if (err) throw err;
         res.redirect(baseURL);
 });
