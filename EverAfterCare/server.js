@@ -68,7 +68,7 @@ app.get("/", function (req, res) {
 	res.render("pages/index", {
 		siteTitle: siteTitle,
 		pageTitle: "Accueil",
-		items: result,
+		items: null,
 	});
 });
 
