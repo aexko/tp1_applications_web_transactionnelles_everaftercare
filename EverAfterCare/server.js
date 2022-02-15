@@ -52,6 +52,12 @@ app.use('/js',express.static(__dirname + '/node_modules/jquery/dist'));
 app.use('/css',express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 /**
+ * Pour que l'application puisse voir le dossier
+ */
+app.use(express.static("public"));
+
+
+/**
 * connection à la BD
 */
 
