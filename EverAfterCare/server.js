@@ -53,7 +53,7 @@ var con = mysql.createConnection({
 /**
  * Nom du site + URL de base
  */
-const siteTitle = "Simple application";
+const siteTitle = "EverAfterCare";
 const baseURL = "http://localhost:4000/";
 
 /**
