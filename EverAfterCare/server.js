@@ -41,6 +41,11 @@ app.use("/css", express.static(__dirname + "/node_modules/bootstrap/dist/css"));
 app.use(express.static("public"));
 
 /**
+ * Pour que l'application puisse accéder aux images
+ */
+app.use(express.static("images"));
+
+/**
  * Pour la connexion de l'application -> la base de données
  */
 var con = mysql.createConnection({
