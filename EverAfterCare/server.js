@@ -62,7 +62,7 @@ const baseURL = "http://localhost:4000/";
 app.get("/", function (req, res) {
 	res.render("pages/index", {
 		siteTitle: siteTitle,
-		pageTitle: "Event list",
+		pageTitle: "Accueil",
 		items: result,
 	});
 });
