@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 12px;
+    text-align: justify;
+}
+
+.image1 {
+    border: 1px solid #000;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+}
+
+.image2 {
+    border: 1px solid #000;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+}
+
+.logo {
+
+}
+
+.container1 {
+    display: flex;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    width: 70%;
+    max-height: 500px;
+    padding: 10px;
+    background-color: #89cff0;
+
+    border: 1px solid #000000;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.container2 {
+    margin: auto;
+    align-items: center;
+    max-width: 300px;
+    padding: 20px;
+}
+
+.container3 {
+    margin: 20px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    width: 45%;
+
+    border: 1px solid #000000;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.container4 {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    width: 600px;
+
+    border: 1px solid #000000;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.container5 {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:20px;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    width: 70%;
+
+    border: 1px solid #000000;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.sub-container1 {
+    border: 1px dotted #000000;
+    text-align: justify;
+    margin-right: 20px;
+    padding: 20px;
+}
+
+/* CSS from Joe Bocock - https://getcssscan.com/css-buttons-examples*/
+.button-52 {
+    font-size: 16px;
+    font-weight: 200;
+    letter-spacing: 1px;
+    padding: 13px 20px 13px;
+    outline: 0;
+    border: 1px solid black;
+    cursor: pointer;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-52:after {
+    content: "";
+    background-color: #89cff0;
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    top: 7px;
+    left: 7px;
+    transition: 0.2s;
+}
+
+.button-52:hover:after {
+    top: 0px;
+    left: 0px;
+}
+
+@media (min-width: 768px) {
+    .button-52 {
+        padding: 13px 50px 13px;
+    }
+}
