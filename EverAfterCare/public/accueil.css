@@ -91,6 +91,13 @@ p {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
+.sub-container1 {
+    border: 1px solid #000;
+    text-align: justify;
+    margin-right: 20px;
+    padding: 20px;
+}
+
 /* CSS from Joe Bocock - https://getcssscan.com/css-buttons-examples*/
 .button-52 {
     font-size: 16px;
