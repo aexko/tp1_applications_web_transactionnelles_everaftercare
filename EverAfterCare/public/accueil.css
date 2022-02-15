@@ -22,7 +22,7 @@ p {
 .image2 {
     border: 1px solid #000;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
-    width: 900px;
+    max-width: 100%;
 }
 
 .logo {
@@ -65,13 +65,12 @@ p {
 }
 
 .container4 {
-    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
     padding: 20px;
     align-items: center;
     text-align: center;
-    width: 60%;
+    width: 600px;
 
     border: 1px solid #000000;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
