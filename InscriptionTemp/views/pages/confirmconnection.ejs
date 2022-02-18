@@ -11,6 +11,10 @@
 	</div>
 </div>
 <br>
+<input type="hidden" name="id" value="<%= items[0].id %>">
+
+
+
 
 <div class="">
 	<div class="col s12">
@@ -46,6 +50,42 @@
 			<p><strong> Non disponible </strong></p>
 		<% } %>
 		</div>
-	<div>			
+	</div>			
+
+
+
+
+    <div class="">
+        <div class="col s12">
+            <% 
+            if (rdv !== undefined && rdv.length>0) {%>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style="width:1%;text-align:center">Client ID </th>
+                        <th style="width:20%">Nom Du Client</th>
+                        <th style="width:20%">Docteur Responsable</th>
+                        <th style="width:39%">Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <% rdv.forEach(function(rd,index){ %>
+                            <tr>
+                            <td style="width:1%;text-align:center"><%= rd.client_id %> </td>
+                            <td style="width:20%"><%= items[0].first_name + " " + items[0].last_name %></td>
+                            
+                            <td style="width:20%"><%=  rd.first_name + " " + rd.last_name%></td>
+                            <td style="width:39%"><%= rd.type %></td>
+                        </tr>
+                        <%}); %>
+                    </tbody>
+                </table>
+            <% }else {%>
+                <p><strong> Non disponible </strong></p>
+            <% } %>
+            </div>
+        </div>			
+
 
 <%- include ('../partials/footer') %>

@@ -34,6 +34,7 @@ app.use((req, res, next) => {
 *used for formatting dates
 */
 var dateFormat = require('dateformat');
+const { debug } = require('console');
 var now = new Date();
 
 /*
@@ -118,7 +119,7 @@ pour generer la page add event
 
 app.get('/inscription',function (req,res) {
     con.query("SELECT * FROM client ORDER BY id DESC", function (err, result){
-    res.render('pages/add-event.ejs',{
+    res.render('pages/inscription.ejs',{
         siteTitle : siteTitle,
         pageTitle : "Add new Event",
         items : result
@@ -149,6 +150,68 @@ app.post('/inscription',function (req,res) {
 	});
 	});	
 
+
+	app.get('/connexion',function (req,res) {
+		con.query("SELECT * FROM client ORDER BY id DESC", function (err, result){
+		res.render('pages/connection.ejs',{
+			siteTitle : siteTitle,
+			pageTitle : "Connexion",
+			items : result
+		});
+	});
+	
+	});
+	
+	
+	/*
+	post method to data : pour ajouter un evenement à la BD
+	*/
+	
+	app.post('/connected',function (req,res) {
+		
+		/* get the record base on ID
+		*/
+		var query = "SELECT * FROM client WHERE ";
+			query += "EMAIL = '"+req.body.email+"' AND ";
+			query += "PASSWORD = '"+req.body.password+"';";
+			
+			con.query(query, function (err, result){
+				if(result.length < 1){
+					console.log("Utilisateur Introuvable");
+					res.redirect(baseURL + "connexion");
+				}else{
+				
+				
+
+				var query2 = "SELECT * FROM rdv r join docteur d on d.id = r.docteur_id WHERE ";
+				query2 += "client_id = " + result[0].id + ";"
+			
+				con.query(query2, function (err, result2){
+					if(err){
+						console.log("Aucun Rendez Vous");
+					}				
+					
+					res.render('pages/confirmconnection.ejs',{
+						siteTitle : siteTitle,
+						pageTitle : "Compte",
+						items : result,
+						rdv : result2
+						
+					
+					
+					
+	
+	
+				});
+			});
+				
+		}
+				
+
+
+		});
+		});	
+	
 /*
 pour editer un event 
 */
@@ -157,7 +220,7 @@ app.get('/account/edit/:id',function (req,res) {
     con.query("SELECT * FROM client WHERE id = '" + req.params.id + "'", function (err, result){
     
     
-        res.render('pages/edit-event.ejs',{
+        res.render('pages/modifierClient.ejs',{
         siteTitle : siteTitle,
         pageTitle : "Editing profile : "+ result[0].last_name + " " + result[0].first_name,
         items : result
