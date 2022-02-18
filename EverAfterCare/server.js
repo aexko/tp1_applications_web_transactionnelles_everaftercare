@@ -55,7 +55,7 @@ var con = mysql.createConnection({
 	database: "eac"
 });
 
-const siteTitle = "Simple application";
+const siteTitle = "EverAfterCare";
 const baseURL = "http://localhost:4000/";
 
 
