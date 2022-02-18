@@ -73,7 +73,22 @@ const baseURL = "http://localhost:4000/"
 	* Envoyer le contenu au client
 	* get the event list
     */
-app.get('/',function (req,res) {    
+	app.get('/',function (req,res) {    
+	
+		   
+		   con.query("SELECT * FROM client ORDER BY id DESC", function (err, result){
+			   
+			   res.render('pages/index',{
+				   siteTitle : siteTitle,
+				   pageTitle : "Clients",
+				   items : result
+			   });
+		   });
+	   
+	   });
+
+
+app.get('/debug',function (req,res) {    
 	
  /*
 get the event list with select from table 
@@ -103,7 +118,7 @@ get the event list with select from table
 	
 	con.query("SELECT * FROM client ORDER BY id DESC", function (err, result){
 		
-		res.render('pages/index',{
+		res.render('pages/debug',{
 			siteTitle : siteTitle,
 			pageTitle : "Clients",
 			items : result
