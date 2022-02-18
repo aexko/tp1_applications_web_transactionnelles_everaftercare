@@ -52,51 +52,15 @@ var con = mysql.createConnection({
 	host: "localhost",
 	user: "root",
 	password: "",
-<<<<<<< HEAD
 	database: "eac"
 });
 
-/*
-* Global site title and base url
-*/
-
 const siteTitle = "Simple application";
-const baseURL = "http://localhost:4000/"
+const baseURL = "http://localhost:4000/";
 
-	/*
-	* Envoyer le contenu au client
-	* get the event list
-    */
+
 app.get('/',function (req,res) {    
-	
- /*
-get the event list with select from table 
-*/
-/*	
-** verifier la connexion à la BD : Afficher les events dans la table items sur la console
-con.connect(function(err) {
-    if (err) throw err;
-con.query("SELECT * FROM e_events ", function (err, result){
-    if (err) throw err;
-    console.log('lol');
-    console.log(result);
-});
-
-});
-*/
-/*
-res.render('pages/index',{
-    siteTitle : siteTitle,
-    pageTitle : "Event list",
-    items : ''
-});
-
-/*
-get the event list with select from table 
-*/
-	
 	con.query("SELECT * FROM client ORDER BY id DESC", function (err, result){
-		
 		res.render('pages/index',{
 			siteTitle : siteTitle,
 			pageTitle : "Clients",
@@ -104,23 +68,22 @@ get the event list with select from table
 		});
 	});
 
-}); /* 
-fin de app.get(....)*/
+});
 
 /*
 pour generer la page add event 
 */
 
 app.get('/event/add',function (req,res) {
-    con.query("SELECT * FROM client ORDER BY id DESC", function (err, result){
-    res.render('pages/add-event.ejs',{
+	con.query("SELECT * FROM client ORDER BY id DESC", function (err, result){
+    	res.render('pages/add-event.ejs',{
         siteTitle : siteTitle,
         pageTitle : "Add new Event",
         items : result
-    });
+    	});
+	});
 });
 
-});
 
 
 /*
@@ -138,11 +101,11 @@ app.post('/event/add',function (req,res) {
 		query += " '"+req.body.email+"',";
 		query += " '"+req.body.password+"')";
 		
-		con.query(query, function (err, result){
-			if (err) throw err;
-			res.redirect(baseURL);
+	con.query(query, function (err, result){
+		if (err) throw err;
+		res.redirect(baseURL);
 	});
-	});	
+});	
 
 /*
 pour editer un event 
@@ -150,16 +113,15 @@ pour editer un event
 
 app.get('/event/edit/:id',function (req,res) {
     con.query("SELECT * FROM client WHERE id = '" + req.params.id + "'", function (err, result){
-    
-    
         res.render('pages/edit-event.ejs',{
         siteTitle : siteTitle,
         pageTitle : "Editing profile : "+ result[0].last_name + " " + result[0].first_name,
         items : result
-    });
+    	});
+	});
 });
 
-});
+
 
 
 function getRandomString(length) {
@@ -169,7 +131,7 @@ function getRandomString(length) {
         result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
 	}
 	return result;
-	}
+};
 
 
 /*
@@ -177,20 +139,18 @@ methode post a la bd : modifier un evenement
 */
 
 app.post('/event/edit/:id',function (req,res) {
-	
-	/* get the record base on ID
-	*/
+
 	var query = "UPDATE  client SET";
         query += " first_name = '"+req.body.first_name+"',";
         query += " last_name = '"+req.body.last_name+"',";
         query += " email = '"+req.body.email+"'";
 		query += " WHERE id = "+req.body.id+"";
 		
-		con.query(query, function (err, result){
-            if (err) throw err;
-			res.redirect(baseURL);
+	con.query(query, function (err, result){
+        if (err) throw err;
+		res.redirect(baseURL);
 	});
-	});	
+});
 
 
 /*
@@ -201,26 +161,7 @@ app.get('/event/delete/:id',function (req,res) {
     con.query("DELETE FROM client WHERE id = '" + req.params.id + "'", function (err, result){
         if (err) throw err;
         res.redirect(baseURL);
-=======
-	database: "mybd",
-});
-
-/**
- * Nom du site + URL de base
- */
-const siteTitle = "EverAfterCare";
-const baseURL = "http://localhost:4000/";
-
-/**
- * La page d'accueil
- */
-app.get("/", function (req, res) {
-	res.render("pages/index", {
-		siteTitle: siteTitle,
-		pageTitle: "Accueil",
-		items: null,
 	});
->>>>>>> daad89629759716697b76856e3a1e1de8a561168
 });
 
 /**
