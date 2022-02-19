@@ -1,0 +1,82 @@
+<%- include ('../partials/header') %>
+
+
+<br>
+<input type="hidden" name="id" value="<%= items[0].id %>">
+
+
+
+
+<div class="">
+	<div class="col s12">
+        <% 
+        if (items !== undefined && items.length>0) {%>
+			<table class="table">
+				<thead>
+				<tr>
+					<th style="width:1%;text-align:center">ID </th>
+					<th style="width:20%">First name</th>
+					<th style="width:20%">Last name</th>
+					<th style="width:39%">Email</th>
+					<th solspan="2" style="width:20%;text-align:center">Actions</th>
+				</tr>
+				</thead>
+				<tbody>
+                    
+                    <% items.forEach(function(item,index){ %>
+                        <tr>
+                        <td style="width:1%;text-align:center"><%= item.id %> </td>
+                        <td style="width:20%"><%= item.first_name %></td>
+                        <td style="width:20%"><%= item.last_name %></td>
+                        <td style="width:39%"><%= item.email %></td>
+                        <td solspan="2" style="width:20%;text-align:center">
+                        <a href="/account/edit/<%=item.id %>" class="btn btn-success">Edit </a>
+                        <a href="/account/delete/<%=item.id %>" class="btn btn-danger">Delete </a>
+                        </td>
+                    </tr>
+                    <%}); %>
+				</tbody>
+			</table>
+		<% }else {%>
+			<p><strong> Utilisateur Inexistant </strong></p>
+		<% } %>
+		</div>
+	</div>			
+
+
+
+
+    <div class="">
+        <div class="col s12">
+            <% 
+            if (rdv !== undefined && rdv.length>0) {%>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style="width:1%;text-align:center">Client ID </th>
+                        <th style="width:20%">Nom Du Client</th>
+                        <th style="width:20%">Docteur Responsable</th>
+                        <th style="width:39%">Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <% rdv.forEach(function(rd,index){ %>
+                            <tr>
+                            <td style="width:1%;text-align:center"><%= rd.client_id %> </td>
+                            <td style="width:20%"><%= items[0].first_name + " " + items[0].last_name %></td>
+                            
+                            <td style="width:20%"><%=  rd.first_name + " " + rd.last_name%></td>
+                            <td style="width:39%"><%= rd.type %></td>
+                        </tr>
+                        <%}); %>
+                    </tbody>
+                </table>
+            <% }else {%>
+                <p><strong> Aucun Rendez-vous </strong></p>
+            <% } %>
+            </div>
+        </div>			
+
+
+<%- include ('../partials/footer') %>

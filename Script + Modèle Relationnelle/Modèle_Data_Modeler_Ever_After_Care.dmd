@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Temp" id="7C4C671D-C4BA-16CD-A85C-61E0C19F1D67" version="3.5">
+<createdBy>adamr</createdBy>
+<createdTime>2022-02-04 20:52:47 UTC</createdTime>
+<ownerDesignName>Temp</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>7C4C671D-C4BA-16CD-A85C-61E0C19F1D67</designId>
+</OSDM_Design>
