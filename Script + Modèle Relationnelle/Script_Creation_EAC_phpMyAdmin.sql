@@ -37,14 +37,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Déchargement des données de la table `client`
---
-
 INSERT INTO `client` (`id`, `first_name`, `last_name`, `email`, `password`) VALUES
-(109, 'Sam', 'Chicotte', 'SamChicou@gmail.com', '123vivatamere'),
-(802, 'Camille', 'Combal', 'Piliplou@gmail.com', 'idekanymore');
-
 -- --------------------------------------------------------
 
 --
