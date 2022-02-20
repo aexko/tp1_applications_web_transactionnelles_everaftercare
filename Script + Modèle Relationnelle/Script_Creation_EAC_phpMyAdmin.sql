@@ -37,7 +37,6 @@ CREATE TABLE IF NOT EXISTS `client` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `client` (`id`, `first_name`, `last_name`, `email`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
