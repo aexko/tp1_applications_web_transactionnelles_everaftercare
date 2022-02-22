@@ -160,6 +160,20 @@ app.get("/connexion", function (req, res) {
 	});
 });
 
+/**
+ * Pour la page de connexion des docteurs
+ */
+
+ app.get("/connexion/docteurs", function (req, res) {
+	con.query("SELECT * FROM docteur ORDER BY id DESC", function (err, result) {
+		res.render("pages/connection.ejs", {
+			siteTitle: siteTitle,
+			pageTitle: "Connexion",
+			items: result,
+		});
+	});
+});
+
 /*
 	post method to data : pour ajouter un evenement à la BD
 	*/
