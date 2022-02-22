@@ -18,7 +18,7 @@ module.exports = app;
  * Pour le formattage des dates
  */
 var dateFormat = require("dateformat");
-const { debug, Console } = require("console");
+const { debug } = require("console");
 var now = new Date();
 
 /**
@@ -166,6 +166,39 @@ app.post("/connectedDoctor", function (req, res) {
 			var query2 =
 				"SELECT * FROM rdv r join client d on d.id = r.client_id WHERE ";
 			query2 += "docteur_id = " + result[0].id + ";";
+
+			con.query(query2, function (err, result2) {
+				if (err) {
+					console.log("Aucun Rendez Vous");
+				}
+
+				res.render("pages/confirmconnection.ejs", {
+					siteTitle: siteTitle,
+					pageTitle: "Compte",
+					items: result,
+					rdv: result2,
+				});
+			});
+		}
+	});
+});
+
+/**
+ * Pour générer la page apres la connexion des docteurs
+ */
+app.post("/connectedDoctor", function (req, res) {
+	var query = "SELECT * FROM docteur WHERE ";
+	query += "EMAIL = '" + req.body.email + "' AND ";
+	query += "PASSWORD = '" + req.body.password + "';";
+
+	con.query(query, function (err, result) {
+		if (result.length < 1) {
+			console.log("Utilisateur Introuvable");
+			res.redirect(baseURL + "connexion");
+		} else {
+			var query2 =
+				"SELECT * FROM rdv r join docteur d on d.id = r.docteur_id WHERE ";
+			query2 += "client_id = " + result[0].id + ";";
 
 			con.query(query2, function (err, result2) {
 				if (err) {
