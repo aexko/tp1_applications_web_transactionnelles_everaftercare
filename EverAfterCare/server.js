@@ -83,6 +83,19 @@ app.get("/", function(req, res) {
 /**
  * Pour générer la page d'inscription
  */
+app.get("/inscription", function(req, res) {
+    con.query("SELECT * FROM client ORDER BY id DESC", function(err, result) {
+        res.render("pages/inscription.ejs", {
+            siteTitle: siteTitle,
+            pageTitle: "Inscription",
+            items: result,
+        });
+    });
+});
+
+/**
+ * Pour générer la page d'inscription
+ */
 app.post("/inscription", function(req, res) {
     var query =
         "INSERT INTO client (id, first_name, last_name, email, password) VALUES (";

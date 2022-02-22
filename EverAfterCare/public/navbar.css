@@ -36,10 +36,6 @@ nav {
     color: black;
 }
 
-.type img {
-    filter: invert(100%);
-}
-
 .type:hover .produit {
     display: block;
 }
@@ -94,4 +90,10 @@ section {
     padding: 60px 10%;
     width: 60%;
     border-radius: 30px;
+}
+
+.logo {
+    width: 100px; 
+    height: auto;
+    margin-left: 15px;
 }
