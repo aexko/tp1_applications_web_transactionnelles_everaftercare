@@ -36,10 +36,6 @@ nav {
     color: black;
 }
 
-.type img {
-    filter: invert(100%);
-}
-
 .type:hover .produit {
     display: block;
 }
