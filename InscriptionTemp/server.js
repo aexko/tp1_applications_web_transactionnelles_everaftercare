@@ -302,23 +302,35 @@ app.get('/rendezvous', function(req, res) {
 
 });
 app.get('/rendezvous', function(req, res) {
-    res.render('pages/rendezvous.ejs')
+
+    var id_docteur = "SELECT * FROM docteur;";
+    con.query(id_docteur, function(err, result) {
+        if (err) throw err;
+
+
+        res.render('pages/rendezvous', {
+            siteTitle: siteTitle,
+            pageTitle: "Docteur",
+            liste: result
+        });
+
+
+    });
+
 
 
 });
 app.post('/rendezvous', function(req, res) {
 
-
-    var query3 = req.body.nom
-    var id_docteur = "SELECT * FROM docteur WHERE last_name='";
-    id_docteur += query3 + "'";
+    var id_doc = "SELECT * FROM docteur where last_name='";
+    var query3 = req.body.nom + "'";
 
     /* get the record base on ID
      */
     var query = "INSERT INTO rdv (type, client_id, docteur_id, starttime) VALUES (";
     query += " '" + req.body.type + "',";
-    query += " '" /*id client*/
-    query += " '" + id_docteur + "',";
+    query += " '" /*id client*/ ;
+    query += " '" + id_doc + "',";
     query += " '" + req.body.date + " " + req.body.time + "')";
 
     con.query(query, function(err, result) {
