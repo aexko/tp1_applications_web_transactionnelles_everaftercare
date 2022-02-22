@@ -4,7 +4,7 @@ const app = express()
 app.use(express.static("public"));
 
 app.get('/menu', (req, res) => {
-    res.render('menu.ejs')
+    res.render('pages/menu.ejs')
 })
 app.get('/services', (req, res) => {
     res.render('services.ejs')
