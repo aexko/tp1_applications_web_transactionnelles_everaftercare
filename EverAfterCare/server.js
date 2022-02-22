@@ -196,6 +196,42 @@ app.post("/connected", function (req, res) {
 	});
 });
 
+/**
+ * Pour la connexion des docteurs
+ */
+
+ app.post("/connectedDoctor", function (req, res) {
+	/* get the record base on ID
+	 */
+	var query = "SELECT * FROM docteur WHERE ";
+	query += "EMAIL = '" + req.body.email + "' AND ";
+	query += "PASSWORD = '" + req.body.password + "';";
+
+	con.query(query, function (err, result) {
+		if (result.length < 1) {
+			console.log("Utilisateur Introuvable");
+			res.redirect(baseURL + "connexion");
+		} else {
+			var query2 =
+				"SELECT * FROM rdv r join docteur d on d.id = r.docteur_id WHERE ";
+			query2 += "client_id = " + result[0].id + ";";
+
+			con.query(query2, function (err, result2) {
+				if (err) {
+					console.log("Aucun Rendez Vous");
+				}
+
+				res.render("pages/confirmconnection.ejs", {
+					siteTitle: siteTitle,
+					pageTitle: "Compte",
+					items: result,
+					rdv: result2,
+				});
+			});
+		}
+	});
+});
+
 /*
 pour editer un event 
 */
