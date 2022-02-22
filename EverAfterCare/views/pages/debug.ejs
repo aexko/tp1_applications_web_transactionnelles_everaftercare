@@ -1,10 +1,6 @@
 <%- include ('../partials/header') %>
 
-<div class="">
-	<div class="col s12">
-		<a href="/event/add" class="btn btn-success btn-lg">Add event </a>
-	</div>
-</div>
+
 <br>
 
 <div class="">
@@ -15,9 +11,9 @@
 				<thead>
 				<tr>
 					<th style="width:1%;text-align:center">ID </th>
-					<th style="width:49%">Name</th>
-					<th style="width:20%">Description</th>
-					<th style="width:10%">Location</th>
+					<th style="width:20%">First name</th>
+					<th style="width:20%">Last name</th>
+					<th style="width:39%">Email</th>
 					<th solspan="2" style="width:20%;text-align:center">Actions</th>
 				</tr>
 				</thead>
@@ -25,13 +21,13 @@
                     
                     <% items.forEach(function(item,index){ %>
                         <tr>
-                        <td style="width:1%;text-align:center"><%= index+1 %> </td>
-                        <td style="width:49%"><%= item.e_name %></td>
-                        <td style="width:20%"><%= item.e_desc %></td>
-                        <td style="width:10%"><%= item.e_location %></td>
+                        <td style="width:1%;text-align:center"><%= item.id %> </td>
+                        <td style="width:20%"><%= item.first_name %></td>
+                        <td style="width:20%"><%= item.last_name %></td>
+                        <td style="width:39%"><%= item.email %></td>
                         <td solspan="2" style="width:20%;text-align:center">
-                        <a href="/event/edit/<%=item.e_id %>" class="btn btn-success">Edit </a>
-                        <a href="/event/delete/<%=item.e_id %>" class="btn btn-danger">Delete </a>
+                        <a href="/account/edit/<%=item.id %>" class="btn btn-success">Edit </a>
+                        <a href="/account/delete/<%=item.id %>" class="btn btn-danger">Delete </a>
                         </td>
                     </tr>
                     <%}); %>

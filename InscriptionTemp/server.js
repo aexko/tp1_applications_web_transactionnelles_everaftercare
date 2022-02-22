@@ -75,6 +75,21 @@ const baseURL = "http://localhost:4000/"
      */
 app.get('/', function(req, res) {
 
+
+    con.query("SELECT * FROM client ORDER BY id DESC", function(err, result) {
+
+        res.render('pages/index', {
+            siteTitle: siteTitle,
+            pageTitle: "Clients",
+            items: result
+        });
+    });
+
+});
+
+
+app.get('/debug', function(req, res) {
+
     /*
 get the event list with select from table 
 */
@@ -118,17 +133,17 @@ fin de app.get(....)*/
 pour generer la page add event 
 */
 
-app.get('/inscription', function(req, res) {
-    con.query("SELECT * FROM client ORDER BY id DESC", function(err, result) {
-        res.render('pages/inscription.ejs', {
-            siteTitle: siteTitle,
-            pageTitle: "Add new Event",
-            items: result
-        });
-    });
+con.query("SELECT * FROM client ORDER BY id DESC", function(err, result) {
 
+    res.render('pages/debug', {
+        siteTitle: siteTitle,
+        pageTitle: "Clients",
+        items: result
+    });
 });
 
+/* 
+fin de app.get(....)*/
 
 /*
 post method to data : pour ajouter un evenement à la BD
@@ -266,6 +281,23 @@ app.get('/account/delete/:id', function(req, res) {
     con.query("DELETE FROM client WHERE id = '" + req.params.id + "'", function(err, result) {
         if (err) throw err;
         res.redirect(baseURL);
+    });
+
+});
+app.get('/rendezvous', function(req, res) {
+
+
+    /*
+    get the event list with select from table 
+    */
+
+    con.query("SELECT last_name FROM docteur ", function(err, result) {
+
+        res.render('pages/index', {
+            siteTitle: siteTitle,
+            pageTitle: "Docteur",
+            liste: result
+        });
     });
 
 });
