@@ -2,7 +2,11 @@
     Prise de rendez-vous</h1>
 
 
-<form action="http://localhost:4000" method="post" class="col s12">
+
+
+<form action="http://localhost:4000/RendezVousConfirmer" method="post" class="col s12">
+    
+<input type="hidden" name="id" value="<%= clientid%>">
     <label for="rendezvous">Sélectionnner votre médecin:</label>
     <select id="nom_doc" name="nom_doc">
         <% liste.forEach(function(item,index){ 
@@ -20,7 +24,7 @@
                 </select>
     <label for="start">Choisissez une date:</label>
 
-    <input type="date" id="start" name="trip-start" value="2022-02-22" max="2030-01-01" min="2022-02-01">
+    <input type="date" id="start" name="tripstart" value="2022-02-22" max="2030-01-01" min="2022-02-01">
     <label for="time">Choisissez l'heure:</label>
 
     <input type="time" id="time" name="time" min="09:00" max="18:00" required>

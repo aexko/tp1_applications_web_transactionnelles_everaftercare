@@ -1,9 +1,8 @@
 <%- include ('../partials/header') %>
 
 
-    <br>
+    <br><form action="http://localhost:4000/rendezvous" method="post" class="col s12">
     <input type="hidden" name="id" value="<%= items[0].id %>">
-
 
 
 
@@ -91,9 +90,10 @@
                 <% }else {%>
                     <p><strong> Aucun Rendez-vous </strong></p>
                     <% } %>
-                        <button onclick="window.location.href = 'http://localhost:4000/rendezvous';">Prendre rendez-vous</button>
+                    <input type="submit" name="submit" value="Prendre un Rendez-Vous" class ="btn btn-primary btn-lg">
         </div>
     </div>
 
+</form>
 
     <%- include ('../partials/footer') %>
