@@ -79,12 +79,6 @@ app.get("/", function(req, res) {
         });
     });
 });
-/**
- * Page services
- */
-app.get("/services", (req, res) => {
-    res.render('pages/services')
-});
 
 /**
  * Pour générer la page d'inscription
@@ -235,6 +229,16 @@ app.post("/connectedDoctor", function(req, res) {
         }
     });
 });
+
+/**
+ * Pour générer la page de services
+ */
+app.get('/services', (req, res) => {
+    res.render("pages/services.ejs", {
+        siteTitle: siteTitle,
+        pageTitle: "Services",
+    });
+})
 
 /**
  * Pour modifier les rendez-vous
