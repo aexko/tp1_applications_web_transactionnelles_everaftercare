@@ -6,8 +6,7 @@
     <form action="http://localhost:4000" method="post" class="col s12">
         <label for="rendezvous">Sélectionnner votre médecin:</label>
         <select id="nom_doc" name="nom_doc">
-        <% liste.forEach(function(item,index){ 
-            console.log("test");%>
+        <% liste.forEach(function(item,index){ ;%>
            <option value="<%= item.id %>"><%= item.last_name %> <%= item.first_name %></option>
         <%}); %>
             
