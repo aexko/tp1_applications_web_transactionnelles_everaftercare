@@ -351,7 +351,7 @@ app.post('/rendezvous', function(req, res) {
      */
     var query = "INSERT INTO rdv (type, client_id, docteur_id, starttime) VALUES (";
     query += " '" + req.body.type + "',";
-    query += " '" /*id client*/ ;
+    query += "000" /*id*/ ;
     query += " '" + liste.id + "',";
     query += " '" + req.body.date + " " + req.body.time + "')";
 
