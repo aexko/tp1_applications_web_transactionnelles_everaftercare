@@ -79,6 +79,12 @@ app.get("/", function(req, res) {
         });
     });
 });
+/**
+ * Page services
+ */
+app.get("/services", (req, res) => {
+    res.render('pages/services')
+});
 
 /**
  * Pour générer la page d'inscription
