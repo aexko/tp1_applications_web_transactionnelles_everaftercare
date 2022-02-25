@@ -330,7 +330,7 @@ app.get("/debugD", function(req, res) {
     });
 });
 
-app.get('/rendezvous', function(req, res) {
+app.post('/rendezvous', function(req, res) {
 
     var id_docteur = "SELECT * FROM docteur;";
     con.query(id_docteur, function(err, result) {
@@ -339,11 +339,13 @@ app.get('/rendezvous', function(req, res) {
         }
         if (err) throw err;
 
+        console.log(req.body.id + " id client");
 
         res.render('pages/rendezvous', {
             siteTitle: siteTitle,
             pageTitle: "Docteur",
-            liste: result
+            liste: result,
+            clientid : req.body.id
         });
 
 
@@ -352,21 +354,27 @@ app.get('/rendezvous', function(req, res) {
 
 
 });
-app.post('/rendezvous', function(req, res) {
+app.post('/RendezVousConfirmer', function(req, res) {
 
 
 
 
     /* get the record base on ID
      */
-    var query = "INSERT INTO rdv (type, client_id, docteur_id, starttime) VALUES (";
+    var query = "INSERT INTO rdv (type, client_id, docteur_id, starttime, endtime) VALUES (";
     query += " '" + req.body.type + "',";
-    query += "000" /*id*/ ;
-    query += " '" + liste.id + "',";
-    query += " '" + req.body.date + " " + req.body.time + "')";
-
-    con.query(query, function(err, result) {
+    query += req.body.id + ", " ;
+    query += " '" + req.body.nom_doc + "',";
+    var endtime = req.body.time + 30*60000;
+    var dateend = new Date(req.body.tripstart + ' ' + endtime);
+    var dateObj = new Date(req.body.tripstart + ' ' + req.body.time);
+    console.log(dateObj);
+    query += " CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+con.query(query, function(err, result) {
         if (err) throw err;
         res.redirect(baseURL);
     });
+    
+
+    
 });
