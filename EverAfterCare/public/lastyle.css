@@ -1,0 +1,35 @@
+.laPage{
+
+    
+    
+        display: flex;
+        justify-content: center;
+   margin-left: 2%;
+   margin-right: 20%;
+   margin-top: 8%;
+   margin-bottom: 8%;
+}
+.cotermedecin{
+margin-left: 28%;
+margin-right: 61%;
+
+
+}
+p{
+    font-size: 20px;
+    color: blue;
+    text-align: center;
+}
+.background{
+    background-color: lightgray;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.line{
+   
+    margin-bottom: 0;
+    transform: rotate(90deg);
+    border-color: #1A85FD;
+}
+
+
