@@ -4,16 +4,26 @@
     
         display: flex;
         justify-content: center;
-   margin-left: 2%;
+   margin-left: 20%;
    margin-right: 20%;
    margin-top: 8%;
    margin-bottom: 8%;
+   height: 40%;
+   
 }
 .cotermedecin{
-margin-left: 28%;
-margin-right: 61%;
 
+margin-right: 10%;
+border-style: solid;
+border-width: thin;
+border-color: #FFFFFF;
 
+}
+.coterclient{
+    margin-left: 20%;
+    border-style: solid;
+border-width: thin;
+border-color: #FFFFFF;
 }
 p{
     font-size: 20px;
@@ -23,7 +33,8 @@ p{
 .background{
     background-color: lightgray;
     margin-left: 10%;
-    margin-right: 10%;
+    margin-right: 7%;
+    
 }
 .line{
    
