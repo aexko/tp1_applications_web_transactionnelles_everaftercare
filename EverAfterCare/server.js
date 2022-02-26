@@ -165,37 +165,6 @@ app.post("/connected", function(req, res) {
 /**
  * Pour générer la page apres la connexion des docteurs
  */
-app.post("/connectedDoctor", function(req, res) {
-    var query = "SELECT * FROM docteur;";
-    /** WHERE ";
-	query += "EMAIL = '" + req.body.email + "' AND ";
-	query += "PASSWORD = '" + req.body.password + "';";*/
-
-    con.query(query, function(err, result) {
-        console.log("DoneQUery");
-        if (result.length < 1) {
-            console.log("Utilisateur Introuvable");
-            res.redirect(baseURL + "connexion");
-        } else {
-            var query2 =
-                "SELECT * FROM rdv r join client d on d.id = r.client_id WHERE ";
-            query2 += "docteur_id = " + result[0].id + ";";
-
-            con.query(query2, function(err, result2) {
-                if (err) {
-                    console.log("Aucun Rendez Vous");
-                }
-
-                res.render("pages/confirmconnection.ejs", {
-                    siteTitle: siteTitle,
-                    pageTitle: "Compte",
-                    items: result,
-                    rdv: result2,
-                });
-            });
-        }
-    });
-});
 
 /**
  * Pour générer la page apres la connexion des docteurs
@@ -346,7 +315,7 @@ app.post('/rendezvous', function(req, res) {
 
         console.log(req.body.id + " id client");
 
-        if(req.body.id){
+        if(req.body.id == undefined){
         res.redirect(baseURL + "connexion");
         }else{
 
