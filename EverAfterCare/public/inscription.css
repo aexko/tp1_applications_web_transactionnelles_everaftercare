@@ -1,0 +1,41 @@
+form {
+    margin-left: 40%;
+    margin-top: 5%;
+    width: 400px;
+    height: 350px;
+    background-color: rgb(214, 210, 210);
+    border-radius: 3px;
+    padding: 10px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+input[type=submit] {
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    margin-left: 25%;
+    border-radius: 10px;
+    font-size: 17px;
+    margin-top: 15px;
+}
+
+input[type=submit]:hover {
+    background-color: #89CFF0;
+    color: #000000;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+input[type=text] {
+    border-radius: 5px;
+    background-color: rgb(173, 208, 255);
+}
+
+.form-group {
+    padding: 4px;
+}

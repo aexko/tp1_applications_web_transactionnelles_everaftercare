@@ -330,6 +330,11 @@ app.get("/debugD", function(req, res) {
     });
 });
 
+app.get('/rendezvous', function(req, res) {
+
+    res.redirect(baseURL + "connexion");
+});
+
 app.post('/rendezvous', function(req, res) {
 
     var id_docteur = "SELECT * FROM docteur;";
@@ -341,12 +346,19 @@ app.post('/rendezvous', function(req, res) {
 
         console.log(req.body.id + " id client");
 
-        res.render('pages/rendezvous', {
-            siteTitle: siteTitle,
-            pageTitle: "Docteur",
-            liste: result,
-            clientid : req.body.id
-        });
+        if(req.body.id){
+        res.redirect(baseURL + "connexion");
+        }else{
+
+            res.render('pages/rendezvous', {
+                siteTitle: siteTitle,
+                pageTitle: "Docteur",
+                liste: result,
+                clientid : req.body.id
+            });
+        }
+
+
 
 
     });
