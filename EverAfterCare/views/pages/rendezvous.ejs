@@ -1,14 +1,14 @@
 <%- include ('../partials/header') %>
 
 
-    <link rel="stylesheet" href="lastyle.css" />
+    <link rel="stylesheet" href="connexion_prise_rdv.css" />
 
 
 
     <div class="formulaire">
         <h1>
             Prise de rendez-vous</h1>
-        <form action="http://localhost:4000/RendezVousConfirmer" method="post" class="col s12">
+        <form action="http://localhost:4000/RendezVousConfirmer" method="post" class="container1">
 
             <div class="form-group row">
                 <input type="hidden" name="id" value="<%= clientid%>">
@@ -22,7 +22,7 @@
             
             </select>
             </div>
-            <div class="form-group row">
+            <div class="container2">
                 <label for="rendezvous">Quel est l'objet du rendez-vous:</label>
                 <select id="type" name="type">
                   <option value="Premier examen">Premier examen</option>
@@ -31,12 +31,12 @@
                   <option value="Opération">Opération</option>
                 </select>
             </div>
-            <div class="form-group row">
+            <div class="container2">
                 <label for="start">Choisissez une date:</label>
 
                 <input type="date" id="start" name="tripstart" value="2022-02-22" max="2030-01-01" min="2022-02-01">
             </div>
-            <div class="form-group row">
+            <div class="container2">
                 <label for="time">Choisissez l'heure:</label>
 
                 <input type="time" id="time" name="time" min="08:00" max="19:00" required>

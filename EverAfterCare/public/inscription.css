@@ -34,7 +34,6 @@ input[type=submit]:hover {
 
 input[type=text] {
     border-radius: 5px;
-    background-color: rgb(173, 208, 255);
 }
 
 .form-group {
