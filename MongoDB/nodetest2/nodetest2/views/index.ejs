@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <!-- WRAPPER -->
+    <div id="wrapper">
+
+     <!-- USER INFO --> 
+     <div id="userInfo">
+      <h2>User Info</h2>
+      <p> Name:
+        <span id='userInfoName'></span>
+        <br>
+         Age:
+        <span id='userInfoAge'></span>
+        <br>
+         Genre:
+        <span id='userInfoGender'></span>
+        <br>
+         Location:
+        <span id='userInfoLocation'></span>
+      </p> 
+    </div>
+    <!-- /USER INFO -->
+
+      <!-- USER LIST -->
+      <h2>User List</h2>
+      <div id="userList">
+        <table>
+          <thead>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Delete?</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <!-- /USER LIST -->
+
+      <!-- Add User -->
+      <h2> Add User </h2>
+      <div id="addUser">
+      
+          <fieldset>
+              <input id="inputUserName", type="text", placeholder="Username">
+              <br>
+              <input id="inputUserEmail", type="text", placeholder="Email">
+              <br>
+              <input id="inputUserFullname", type="text", placeholder="full Name">
+              <br>
+              <input id="inputUserAge", type="text", placeholder="Age">
+              <br>
+              <input id="inputUserLocation", type="text", placeholder="Location">
+              <br>
+              <input id="inputUserGender", type="text", placeholder="genre">
+              <br>
+              <button id="btnAddUser" type="button"> Add User </button>
+          </fieldset>
+      </div>
+
+    </div>
+    <!-- /WRAPPER -->
+  </body>
+ 
+  <script type="text/javascript" src="/javascripts/global.js"></script>
+</html>
