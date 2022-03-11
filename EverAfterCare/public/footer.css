@@ -4,21 +4,19 @@ body {
 }
 
 .footer {
-    position: relative;
     left: 0;
+    right: 0;
     bottom: 0;
+    background-color: #89cff0;
+    padding: 20px;
+    border: 1px solid #000;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    position:fixed;
 }
 
 h3 {
     font-size: 14px;
     font-weight: normal;
-}
-
-.footer {
-    background-color: #89cff0;
-    padding: 20px;
-    border: 1px solid #000;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 .contact {
