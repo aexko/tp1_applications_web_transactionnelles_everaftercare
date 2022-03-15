@@ -1,35 +1,30 @@
-.laPage{
-
-    
-    
-        display: flex;
-        justify-content: center;
-   margin-left: 20%;
-   margin-right: 20%;
-   margin-top: 8%;
-   margin-bottom: 8%;
-   height: 40%;
-   
+.laPage {
+    display: flex;
+    justify-content: center;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+    height: 40%;
+    background-color: lightgray;
 }
-.cotermedecin{
 
-margin-right: 10%;
-border-style: solid;
-border-width: thin;
-border-color: #FFFFFF;
+p {
+    font-size: 20px;
 }
-.coterclient{
+
+.cotermedecin {
+    margin-right: 10%;
+    border-style: solid;
+    border-width: thin;
+    border: none;
+}
+
+.coterclient {
     margin-left: 20%;
     border-style: solid;
-border-width: thin;
-border-color: #FFFFFF;
-}
-
-.background {
-    background-color: lightgray;
-    margin-left: 10%;
-    margin-right: 7%;
-    
+    border-width: thin;
+    border: none;
 }
 
 .line {
@@ -37,6 +32,3 @@ border-color: #FFFFFF;
     transform: rotate(90deg);
     border-color: #1A85FD;
 }
-
-
-
