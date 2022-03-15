@@ -1,34 +1,86 @@
 .laPage {
     display: flex;
     justify-content: center;
-    margin-left: 20%;
+    margin-left: 2%;
     margin-right: 20%;
     margin-top: 8%;
     margin-bottom: 8%;
-    height: 40%;
-    background-color: lightgray;
-}
-
-p {
-    font-size: 20px;
 }
 
 .cotermedecin {
-    margin-right: 10%;
-    border-style: solid;
-    border-width: thin;
-    border: none;
+    margin-left: 28%;
+    margin-right: 61%;
 }
 
-.coterclient {
-    margin-left: 20%;
-    border-style: solid;
-    border-width: thin;
-    border: none;
+h2 {
+    color: #000000;
+    text-align: left;
+}
+
+.background {
+    background-color: lightgray;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .line {
     margin-bottom: 0;
     transform: rotate(90deg);
     border-color: #1A85FD;
+}
+
+input[type=submit] {
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    margin-left: 25%;
+    border-radius: 3px;
+    font-size: 17px;
+}
+
+input[type=submit]:hover {
+    background-color: #89CFF0;
+    color: #000000;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.formulaire {
+    margin-left: 22%;
+    margin-top: 5%;
+    margin-bottom: 20%;
+    width: 1000px;
+    height: 400px;
+    background-color: rgb(214, 210, 210);
+    border-radius: 3px;
+    padding-top: 1px;
+    border-radius: 15px;
+}
+
+h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.form-group {
+    padding: 10px;
+}
+
+label {
+    font-size: 18px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+input[type=date] {
+    margin-left: 19%;
+}
+
+input[type=time] {
+    margin-left: 20%;
+}
+
+select[name=type] {
+    margin-left: 10%;
+}
+
+select[name=nom_doc] {
+    margin-left: 12%;
 }
