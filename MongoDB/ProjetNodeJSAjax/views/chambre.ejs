@@ -1,0 +1,78 @@
+<html>
+    <head><meta charset="utf-8" />
+        <title>Ma page Node.js !</title>
+    </head>
+    
+<body>
+    <img src="/images/boom.png" />
+        
+<h1>Vous êtes dans la chambre</h1>
+
+<p id="demo">Vous êtes à l'étage n°<%= etage %></p>
+
+<button type="button" onclick="loadDoc()">Liste des users </button>
+
+<table id="users"></table> 
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script>
+/*$(document).ready(function()
+{
+    $(".backup_picture").on("error", function(){
+        $(this).attr('src', './images/boom.png');
+    });
+});*/
+
+
+ //En utilisant AJAX avec FETCH() 
+ async function loadDoc() {
+ //   const fetch = require ('node-fetch');
+ console.log('data');
+ const response = await fetch('https://api.github.com/users'); 
+    
+    // Storing data in form of JSON 
+    var data = await response.json(); 
+    console.log(data);  //la console du browser
+    show(data);
+};
+
+function show(data){
+    let tab =  
+        `<tr> 
+          <th>Login</th> 
+          <th>ID</th> 
+          <th>URL</th> 
+         </tr>`; 
+    
+    // Loop to access all rows  
+    for (let r of Object.keys(data)) { 
+        var o = data[r];
+        tab += `<tr>  
+    <td>${o.login} </td> 
+    <td>${o.id}</td> 
+    <td>${o.url}</td>            
+</tr>`; 
+    } 
+    // Setting innerHTML as tab variable 
+    document.getElementById("users").innerHTML = tab; 
+}
+ 
+/*
+//En utilisant AJAX avec XMLHTTPREQUEST 
+ function loadDoc() {
+let request = new XMLHttpRequest();
+ 
+request.open('GET', 'https://api.github.com/users',true);
+request.onload = function()  {
+        document.getElementById("demo").innerHTML = this.responseText;  
+     }
+     request.send();
+ }; 
+   */
+</script>
+
+
+</body>
+
+</html>

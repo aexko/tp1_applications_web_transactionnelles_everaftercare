@@ -1,0 +1,4 @@
+_id,client_id,docteur_id,endtime,starttime,type
+622bacaa074b4fea5329b043,927,123,2022-02-18 17:34:59,2022-02-18 17:34:59,examen de dentition
+622bacaa074b4fea5329b044,927,123,2022-02-25 16:13:14,2022-02-25 16:13:14,Premier examen
+622bacaa074b4fea5329b045,583,123,2022-02-26 15:58:43,2022-02-26 15:58:43,Premier examen
