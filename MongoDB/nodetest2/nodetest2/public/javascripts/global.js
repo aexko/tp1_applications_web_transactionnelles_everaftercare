@@ -29,7 +29,7 @@ function populateTable() {
     $.each(data, function(){
     
       tableContent += '<tr>';
-      tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.id + '">' + this.last_name + '</a></td>';
+      tableContent += '<td><a href="#" class="linkshowuser" rel="' + this._id + '">' + this.last_name + '</a></td>';
       tableContent += '<td>' + this.email + '</td>';
       tableContent += '<td><a href="#" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
       tableContent += '</tr>';
@@ -70,17 +70,17 @@ function showUserInfo(event) {
   /**
    * ou Ce qui a été modifié/ajouter par moi
    */
-  var arrayPosition = userListData.findIndex(obj => obj.username==thisUserName);
+  var arrayPosition = userListData.findIndex(obj => obj._id==thisUserName);
 
  
   // Get our User Object    
  
   var thisUserObject = userListData[arrayPosition];
   //Populate Info Box    
-  $('#userInfoName').text(thisUserObject.fullname);    
-  $('#userInfoAge').text(thisUserObject.age);    
-  $('#userInfoGender').text(thisUserObject.genre);   
-  $('#userInfoLocation').text(thisUserObject.location);
+  $('#userInfoName').text(thisUserObject.first_name + thisUserObject.last_name);    
+  $('#userInfoAge').text(thisUserObject.email);    
+  $('#userInfoGender').text(thisUserObject.password);   
+  $('#userInfoLocation').text(thisUserObject.id);
 
 });
 };
