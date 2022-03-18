@@ -14,10 +14,13 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.flash());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUnitialized: false,
 
-app.get('/', (req, res) => {
-    res.render('index', {})
 })
+);
 
 app.get('/connexion', (req, res) => {
     res.render('connexion');
