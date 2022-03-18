@@ -21,6 +21,9 @@ app.use(session({
 
 })
 );
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(methodOverride(_method))
 
 app.get('/connexion', (req, res) => {
     res.render('connexion');
