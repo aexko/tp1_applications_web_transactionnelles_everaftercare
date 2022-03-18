@@ -9,3 +9,7 @@ app.get('/', (req, res) => {
 app.get('/connexion', (req, res) => {
     res.render('connexion');
 })
+
+app.get('/inscription', (req, res) => {
+    res.render('inscription');
+})
