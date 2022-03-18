@@ -13,3 +13,8 @@ app.get('/connexion', (req, res) => {
 app.get('/inscription', (req, res) => {
     res.render('inscription');
 })
+mongoose
+    .connect('mongodb://localhost:27017/auth', { 
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+})
