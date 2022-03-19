@@ -4,50 +4,99 @@ const app = express();
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
-const user = require("./models/user");
+const User = require("./models/users");
 const methodOverride = require("method-override");
-require('dotenv').config();
+require("dotenv").config();
+const bcrypt = require("bcryptjs");
+
+const {
+	checkAuthenticated,
+	checkNotAuthenticated,
+} = require("./middlewares/auth");
 
 const initializePassport = require("./passport-config");
 initializePassport(
 	passport,
 	async (email) => {
-		const userFound = await user.findOne({ email });
+		const userFound = await User.findOne({ email });
 		return userFound;
 	},
 	async (id) => {
-		const userFound = await user.findOne({ _id: id });
+		const userFound = await User.findOne({ _id: id });
 		return userFound;
 	}
 );
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use(express.flash());
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUnitialized: false,
-
-})
+app.use(flash());
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET,
+		resave: true,
+		saveUnitialized: true,
+	})
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(methodOverride(_method))
+app.use(methodOverride("_method"));
 
-app.get("/", (req, res) => {
+app.get("/", checkAuthenticated, (req, res) => {
 	res.render("index", {});
 });
 
-app.get("/connexion", (req, res) => {
+app.get("/connexion", checkNotAuthenticated, (req, res) => {
 	res.render("connexion");
 });
 
-app.get("/inscription", (req, res) => {
+app.get("/inscription", checkNotAuthenticated, (req, res) => {
 	res.render("inscription");
 });
+
+app.post(
+	"/connexion",
+	checkNotAuthenticated,
+	passport.authenticate("local", {
+		successRedirect: "/",
+		failureRedirect: "/connexion",
+		failureFlash: true,
+	})
+);
+
+app.post("/inscription", checkNotAuthenticated, async (req, res) => {
+	const userFound = await User.findOne({ email: req.body.email });
+
+	if (userFound) {
+		req.flash(
+			"error",
+			"Il existe déjà un utilisateur avec cette adresse courriel."
+		);
+		res.redirect("/inscription");
+	} else {
+		try {
+			const hashedPassword = await bcrypt.hash(req.body.password, 10);
+			const user = new User({
+				name: req.body.name,
+				email: req.body.email,
+				password: hashedPassword,
+			});
+
+            await user.save();
+            res.redirect('/connexion');
+		} catch (error) {
+			console.log(error);
+			res.redirect("/inscription");
+		}
+	}
+});
+
+app.delete('/deconnexion', (req, res) => {
+    req.logOut();
+    res.redirect('/connexion');
+})
+
 mongoose
-	.connect("mongodb://localhost:27017/auth", {
+	.connect("mongodb://127.0.0.1:27017/auth", {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
 	})
