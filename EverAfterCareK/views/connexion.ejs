@@ -10,7 +10,10 @@
     
     <div class="container1">
         <h1>Connexion</h1>
-        <form action="/login" method="POST">
+      <% if (messages) { %>
+        <p><%= messages.error %></p> 
+        <% } %>
+        <form action="/connexion" method="POST">
             <input type="email" name="email" placeholder="alexkao@gmail.com"/>
             <input type="password" name="password" placeholder="alex"/>
             <button>Connexion</button>
