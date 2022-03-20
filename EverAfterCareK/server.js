@@ -106,6 +106,11 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 app.delete('/deconnexion', (req, res) => {
     req.logOut();
     res.redirect('/connexion');
+app.delete("/deconnexion", (req, res) => {
+	req.logOut();
+	res.redirect("/connexion");
+});
+
 	res.render("profil", {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
