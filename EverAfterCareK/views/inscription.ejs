@@ -21,6 +21,9 @@
     <h1>Inscription</h1>
     <% if (messages) { %>
         <p><%= messages.error %></p> 
+        <p>
+            <%= messages.error %>
+        </p>
         <% } %>
     <div class="container1">
         <form action="/inscription" method="POST">
