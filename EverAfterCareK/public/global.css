@@ -47,3 +47,8 @@ table {
 	border-spacing: 0;
 }
 
+/* Pour que le menu ne overlap pas sur la page */
+body {
+	padding-top: 5%;
+}
+
