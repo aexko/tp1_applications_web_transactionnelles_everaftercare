@@ -21,5 +21,15 @@
 
     </div>
 
+    <script>
+        function verifierChamps() {
+            if (champ1.value.length > 0 && champ2.value.length > 0) {
+                document.getElementById('button').disabled = false;
+            } else {
+                document.getElementById('button').disabled = true;
+            }
+        }
+    </script>
+
 </body>
 </html>
