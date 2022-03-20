@@ -18,6 +18,15 @@
             <input type="password" name="password" placeholder="alex"/>
             <button>Inscription</button>
         </form>
+            <div class="container1">
+                <form action="/inscription" method="POST">
+                    <input type="name" name="name" placeholder="Nom complet" id="champ1" onkeyup="verifierChamps()" />
+                    <input type="email" name="email" placeholder="Adresse courriel" onkeyup="verifierChamps()"
+                        id="champ2" />
+                    <input type="password" name="password" placeholder="Mot de passe" onkeyup="verifierChamps()"
+                        id="champ3" />
+                    <button id="button" disabled>Inscription</button>
+                </form>
 
     </div>
 
