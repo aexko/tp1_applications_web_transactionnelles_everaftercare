@@ -112,6 +112,7 @@ app.get("/profil/",checkAuthenticated, (req, res) => {
 	res.render("profil", {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
+        name: req.user.name
 	});
 })
 
