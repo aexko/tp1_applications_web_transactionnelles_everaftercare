@@ -44,15 +44,27 @@ app.use(methodOverride("_method"));
 
 app.get("/", checkAuthenticated, (req, res) => {
 	res.render("index", {});
+	res.render("index", {
+		titrePage: "Accueil",
+		titreSite: titreSite,
+	});
 });
 
 app.get("/connexion", checkNotAuthenticated, (req, res) => {
 	res.render("connexion");
+	res.render("connexion", {
+		titrePage: "Connexion",
+		titreSite: titreSite,
+	});
 });
 
 app.get("/inscription", checkNotAuthenticated, (req, res) => {
 	res.render("inscription");
 });
+	res.render("inscription", {
+		titrePage: "Inscription",
+		titreSite: titreSite,
+	});});
 
 app.post(
 	"/connexion",
@@ -94,6 +106,10 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 app.delete('/deconnexion', (req, res) => {
     req.logOut();
     res.redirect('/connexion');
+	res.render("profil", {
+		titrePage: "Votre profil",
+		titreSite: titreSite,
+	});
 })
 
 mongoose
