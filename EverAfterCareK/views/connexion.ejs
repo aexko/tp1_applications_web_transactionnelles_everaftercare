@@ -1,12 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
     <%- include('./partials/head'); %>
     <title>
         <%- titreSite %> - <%- titrePage %>
@@ -19,15 +14,12 @@
 
 <body>
     
-    <div class="container1">
+    <div class="containerConnexion1">
         <h1>Connexion</h1>
       <% if (messages) { %>
         <p><%= messages.error %></p> 
         <% } %>
         <form action="/connexion" method="POST">
-            <input type="email" name="email" placeholder="alexkao@gmail.com"/>
-            <input type="password" name="password" placeholder="alex"/>
-            <button>Connexion</button>
             <input type="email" name="email" placeholder="Adresse courriel" id="champ1" onkeyup="verifierChamps()"/>
             <input type="password" name="password" placeholder="Mot de passe" id="champ2" onkeyup="verifierChamps()"/>
             <button id="button" disabled>Connexion</button>
@@ -47,4 +39,5 @@
 
 </body>
 </html>
+
 <%- include('partials/footer') %>
