@@ -1,3 +1,6 @@
+/**
+ * Initialisation des modules
+ */
 const titreSite = "EverAfterCare";
 const express = require("express");
 const mongoose = require("mongoose");
@@ -9,12 +12,10 @@ const User = require("./models/users");
 const methodOverride = require("method-override");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
-
 const {
 	checkAuthenticated,
 	checkNotAuthenticated,
 } = require("./middlewares/auth");
-
 const initializePassport = require("./passport-config");
 initializePassport(
 	passport,
@@ -27,10 +28,19 @@ initializePassport(
 		return userFound;
 	}
 );
+// pour activer le module ejs
 app.set("view engine", "ejs");
+
+// pour permettre le parsing des URLs
 app.use(express.urlencoded({ extended: true }));
+
+// pour l'acces au dossier "public"
 app.use(express.static("public"));
+
+// pour activer le module express-flash
 app.use(flash());
+
+// pour activer le module session
 app.use(
 	session({
 		secret: process.env.SESSION_SECRET,
@@ -38,34 +48,40 @@ app.use(
 		saveUnitialized: true,
 	})
 );
+
+// pour utiliser la fonction intialize() dans passport
 app.use(passport.initialize());
+
+// pour activer session du passport
 app.use(passport.session());
+
 app.use(methodOverride("_method"));
 
+// pour charger la page d'accueil
 app.get("/", checkAuthenticated, (req, res) => {
-	res.render("index", {});
 	res.render("index", {
 		titrePage: "Accueil",
 		titreSite: titreSite,
 	});
 });
 
+// pour charger la page de connexion
 app.get("/connexion", checkNotAuthenticated, (req, res) => {
-	res.render("connexion");
 	res.render("connexion", {
 		titrePage: "Connexion",
 		titreSite: titreSite,
 	});
 });
 
+// pour charger la page d'inscription
 app.get("/inscription", checkNotAuthenticated, (req, res) => {
-	res.render("inscription");
-});
 	res.render("inscription", {
 		titrePage: "Inscription",
 		titreSite: titreSite,
-	});});
+	});
+});
 
+// pour verifier la connexion
 app.post(
 	"/connexion",
 	checkNotAuthenticated,
@@ -76,6 +92,7 @@ app.post(
 	})
 );
 
+// pour faire l'inscription
 app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 	const userFound = await User.findOne({ email: req.body.email });
 
@@ -94,8 +111,8 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 				password: hashedPassword,
 			});
 
-            await user.save();
-            res.redirect('/connexion');
+			await user.save();
+			res.redirect("/connexion");
 		} catch (error) {
 			console.log(error);
 			res.redirect("/inscription");
@@ -103,18 +120,20 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 	}
 });
 
+// pour se deconnecter
 app.delete("/deconnexion", (req, res) => {
 	req.logOut();
 	res.redirect("/connexion");
 });
 
-app.get("/profil/",checkAuthenticated, (req, res) => {
+// pour charger le profil de l'utilisateur apres une connexion reussie
+app.get("/profil/", checkAuthenticated, (req, res) => {
 	res.render("profil", {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
-        name: req.user.name
+		name: req.user.name,
 	});
-})
+});
 
 // Connexion à MongoDB
 mongoose
