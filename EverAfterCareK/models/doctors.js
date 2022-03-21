@@ -8,4 +8,6 @@ const doctorSchema = new mongoose.Schema({
 });
 
 const doctor = mongoose.model('Doctor', doctorSchema);
+
+// pour l'acces dans les autres fichiers
 module.exports = doctor;
