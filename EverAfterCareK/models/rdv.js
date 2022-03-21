@@ -8,4 +8,6 @@ const rdvSchema = new mongoose.Schema({
 });
 
 const rdv = mongoose.model('Rdv', rdvSchema);
+
+// pour l'acces dans les autres fichiers
 module.exports = rdv;

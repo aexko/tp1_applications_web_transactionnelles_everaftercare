@@ -8,4 +8,6 @@ const userSchema = new mongoose.Schema({
 });
 
 const user = mongoose.model('User', userSchema);
+
+// pour l'acces dans les autres fichiers
 module.exports = user;
