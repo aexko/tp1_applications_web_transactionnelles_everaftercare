@@ -1,0 +1,99 @@
+nav {
+    /*Menu*/
+    background-color: #89cff0;
+    text-transform: uppercase;
+    text-align: center;
+    top: 0%;
+    width: 100%;
+    height: 75px;
+    display: inline-flex;
+    position: relative;
+    border-radius: 15px;
+}
+
+.section {
+    width: 86%;
+    display: inline-flex;
+}
+
+.type {
+    width: 100%;
+    display: inline-flex;
+}
+
+.type a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 25px;
+    line-height: 65px;
+    width: 100%;
+    display: inline-block;
+}
+
+.section a:hover {
+    /*souris au dessus*/
+    background-color: white;
+    color: black;
+}
+
+.type:hover .produit {
+    display: block;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #7AE582;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    text-align: left;
+}
+
+.service {
+    float: left;
+    margin-right: 10px;
+    margin-left: 30px;
+}
+
+.box {
+    /* bloc service */
+    margin-bottom: 100px;
+    background-color: #3d89ec;
+}
+
+h1 {
+    text-align: center;
+    text-shadow: 2px 2px rgb(83, 83, 83);
+    font-size: 40px;
+    margin-top: 100px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+}
+
+h2 {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+}
+
+p {
+    margin-top: 0;
+}
+
+section {
+    background-color: rgb(255, 255, 255);
+    text-align: justify;
+    margin: 140px 180px 70px 180px;
+    padding: 60px 10%;
+    width: 60%;
+    border-radius: 30px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin-left: 30px;
+}
