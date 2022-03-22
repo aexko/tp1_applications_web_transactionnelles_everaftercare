@@ -132,7 +132,9 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
 		name: req.user.name,
+		
 	});
+	console.log(req.user);
 });
 
 // Connexion à MongoDB
