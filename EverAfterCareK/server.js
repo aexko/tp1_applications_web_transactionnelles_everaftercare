@@ -62,6 +62,7 @@ app.use(methodOverride("_method"));
 
 // pour charger la page d'accueil
 app.get("/", checkAuthenticated, (req, res) => {
+app.get("/", (req, res) => {
 	res.render("index", {
 		titrePage: "Accueil",
 		titreSite: titreSite,
