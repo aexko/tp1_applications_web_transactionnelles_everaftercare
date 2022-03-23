@@ -28,6 +28,7 @@ initializePassport(
 		return userFound;
 	}
 );
+
 // pour activer le module ejs
 app.set("view engine", "ejs");
 
@@ -61,7 +62,6 @@ app.use(passport.session());
 app.use(methodOverride("_method"));
 
 // pour charger la page d'accueil
-app.get("/", checkAuthenticated, (req, res) => {
 app.get("/", (req, res) => {
 	res.render("index", {
 		titrePage: "Accueil",
@@ -136,14 +136,12 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
 		name: req.user.name,
-		
 	});
-	console.log(req.user);
+	console.log(req.user.name);
 });
 
 // Connexion à MongoDB
 mongoose
-	.connect("mongodb://127.0.0.1:27017/auth", {
 	.connect("mongodb://127.0.0.1:27017/eac", {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
