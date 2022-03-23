@@ -1,5 +1,4 @@
-nav {
-    /*Menu*/
+/* nav {
     background-color: #89cff0;
     text-transform: uppercase;
     text-align: center;
@@ -7,12 +6,21 @@ nav {
     width: 100%;
     height: 75px;
     display: inline-flex;
-    position: relative;
     border-radius: 15px;
+} */
+/* 
+nav {
+    background-color: #89cff0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-transform: uppercase;
+
 }
 
 .section {
-    width: 86%;
+    width: 100%;
     display: inline-flex;
 }
 
@@ -24,6 +32,7 @@ nav {
 .type a {
     color: rgb(255, 255, 255);
     text-decoration: none;
+    text-align: center;
     font-size: 25px;
     line-height: 65px;
     width: 100%;
@@ -31,37 +40,10 @@ nav {
 }
 
 .section a:hover {
-    /*souris au dessus*/
     background-color: white;
     color: black;
 }
 
-.type:hover .produit {
-    display: block;
-}
-
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #7AE582;
-    color: rgb(0, 0, 0);
-    padding: 5px;
-    text-align: left;
-}
-
-.service {
-    float: left;
-    margin-right: 10px;
-    margin-left: 30px;
-}
-
-.box {
-    /* bloc service */
-    margin-bottom: 100px;
-    background-color: #3d89ec;
-}
 
 h1 {
     text-align: center;
@@ -78,22 +60,116 @@ h2 {
     color: white;
     text-align: center;
 }
-
-p {
-    margin-top: 0;
-}
-
-section {
-    background-color: rgb(255, 255, 255);
-    text-align: justify;
-    margin: 140px 180px 70px 180px;
-    padding: 60px 10%;
-    width: 60%;
-    border-radius: 30px;
-}
+*/
 
 .logo {
     width: 100px;
-    height: auto;
-    margin-left: 30px;
+} 
+
+/* 
+https://codepen.io/Patak/pen/QpLpOV/
+ */
+
+ nav {
+	position: relative;
+	background-color: #89cff0;
+	font-size: 0;
+    align-items: center;
+    
+
 }
+nav a {
+	font-size: 20px;
+	display: inline-block;
+	position: relative;
+    margin-top:10px;    
+    margin-bottom:10px;
+	z-index: 1;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+    align-items: center;
+
+}
+nav .animation {
+	position: absolute;
+	height: 100%;
+	top: 0;
+	z-index: 0;
+	transition: all .5s ease 0s;
+}
+a:nth-child(1) {
+	width: 12.5%;
+    left: 12.5%;
+
+}
+a:nth-child(2) {
+	width: 12.5%;
+    left: 12.5%;
+}
+a:nth-child(3) {
+	width: 12.5%;
+    left: 12.5%;
+
+}
+a:nth-child(4) {
+	width: 12.5%;
+    left: 12.5%;
+
+}
+a:nth-child(5) {
+	width: 12.5%;
+    left: 12.5%;
+
+}
+a:nth-child(6) {
+	width: 12.5%;
+    left: 12.5%;
+
+}
+
+
+nav .start-home, a:nth-child(1):hover~.animation {
+	width: 12.5%;
+	left: 12.5%;
+	background-color: #89f0aa;
+}
+nav a:nth-child(2):hover~.animation {
+	width: 12.5%;
+	left: 25%;
+    
+	background-color: #000 ;
+}
+
+nav a:nth-child(3):hover~.animation {
+	width: 12.5%;
+	left: 37.5%;
+    
+	background-color: #000 ;
+}
+nav a:nth-child(4):hover~.animation {
+	width: 12.5%;
+	left: 50%;
+	background-color: #000 ;
+}
+nav a:nth-child(5):hover~.animation {
+	width: 12.5%;
+	left: 62.5%;
+	background-color: #000 ;
+}
+nav a:nth-child(6):hover~.animation {
+	width: 12.5%;
+	left: 75%;
+	background-color: #000 ;
+}
+
+
+
+.center {
+    align-items: center;
+}
+
+
+
