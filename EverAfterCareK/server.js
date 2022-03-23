@@ -37,6 +37,9 @@ app.use(express.urlencoded({ extended: true }));
 // pour l'acces au dossier "public"
 app.use(express.static("public"));
 
+// pour l'acces au dossier "images"
+app.use(express.static("images"));
+
 // pour activer le module express-flash
 app.use(flash());
 
