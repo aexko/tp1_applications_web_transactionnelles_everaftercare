@@ -49,18 +49,12 @@ table {
 	border-spacing: 0;
 }
 
-/* Pour que le menu ne overlap pas sur la page */
+/* Pour que le menu ne overlap pas sur la page
 body {
 	padding-top: 5%;
 }
+ */
 
-nav {
-	background-color: red;
-	overflow: hidden;
-	position: fixed; /* Set the navbar to fixed position */
-	top: 0; /* Position the navbar at the top of the page */
-	width: 100%; /* Full width */
-}
 
 footer {
 	position: fixed;
@@ -69,5 +63,5 @@ footer {
 	width: 100%;
 	color: white;
 	text-align: center;
-    background-color: teal;
+    background-color: #89cff0; 
 }
