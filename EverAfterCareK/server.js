@@ -87,10 +87,23 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 
 
 app.get("/rendezvous", checkAuthenticated, (req, res) => {
-	res.render("rendezvous", {
-		titrePage: "Prise de Rendez-Vous",
-		titreSite: titreSite,
-	});
+
+
+		
+	
+	
+		User.find({}, function(err, users) {
+			res.render("rendezvous", {
+				titrePage: "Prise de Rendez-Vous",
+				titreSite: titreSite,
+				ListClient : users,
+			});
+		
+			users.forEach(function(user) {
+				console.log(user.first_name);
+			  });
+	
+});
 });
 
 // pour verifier la connexion
@@ -141,12 +154,16 @@ app.delete("/deconnexion", (req, res) => {
 
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
+
+
+	//const userFound = await User.findOne({ email });
+	
 	res.render("profil", {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
 		name: req.user.name,
 	});
-	console.log(req.user.name);
+	console.log(req.user._id);
 });
 
 // Connexion à MongoDB
