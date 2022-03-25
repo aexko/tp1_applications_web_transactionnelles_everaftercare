@@ -1,6 +1,7 @@
 /**
  * Initialisation des modules
  */
+let iduseractuel = null;
 const titreSite = "EverAfterCare";
 const express = require("express");
 const mongoose = require("mongoose");
@@ -114,7 +115,13 @@ app.post(
 		successRedirect: "/profil",
 		failureRedirect: "/connexion",
 		failureFlash: true,
+
+
+
 	})
+
+
+
 );
 
 // pour faire l'inscription
@@ -164,6 +171,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 		name: req.user.name,
 	});
 	console.log(req.user._id);
+	console.log(passport.serializeUser._id);
 });
 
 // Connexion à MongoDB
