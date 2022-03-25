@@ -8,7 +8,7 @@ const app = express();
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
-const User = require("./models/users");
+const User = require("./models/client");
 const methodOverride = require("method-override");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
@@ -110,7 +110,8 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 		try {
 			const hashedPassword = await bcrypt.hash(req.body.password, 10);
 			const user = new User({
-				name: req.body.name,
+				first_name: req.body.firstname,
+				last_name: req.body.lastname,
 				email: req.body.email,
 				password: hashedPassword,
 			});
