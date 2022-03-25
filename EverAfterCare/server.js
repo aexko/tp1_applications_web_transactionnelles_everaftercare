@@ -9,7 +9,7 @@ var bodyParser = require("body-parser");
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/eac');
-
+const bcrypt = require('bcrypt');
 
 /**
  * Parse all from data
@@ -102,9 +102,9 @@ app.get("/inscription", function(req, res) {
  */
 app.post("/inscription", function(req, res) {
 
+    const hashedPassword = bcrypt.hash(req.body.password, 10);
+    var myobj = { id: getRandomString(3), first_name: req.body.first_name, last_name: req.body.last_name, email: req.body.email, password: hashedPassword };
 
-    var myobj = { id: getRandomString(3), first_name: req.body.first_name, last_name: req.body.last_name, email: req.body.email, password: req.body.password };
-    console.log(myobj);
     try {
         db.collection("client").insert(myobj);
     } catch (error) {
