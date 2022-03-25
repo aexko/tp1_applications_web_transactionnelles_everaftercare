@@ -1,0 +1,184 @@
+/* nav {
+    background-color: #89cff0;
+    text-transform: uppercase;
+    text-align: center;
+    top: 0%;
+    width: 100%;
+    height: 75px;
+    display: inline-flex;
+    border-radius: 15px;
+} */
+/* 
+nav {
+    background-color: #89cff0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-transform: uppercase;
+
+}
+
+.section {
+    width: 100%;
+    display: inline-flex;
+}
+
+.type {
+    width: 100%;
+    display: inline-flex;
+}
+
+.type a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    text-align: center;
+    font-size: 25px;
+    line-height: 65px;
+    width: 100%;
+    display: inline-block;
+}
+
+.section a:hover {
+    background-color: white;
+    color: black;
+}
+
+
+h1 {
+    text-align: center;
+    text-shadow: 2px 2px rgb(83, 83, 83);
+    font-size: 40px;
+    margin-top: 100px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+}
+
+h2 {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+}
+*/
+
+.logo {
+    width: 100px;
+}
+
+/* 
+https://codepen.io/Patak/pen/QpLpOV/
+ */
+
+nav {
+    position: relative;
+    background-color: #89cff0;
+    font-size: 0;
+    align-items: center;
+
+
+}
+
+nav a {
+    font-size: 20px;
+    display: inline-block;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    z-index: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    align-items: center;
+
+}
+
+nav .animation {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    z-index: 0;
+    transition: all .5s ease 0s;
+}
+
+a:nth-child(1) {
+    width: 12.5%;
+    left: 12.5%;
+
+}
+
+a:nth-child(2) {
+    width: 12.5%;
+    left: 12.5%;
+}
+
+a:nth-child(3) {
+    width: 12.5%;
+    left: 12.5%;
+
+}
+
+a:nth-child(4) {
+    width: 12.5%;
+    left: 12.5%;
+
+}
+
+a:nth-child(5) {
+    width: 12.5%;
+    left: 12.5%;
+
+}
+
+a:nth-child(6) {
+    width: 12.5%;
+    left: 12.5%;
+
+}
+
+
+nav .start-home, a:nth-child(1):hover~.animation {
+    width: 12.5%;
+    left: 12.5%;
+    background-color: #89f0aa;
+}
+
+nav a:nth-child(2):hover~.animation {
+    width: 12.5%;
+    left: 25%;
+
+    background-color: #000;
+}
+
+nav a:nth-child(3):hover~.animation {
+    width: 12.5%;
+    left: 37.5%;
+
+    background-color: #000;
+}
+
+nav a:nth-child(4):hover~.animation {
+    width: 12.5%;
+    left: 50%;
+    background-color: #000;
+}
+
+nav a:nth-child(5):hover~.animation {
+    width: 12.5%;
+    left: 62.5%;
+    background-color: #000;
+}
+
+nav a:nth-child(6):hover~.animation {
+    width: 12.5%;
+    left: 75%;
+    background-color: #000;
+}
+
+
+
+.center {
+    align-items: center;
+}
