@@ -85,6 +85,14 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 	});
 });
 
+
+app.get("/rendezvous", checkAuthenticated, (req, res) => {
+	res.render("rendezvous", {
+		titrePage: "Prise de Rendez-Vous",
+		titreSite: titreSite,
+	});
+});
+
 // pour verifier la connexion
 app.post(
 	"/connexion",
