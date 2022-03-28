@@ -6,6 +6,7 @@ const titreSite = "EverAfterCare";
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+currentlyConnectedUser = null;
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
@@ -76,6 +77,9 @@ app.get("/connexion", checkNotAuthenticated, (req, res) => {
 		titrePage: "Connexion",
 		titreSite: titreSite,
 	});
+	if(checkNotAuthenticated){
+		currentlyConnectedUser = null;
+	}
 });
 
 // pour charger la page d'inscription
@@ -108,6 +112,7 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 });
 
 // pour verifier la connexion
+/*
 app.post(
 	"/connexion",
 	checkNotAuthenticated,
@@ -123,6 +128,35 @@ app.post(
 
 
 );
+*/
+app.post("/connexion", StoreUser, checkNotAuthenticated, 
+passport.authenticate("local", {
+	successRedirect: "/profil",
+	failureRedirect: "/connexion",
+	failureFlash: true,
+}), async (req, res) => {
+	
+
+	
+
+	
+	
+	
+});
+
+async function StoreUser(req, res, next) {
+	const userFound = await User.findOne({ email: req.body.email});
+
+	if (userFound) {
+		currentlyConnectedUser = userFound;
+		console.log(currentlyConnectedUser.first_name);
+	} else {
+	console.log("Lol t'existe pas");
+	}
+	
+	next();
+	
+}
 
 // pour faire l'inscription
 app.post("/inscription", checkNotAuthenticated, async (req, res) => {
@@ -155,6 +189,7 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 
 // pour se deconnecter
 app.delete("/deconnexion", (req, res) => {
+	currentlyConnectedUser = null;
 	req.logOut();
 	res.redirect("/connexion");
 });
@@ -170,8 +205,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 		titreSite: titreSite,
 		name: req.user.name,
 	});
-	console.log(req.user._id);
-	console.log(passport.serializeUser._id);
+	console.log(currentlyConnectedUser.first_name);
 });
 
 // Connexion à MongoDB
