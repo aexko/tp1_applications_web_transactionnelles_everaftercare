@@ -103,6 +103,21 @@ flex-direction: row;
   
 }
 .containerConnexion1 form button{
+	color: rgb(0, 0, 0);
+    background-color:rgb(255,255,255);
+    font-weight: 500;
+    font-size: 15px;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: solid 2px rgb(123,119,119);
+	text-align:center;
+    display: block;
+    margin: 0 auto 1em auto;
+}
+
+
+.containerConnexion1 form button:disabled{
 	color: rgb(121,119,119);
     background-color:rgb(255,255,255);
     font-weight: 500;
