@@ -1,10 +1,53 @@
 .laPage {
-    display: flex;
-    justify-content: center;
-    margin-left: 2%;
+    /* margin-left: 2%;
     margin-right: 20%;
     margin-top: 8%;
-    margin-bottom: 8%;
+    margin-bottom: 8%; */
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 660px;
+    height: 400px;
+    background: lightgray;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.5);
+}
+
+[data-tab-info] {
+    display: none;
+}
+
+.active[data-tab-info] {
+    display: block;
+}
+
+.tab-content {
+    font-size: 30px;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin: 60;
+    color: rgb(82, 75, 75);
+}
+
+.tabs {
+    font-size: 40px;
+    color: rgb(243, 243, 243);
+    display: flex;
+    margin: 20;
+    position: center;
+}
+
+.tabs span {
+    background: rgb(35, 143, 170);
+    padding: 10px;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.tabs span:hover {
+    background: rgb(255, 255, 255);
+    cursor: pointer;
+    color: rgb(0, 0, 0);
 }
 
 .cotermedecin {

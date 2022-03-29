@@ -23,6 +23,7 @@ module.exports = app;
  */
 var dateFormat = require("dateformat");
 const { debug } = require("console");
+const { use } = require("passport");
 var now = new Date();
 
 /**
@@ -102,19 +103,32 @@ app.get("/inscription", function(req, res) {
  */
 app.post("/inscription", function(req, res) {
 
-    const hashedPassword = bcrypt.hash(req.body.password, 10);
-    var myobj = { id: getRandomString(3), first_name: req.body.first_name, last_name: req.body.last_name, email: req.body.email, password: hashedPassword };
+    /* var user_exists = db.collection("client").find({ "email": req.body.email })*/
 
-    try {
-        db.collection("client").insert(myobj);
-    } catch (error) {
-        console.log(error);
-        res.redirect("/inscription")
+    const userFound = db.collection("client").findOne({ email: req.body.email });
+    if (userFound) {
+
+        console.log("Utilisateur existant")
+
+    } else {
+        const hashedPassword = bcrypt.hash(req.body.password, 10);
+
+        var myobj = {
+            id: getRandomString(3),
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            password: hashedPassword
+        };
+
+        try {
+            db.collection("client").insert(myobj);
+            res.redirect("/connexion");
+        } catch (error) {
+            console.log(error);
+            res.redirect("/inscription")
+        }
     }
-
-
-
-
 
 
 });
