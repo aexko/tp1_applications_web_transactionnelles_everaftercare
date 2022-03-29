@@ -12,10 +12,10 @@ del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
+fieldset, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -25,42 +25,37 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
+article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-
 body {
 	line-height: 1;
 }
-
 ol, ul {
 	list-style: none;
 }
-
 blockquote, q {
 	quotes: none;
 }
-
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
-
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
 
-/* Pour que le menu ne overlap pas sur la page
-body {
-	padding-top: 5%;
+nav {
+	background-color: red;
+	overflow: hidden;
+	position: fixed; /* Set the navbar to fixed position */
+	top: 0; /* Position the navbar at the top of the page */
+	width: 100%; /* Full width */
 }
- */
-
 
 footer {
 	position: fixed;
@@ -69,5 +64,74 @@ footer {
 	width: 100%;
 	color: white;
 	text-align: center;
-	background-color: #89cff0;
+    background-color: teal;
+}
+/*----------- connexion --------------*/
+
+.containerConnexion1{
+	border-top: solid 1px rgb(154,154,154);
+
+}
+
+.containerConnexion1 form label{
+ display: flex;
+flex-direction: row;
+ justify-content: center;
+ padding: 12px 20px;
+}
+.containerConnexion1 form tt{
+	background-color: lightgray;
+}
+.containerConnexion1 form input{
+	padding: 15px 30px;
+    
+    font-size: 15px;
+    border: solid 2px rgb(219,219,219);
+    border-radius: 10px;
+	text-align:center;
+    display: block;
+    margin: 0 auto 1em auto;
+	
+}
+
+
+.containerConnexion1 form .tt{
+	margin: auto;
+	width: 50%;
+	border: 3px solid green;
+	padding: 10px;
+  
+}
+.containerConnexion1 form button{
+	color: rgb(0, 0, 0);
+    background-color:rgb(255,255,255);
+    font-weight: 500;
+    font-size: 15px;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: solid 2px rgb(123,119,119);
+	text-align:center;
+    display: block;
+    margin: 0 auto 1em auto;
+}
+
+
+.containerConnexion1 form button:disabled{
+	color: rgb(121,119,119);
+    background-color:rgb(255,255,255);
+    font-weight: 500;
+    font-size: 15px;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: solid 2px rgb(123,119,119);
+	text-align:center;
+    display: block;
+    margin: 0 auto 1em auto;
+}
+h2{
+	font-size: 30px;
+text-align: center;
+font-style: italic;
 }
