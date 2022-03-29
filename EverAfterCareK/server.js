@@ -11,6 +11,8 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
+const Docteur = require("./models/docteur");
+//const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
@@ -97,16 +99,13 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 		
 	
 	
-		User.find({}, function(err, users) {
+		Docteur.find({}, function(err, users) {
 			res.render("rendezvous", {
 				titrePage: "Prise de Rendez-Vous",
 				titreSite: titreSite,
-				ListClient : users,
+				ListDocteur : users,
 			});
 		
-			users.forEach(function(user) {
-				console.log(user.first_name);
-			  });
 	
 });
 });
@@ -149,7 +148,6 @@ async function StoreUser(req, res, next) {
 
 	if (userFound) {
 		currentlyConnectedUser = userFound;
-		console.log(currentlyConnectedUser.first_name);
 	} else {
 	console.log("Lol t'existe pas");
 	}
@@ -203,9 +201,8 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 	res.render("profil", {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
-		name: req.user.name,
+		name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
 	});
-	console.log(currentlyConnectedUser.first_name);
 });
 
 // Connexion à MongoDB

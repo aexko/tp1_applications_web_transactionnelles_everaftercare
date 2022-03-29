@@ -12,14 +12,27 @@
 <body>
     
     <div class="containerConnexion1">
-        <h1>Connexion</h1>
+        <h1>Connexion des clients</h1>
       <% if (messages) { %>
         <p><%= messages.error %></p> 
         <% } %>
         <form action="/connexion" method="POST">
-            <input type="email" name="email" placeholder="Adresse courriel" id="champ1" onkeyup="verifierChamps()"/>
-            <input type="password" name="password" placeholder="Mot de passe" id="champ2" onkeyup="verifierChamps()"/>
-            <button id="button" disabled>Connexion</button>
+            <input type="email" name="email" placeholder="Adresse courriel" id="champ1" onkeyup="verifierChamps()"/> <br>
+            <input type="password" name="password" placeholder="Mot de passe" id="champ2" onkeyup="verifierChamps()"/> <br>
+            <button id="buttonc"  disabled>Connexion</button>
+        </form>
+
+    </div>
+
+    <div class="containerConnexion1">
+        <h1>Connexion des docteurs</h1>
+      <% if (messages) { %>
+        <p><%= messages.error %></p> 
+        <% } %>
+        <form action="/connexion" method="POST">
+            <input type="email" name="email" placeholder="Adresse courriel" id="champ3" onkeyup="verifierChamps()"/> <br>
+            <input type="password" name="password" placeholder="Mot de passe" id="champ4" onkeyup="verifierChamps()"/> <br>
+            <button id="buttond" disabled>Connexion</button>
         </form>
 
     </div>
@@ -27,9 +40,17 @@
     <script>
         function verifierChamps() {
             if (champ1.value.length > 0 && champ2.value.length > 0) {
-                document.getElementById('button').disabled = false;
+                document.getElementById('buttonc').disabled = false;
             } else {
-                document.getElementById('button').disabled = true;
+                document.getElementById('buttonc').disabled = true;
+            }
+
+
+
+            if (champ3.value.length > 0 && champ4.value.length > 0) {
+                document.getElementById('buttond').disabled = false;
+            } else {
+                document.getElementById('buttond').disabled = true;
             }
         }
     </script>

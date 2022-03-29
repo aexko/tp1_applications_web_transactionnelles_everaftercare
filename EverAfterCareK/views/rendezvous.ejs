@@ -20,8 +20,12 @@
                 <label for="rendezvous">Sélectionnner votre médecin:</label>
 
                 <select id="nom_doc" name="nom_doc">
-                        <option value="PlaceHolderID">PlaceHolder Name FirstName
-                        </option>
+                    <% ListDocteur.forEach(function(item,index){ console.log("test");%>
+                    <option value="<%= item.id %>">
+                        <%= item.last_name %>
+                            <%= item.first_name %>
+                    </option>
+                    <%}); %>
 
                 </select>
             </div>
