@@ -203,7 +203,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 	res.render("profil", {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
-		name: req.user.name,
+		name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
 	});
 	console.log(currentlyConnectedUser.first_name);
 });
