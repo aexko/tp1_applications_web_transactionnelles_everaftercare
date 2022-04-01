@@ -11,7 +11,7 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
-const Docteur = require("./models/docteur");
+//const Docteur = require("./models/docteur");
 const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 require("dotenv").config();
@@ -24,15 +24,10 @@ const initializePassport = require("./passport-config");
 initializePassport(
 	passport,
 	async (email) => {
-		var userFound = await User.findOne({ email });
-		console.log("Ici%");
-		if(userFound){
-			return userFound;
-		}else{
-			
-		var userFound = await Docteur.findOne({ email });
+		
+		const userFound = await User.findOne({ email });
 		return userFound;
-		}
+		
 		
 	},
 	async (id) => {
@@ -107,13 +102,12 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 		
 	
 	
-		Docteur.find({}, function(err, users) {
+		User.find({user_type : "docteur"}, function(err, users) {
 			res.render("rendezvous", {
 				titrePage: "Prise de Rendez-Vous",
 				titreSite: titreSite,
 				ListDocteur : users,
 			});
-		console.log(currentlyConnectedUser.isDocteur);
 	
 });
 });
@@ -121,9 +115,9 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 
 app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 		d_id = req.body.nom_doc;
-		const userFound = await Docteur.findOne({ _id : d_id});
+		const userFound = await User.findOne({ _id : d_id, user_type : "docteur"});
 
-		var canschedule = true;
+		var canschedule;
 		if(userFound){
 
 
@@ -137,7 +131,7 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 		var array2 = currentrdvtime.split(":");
 		var currentrdvseconds = (parseInt(array2[0], 10) * 60 * 60) + (parseInt(array2[1], 10) * 60)
 		
-		Rdv.find({date : startdate}, function(err, Rendezvous) {
+		Rdv.find({date : startdate, docteur_id : d_id}, function(err, Rendezvous) {
 			
 
 			Rendezvous.forEach(rvd => {
@@ -148,17 +142,15 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 				
 				if(thisrdvseconds - currentrdvseconds > -3600 && thisrdvseconds - currentrdvseconds < 3600){
 					
-					canschedule = false;
+					canschedule = rvd;
 					}
 					
-			console.log(canschedule);
 			});
 
 
 
 		});
-		console.log(canschedule);
-		if(canschedule === true){
+		if(canschedule === null){
 			console.log(canschedule);
 			try {
 				const rdv = new Rdv({
@@ -179,6 +171,9 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 				console.log(error);
 				res.redirect("/rendezvous");
 			}
+		}else{
+			
+			res.redirect("/rendezvous");
 		}
 
 	
@@ -243,18 +238,8 @@ async function StoreUser(req, res, next) {
 
 	if (userFound) {
 		currentlyConnectedUser = userFound;
-		currentlyConnectedUser.isDocteur = false;
 	} else {
 	console.log("Lol t'existe pas en tant que client");
-	}
-
-	userFound = await Docteur.findOne({ email: req.body.email});
-
-	if (userFound) {
-		currentlyConnectedUser = userFound;
-		currentlyConnectedUser.isDocteur = true;
-	} else {
-	console.log("Lol t'existe pas en tant que docteur");
 	}
 
 	
@@ -265,9 +250,7 @@ async function StoreUser(req, res, next) {
 // pour faire l'inscription
 app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 	var userFound = await User.findOne({ email: req.body.email });
-	if(!userFound){
-		userFound = await Docteur.findOne({email: req.body.email});
-	}
+	
 
 	if (userFound) {
 		req.flash(
@@ -283,6 +266,7 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 				last_name: req.body.lastname,
 				email: req.body.email,
 				password: hashedPassword,
+				user_type: "client"
 			});
 
 			await user.save();
