@@ -117,7 +117,6 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 		d_id = req.body.nom_doc;
 		const userFound = await User.findOne({ _id : d_id, user_type : "docteur"});
 
-		var canschedule;
 		if(userFound){
 
 
@@ -126,55 +125,41 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 		var time = req.body.time;
 
 
-		
-		var currentrdvtime = time;
-		var array2 = currentrdvtime.split(":");
-		var currentrdvseconds = (parseInt(array2[0], 10) * 60 * 60) + (parseInt(array2[1], 10) * 60)
-		
-		Rdv.find({date : startdate, docteur_id : d_id}, function(err, Rendezvous) {
+		Rdv.findOne({date : startdate, docteur_id : d_id, heure : time}, async function(err, Rendezvous) {
 			
 
-			Rendezvous.forEach(rvd => {
-				var thisrdvtime = rvd.heure;
-				var array = thisrdvtime.split(":");
-				var thisrdvseconds = (parseInt(array[0], 10) * 60 * 60) + (parseInt(array[1], 10) * 60)
-				
-				
-				if(thisrdvseconds - currentrdvseconds > -3600 && thisrdvseconds - currentrdvseconds < 3600){
+			if(Rendezvous == null){
+					try {
+						const rdv = new Rdv({
+							docteur_id : d_id,
+							client_id : currentlyConnectedUser._id,
+							type : req.body.type,
+							date : startdate,
+							heure : time
+						});
+			
+						await rdv.save();
+		
+						console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " +  currentlyConnectedUser.last_name);
 					
-					canschedule = rvd;
+			
+						res.redirect("/");
+					} catch (error) {
+						console.log(error);
+						res.redirect("/rendezvous");
 					}
-					
-			});
+				}else{
+					console.log("Rendez-Vous existe déja dans la plage horaire");
+					res.redirect("/rendezvous");
+				}
+			
+				
 
 
 
 		});
-		if(canschedule === null){
-			console.log(canschedule);
-			try {
-				const rdv = new Rdv({
-					docteur_id : d_id,
-					client_id : currentlyConnectedUser._id,
-					type : req.body.type,
-					date : startdate,
-					heure : time
-				});
+		
 	
-				await rdv.save();
-
-				console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " +  currentlyConnectedUser.last_name);
-			
-	
-				res.redirect("/");
-			} catch (error) {
-				console.log(error);
-				res.redirect("/rendezvous");
-			}
-		}else{
-			
-			res.redirect("/rendezvous");
-		}
 
 	
 
