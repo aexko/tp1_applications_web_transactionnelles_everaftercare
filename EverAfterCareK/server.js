@@ -6,13 +6,14 @@ const titreSite = "EverAfterCare";
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const moment = require("moment");
 currentlyConnectedUser = null;
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
 const Docteur = require("./models/docteur");
-//const Rdv = require("./models/rdv");
+const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
@@ -108,6 +109,78 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 		
 	
 });
+});
+
+
+app.post("/rendezvous", checkAuthenticated, async (req, res) => {
+		d_id = req.body.nom_doc;
+		const userFound = await Docteur.findOne({ _id : d_id});
+
+		var canschedule = true;
+		if(userFound){
+
+
+
+		var startdate = req.body.tripstart;
+		var time = req.body.time;
+
+
+		
+		var currentrdvtime = time;
+		var array2 = currentrdvtime.split(":");
+		var currentrdvseconds = (parseInt(array2[0], 10) * 60 * 60) + (parseInt(array2[1], 10) * 60)
+		
+		Rdv.find({date : startdate}, function(err, Rendezvous) {
+			
+
+			Rendezvous.forEach(rvd => {
+				var thisrdvtime = rvd.heure;
+				var array = thisrdvtime.split(":");
+				var thisrdvseconds = (parseInt(array[0], 10) * 60 * 60) + (parseInt(array[1], 10) * 60)
+				
+				
+				if(thisrdvseconds - currentrdvseconds > -3600 && thisrdvseconds - currentrdvseconds < 3600){
+					
+					canschedule = false;
+					}
+					
+			console.log(canschedule);
+			});
+
+
+
+		});
+		console.log(canschedule);
+		if(canschedule === true){
+			console.log(canschedule);
+			try {
+				const rdv = new Rdv({
+					docteur_id : d_id,
+					client_id : currentlyConnectedUser._id,
+					type : req.body.type,
+					date : startdate,
+					heure : time
+				});
+	
+				await rdv.save();
+
+				console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " +  currentlyConnectedUser.last_name);
+			
+	
+				res.redirect("/");
+			} catch (error) {
+				console.log(error);
+				res.redirect("/rendezvous");
+			}
+		}
+
+	
+
+		/*	
+			*/
+		
+		}
+
 });
 
 // pour verifier la connexion
