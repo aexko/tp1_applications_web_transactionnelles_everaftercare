@@ -142,7 +142,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 
 // Connexion à MongoDB
 mongoose
-	.connect("mongodb://127.0.0.1:27017/eac", {
+	.connect("mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac?retryWrites=true&w=majority", {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
 	})
