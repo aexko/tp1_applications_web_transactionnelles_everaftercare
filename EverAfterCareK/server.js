@@ -1,7 +1,6 @@
 /**
  * Initialisation des modules
  */
-let iduseractuel = null;
 const titreSite = "EverAfterCare";
 const express = require("express");
 const mongoose = require("mongoose");
@@ -25,8 +24,16 @@ const initializePassport = require("./passport-config");
 initializePassport(
 	passport,
 	async (email) => {
-		const userFound = await User.findOne({ email });
+		var userFound = await User.findOne({ email });
+		console.log("Ici%");
+		if(userFound){
+			return userFound;
+		}else{
+			
+		var userFound = await Docteur.findOne({ email });
 		return userFound;
+		}
+		
 	},
 	async (id) => {
 		const userFound = await User.findOne({ _id: id });
@@ -216,7 +223,7 @@ passport.authenticate("local", {
 	
 });
 
-app.post("/connexiond", StoreUserD, checkNotAuthenticated, 
+app.post("/connexiond", StoreUser, checkNotAuthenticated, 
 passport.authenticate("local", {
 	successRedirect: "/profil",
 	failureRedirect: "/connexion",
@@ -231,28 +238,25 @@ passport.authenticate("local", {
 	
 });
 
-async function StoreUserD(req, res, next) {
-	const userFound = await Docteur.findOne({ email: req.body.email});
-
-	if (userFound) {
-		currentlyConnectedUser = userFound;
-		currentlyConnectedUser.isDocteur = true;
-	} else {
-	console.log("Lol t'existe pas");
-	}
-	
-	next();
-	
-}
 async function StoreUser(req, res, next) {
-	const userFound = await User.findOne({ email: req.body.email});
+	var userFound = await User.findOne({ email: req.body.email});
 
 	if (userFound) {
 		currentlyConnectedUser = userFound;
 		currentlyConnectedUser.isDocteur = false;
 	} else {
-	console.log("Lol t'existe pas");
+	console.log("Lol t'existe pas en tant que client");
 	}
+
+	userFound = await Docteur.findOne({ email: req.body.email});
+
+	if (userFound) {
+		currentlyConnectedUser = userFound;
+		currentlyConnectedUser.isDocteur = true;
+	} else {
+	console.log("Lol t'existe pas en tant que docteur");
+	}
+
 	
 	next();
 	
@@ -260,7 +264,10 @@ async function StoreUser(req, res, next) {
 
 // pour faire l'inscription
 app.post("/inscription", checkNotAuthenticated, async (req, res) => {
-	const userFound = await User.findOne({ email: req.body.email });
+	var userFound = await User.findOne({ email: req.body.email });
+	if(!userFound){
+		userFound = await Docteur.findOne({email: req.body.email});
+	}
 
 	if (userFound) {
 		req.flash(
