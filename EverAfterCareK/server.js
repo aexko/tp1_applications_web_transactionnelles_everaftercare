@@ -5,13 +5,21 @@ const titreSite = "EverAfterCare";
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const passport = require("passport");
-const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/users");
+const passport = require("passport");
+const flash = require("express-flash");
 const methodOverride = require("method-override");
+const fetch = require("node-fetch");
+fetch("https://api.github.com/users")
+	.then((res) => res.json())
+	.then((data) => console.log(data));
+
+// import fetch from 'node-fetch';
+
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
+
 const {
 	checkAuthenticated,
 	checkNotAuthenticated,
@@ -67,6 +75,7 @@ app.get("/", (req, res) => {
 		titrePage: "Accueil",
 		titreSite: titreSite,
 	});
+	console.log(data);
 });
 
 // pour charger la page de connexion
@@ -140,12 +149,26 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 	console.log(req.user.name);
 });
 
+/**
+ * SECTION DEBUG ET TESTS
+ */
+// pour charger la page d'inscription
+app.get("/page_test_ajax", checkNotAuthenticated, (req, res) => {
+	res.render("page_test_ajax", {
+		titrePage: "Test AJAX",
+		titreSite: titreSite,
+	});
+});
+
 // Connexion à MongoDB
 mongoose
-	.connect("mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac?retryWrites=true&w=majority", {
-		useUnifiedTopology: true,
-		useNewUrlParser: true,
-	})
+	.connect(
+		"mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac?retryWrites=true&w=majority",
+		{
+			useUnifiedTopology: true,
+			useNewUrlParser: true,
+		}
+	)
 	.then(() => {
 		app.listen(3000, () => {
 			console.log("listening on port 3000");
