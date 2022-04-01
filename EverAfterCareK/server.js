@@ -106,7 +106,7 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 				titreSite: titreSite,
 				ListDocteur : users,
 			});
-		
+		console.log(currentlyConnectedUser.isDocteur);
 	
 });
 });
@@ -216,11 +216,40 @@ passport.authenticate("local", {
 	
 });
 
+app.post("/connexiond", StoreUserD, checkNotAuthenticated, 
+passport.authenticate("local", {
+	successRedirect: "/profil",
+	failureRedirect: "/connexion",
+	failureFlash: true,
+}), async (req, res) => {
+	
+
+	
+
+	
+	
+	
+});
+
+async function StoreUserD(req, res, next) {
+	const userFound = await Docteur.findOne({ email: req.body.email});
+
+	if (userFound) {
+		currentlyConnectedUser = userFound;
+		currentlyConnectedUser.isDocteur = true;
+	} else {
+	console.log("Lol t'existe pas");
+	}
+	
+	next();
+	
+}
 async function StoreUser(req, res, next) {
 	const userFound = await User.findOne({ email: req.body.email});
 
 	if (userFound) {
 		currentlyConnectedUser = userFound;
+		currentlyConnectedUser.isDocteur = false;
 	} else {
 	console.log("Lol t'existe pas");
 	}
