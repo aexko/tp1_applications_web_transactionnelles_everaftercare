@@ -14,13 +14,13 @@
     <div class="formulaire">
         <h1>
             Prise de rendez-vous</h1>
-        <form action="http://localhost:4000/RendezVousConfirmer" method="post" class="container1">
+        <form action="/rendezvous" method="post" class="container1">
 
             <div class="form-group row">
                 <label for="rendezvous">Sélectionnner votre médecin:</label>
 
                 <select id="nom_doc" name="nom_doc">
-                    <% ListDocteur.forEach(function(item,index){ console.log("test");%>
+                    <% ListDocteur.forEach(function(item,index){%>
                     <option value="<%= item.id %>">
                         <%= item.last_name %>
                             <%= item.first_name %>
@@ -46,7 +46,7 @@
             <div class="container2">
                 <label for="time">Choisissez l'heure:</label>
 
-                <input type="time" id="time" name="time" min="08:00" max="19:00" required>
+                <input type="time" id="time" name="time" value="08:00" min="08:00" max="19:00" step="3600" required>
             </div>
             <input type="submit" name="submit" value="Confirmer" class="btn btn-primary btn-lg">
         </form>
