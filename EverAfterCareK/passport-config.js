@@ -28,9 +28,8 @@ function initialize(passport, getUserByEmail, getUserByID) {
 	);
 	passport.serializeUser((user, done) => done(null, user.id));
 	passport.deserializeUser(async (id, done) => {
-		return done(null, await (id));
+		return done(null, await id);
 	});
-
 }
 
 module.exports = initialize;
