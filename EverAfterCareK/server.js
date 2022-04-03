@@ -79,7 +79,7 @@ app.get("/connexion", checkNotAuthenticated, (req, res) => {
 		titrePage: "Connexion",
 		titreSite: titreSite,
 	});
-	if(checkNotAuthenticated){
+	if (checkNotAuthenticated) {
 		currentlyConnectedUser = null;
 	}
 });
@@ -92,22 +92,14 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 	});
 });
 
-
 app.get("/rendezvous", checkAuthenticated, (req, res) => {
-
-
-		
-	
-	
-		Docteur.find({}, function(err, users) {
-			res.render("rendezvous", {
-				titrePage: "Prise de Rendez-Vous",
-				titreSite: titreSite,
-				ListDocteur : users,
-			});
-		
-	
-});
+	Docteur.find({}, function (err, users) {
+		res.render("rendezvous", {
+			titrePage: "Prise de Rendez-Vous",
+			titreSite: titreSite,
+			ListDocteur: users,
+		});
+	});
 });
 
 // pour verifier la connexion
@@ -128,32 +120,28 @@ app.post(
 
 );
 */
-app.post("/connexion", StoreUser, checkNotAuthenticated, 
-passport.authenticate("local", {
-	successRedirect: "/profil",
-	failureRedirect: "/connexion",
-	failureFlash: true,
-}), async (req, res) => {
-	
-
-	
-
-	
-	
-	
-});
+app.post(
+	"/connexion",
+	StoreUser,
+	checkNotAuthenticated,
+	passport.authenticate("local", {
+		successRedirect: "/profil",
+		failureRedirect: "/connexion",
+		failureFlash: true,
+	}),
+	async (req, res) => {}
+);
 
 async function StoreUser(req, res, next) {
-	const userFound = await User.findOne({ email: req.body.email});
+	const userFound = await User.findOne({ email: req.body.email });
 
 	if (userFound) {
 		currentlyConnectedUser = userFound;
 	} else {
-	console.log("Lol t'existe pas");
+		console.log("Lol t'existe pas");
 	}
-	
+
 	next();
-	
 }
 
 // pour faire l'inscription
@@ -194,14 +182,15 @@ app.delete("/deconnexion", (req, res) => {
 
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
-
-
 	//const userFound = await User.findOne({ email });
-	
+
 	res.render("profil", {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
-		name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
+		name:
+			currentlyConnectedUser.first_name +
+			" " +
+			currentlyConnectedUser.last_name,
 	});
 });
 
