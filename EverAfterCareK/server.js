@@ -11,7 +11,7 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
-//const Docteur = require("./models/docteur");
+const Confirms = require("./models/confirmation");
 const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 require("dotenv").config();
@@ -108,6 +108,36 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 				ListDocteur : users,
 			});
 	
+});
+});
+
+app.get("/lol", checkAuthenticated, async (req, res) => {
+
+	const confirm = new Confirms({
+		client_id : currentlyConnectedUser._id,
+		type: "mdp",
+		newpass: "mdp"
+	});
+
+	await confirm.save();
+	
+		res.redirect("/");
+
+});
+
+app.get("/mailchange/:confirmid", checkAuthenticated, (req, res) => {
+
+
+		
+	
+	
+	User.find({user_type : "docteur"}, function(err, users) {
+		res.render("rendezvous", {
+			titrePage: "Prise de Rendez-Vous",
+			titreSite: titreSite,
+			ListDocteur : users,
+		});
+
 });
 });
 
@@ -210,6 +240,8 @@ app.post(
 	async (req, res) => {}
 );
 
+
+
 app.post("/connexiond", StoreUser, checkNotAuthenticated, 
 passport.authenticate("local", {
 	successRedirect: "/profil",
@@ -284,7 +316,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 		titreSite: titreSite,
 		name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
 		Cuser : currentlyConnectedUser,
-		Rdv : Rendezvous,
+		//Rdv : Rendezvous,
 
 });
 });

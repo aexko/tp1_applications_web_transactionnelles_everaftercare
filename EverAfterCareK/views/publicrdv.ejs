@@ -19,13 +19,40 @@
 
 
 
-    <li id="nom_doc" name="nom_doc">
-        <% rdv.forEach(function(item,index){%>
-        <ul value="<%= item.id %>">
-            <%= item.last_name %>
-                <%= item.first_name %>
-        </ul>
-        <%}); %>
+    <% if (rdv !==undefined && rdv.length>0) {%>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="width:1%;text-align:center">Numéro client</th>
+                    <th style="width:20%">Nom du client</th>
+                    <th style="width:20%">Docteur Responsable</th>
+                    <th style="width:39%">Type d'examen</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <% rdv.forEach(function(rd,index){ %>
+                    <tr>
+                        <td style="width:1%;text-align:center">
+                            <%= rd.client_id %>
+                        </td>
+                        <td style="width:20%">
+                            <%= items[0].first_name + " " + items[0].last_name %>
+                        </td>
+
+                        <td style="width:20%">
+                            <%= rd.first_name + " " + rd.last_name%>
+                        </td>
+                        <td style="width:39%">
+                            <%= rd.type %>
+                        </td>
+                    </tr>
+                    <%}); %>
+            </tbody>
+        </table>
+        <% }else {%>
+            <p><strong> Aucun rendez-vous </strong></p>
+            <% } %>
 
 
     
