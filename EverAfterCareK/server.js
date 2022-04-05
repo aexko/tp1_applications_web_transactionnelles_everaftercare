@@ -12,8 +12,11 @@ const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
 //const Docteur = require("./models/docteur");
+let tableauUsers = [];
+let dataUsersString = "[]";
 const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
+const fs = require("fs");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const {
@@ -219,6 +222,27 @@ async function StoreUser(req, res, next) {
 
 	if (userFound) {
 		currentlyConnectedUser = userFound;
+		const userData = {
+			first_name: currentlyConnectedUser.first_name,
+			last_name: currentlyConnectedUser.last_name,
+			email: currentlyConnectedUser.email,
+			password: currentlyConnectedUser.password,
+			user_type: "client"
+		};
+		tableauUsers.push(userData);
+		for (let i = 0; i < tableauUsers.length; i++) {
+			dataUsersString += JSON.stringify(tableauUsers[i], null, 4) + ",\n";
+			console.log(tableauUsers[i]);
+		}
+		fs.writeFile('users.json', dataUsersString, (err) => {
+			if (err) {
+				throw err;
+			}
+		} );
+		console.log('Les données de l\'utilisateur ont été sauvegardés.')
+		console.log(tableauUsers.length);
+
+
 	} else {
 		console.log("Lol t'existe pas");
 	}
