@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <%- include('./partials/head'); %>
+        <title>
+            <%- titreSite %> - <%- titrePage %>
+        </title>
+</head>
+
+<header>
+    <%- include('./partials/header'); %>
+</header>
+
+<body>
+    <h1>Hello <%= name %>
+    </h1>
+
+
+
+
+    <li id="nom_doc" name="nom_doc">
+        <% rdv.forEach(function(item,index){%>
+        <ul value="<%= item.id %>">
+            <%= item.last_name %>
+                <%= item.first_name %>
+        </ul>
+        <%}); %>
+
+
+    
+
+
+
+
+</body>

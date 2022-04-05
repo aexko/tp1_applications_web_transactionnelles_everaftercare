@@ -128,27 +128,38 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 			
 
 			if(Rendezvous == null){
-					try {
-						const rdv = new Rdv({
-							docteur_id : d_id,
-							client_id : currentlyConnectedUser._id,
-							type : req.body.type,
-							date : startdate,
-							heure : time
-						});
-			
-						await rdv.save();
+
+				
+		Rdv.findOne({date : startdate, client_id : currentlyConnectedUser._id , heure : time}, async function(err, crdv) {
+			if(crdv == null){
+				try {
+					const rdv = new Rdv({
+						docteur_id : d_id,
+						client_id : currentlyConnectedUser._id,
+						type : req.body.type,
+						date : startdate,
+						heure : time
+					});
 		
-						console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " +  currentlyConnectedUser.last_name);
-					
+					await rdv.save();
+	
+					console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " +  currentlyConnectedUser.last_name);
+				
+		
+					res.redirect("/");
+				} catch (error) {
+					console.log(error);
+					res.redirect("/rendezvous");
+				}
+			}else{
 			
-						res.redirect("/");
-					} catch (error) {
-						console.log(error);
-						res.redirect("/rendezvous");
-					}
+				console.log("Rendez-Vous existe déja dans la plage horaire pour le client");
+				res.redirect("/rendezvous");	
+			}
+		});
+					
 				}else{
-					console.log("Rendez-Vous existe déja dans la plage horaire");
+					console.log("Rendez-Vous existe déja dans la plage horaire pour le docteur");
 					res.redirect("/rendezvous");
 				}
 			
@@ -271,11 +282,11 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 	res.render("profil", {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
-		name:
-			currentlyConnectedUser.first_name +
-			" " +
-			currentlyConnectedUser.last_name,
-	});
+		name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
+		Cuser : currentlyConnectedUser,
+		Rdv : Rendezvous,
+
+});
 });
 
 // Connexion à MongoDB

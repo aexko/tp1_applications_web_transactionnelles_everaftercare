@@ -6,7 +6,8 @@ const rdvSchema = new mongoose.Schema({
     heure: { type: String, required: true},
     docteur_id: { type: String, required: true},
     client_id: { type: String, required: true},
-    type: { type: String, required: true}
+    type: { type: String, required: true},
+    confirme: { type: Boolean, default : false, required: true}
 });
 
 const rdv = mongoose.model('Rdv', rdvSchema);
