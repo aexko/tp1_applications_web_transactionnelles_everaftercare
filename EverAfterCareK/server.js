@@ -163,7 +163,8 @@ app.get("/page_test_ajax", checkNotAuthenticated, (req, res) => {
 // Connexion à MongoDB
 mongoose
 	.connect(
-		"mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac?retryWrites=true&w=majority",
+		// pourmongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac?retryWrites=true&w=majority
+		"mongodb://127.0.0.1:27017/eac",
 		{
 			useUnifiedTopology: true,
 			useNewUrlParser: true,
