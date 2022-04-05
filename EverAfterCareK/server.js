@@ -5,21 +5,17 @@ const titreSite = "EverAfterCare";
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const session = require("express-session");
-const User = require("./models/users");
+const moment = require("moment");
+currentlyConnectedUser = null;
 const passport = require("passport");
 const flash = require("express-flash");
+const session = require("express-session");
+const User = require("./models/client");
+//const Docteur = require("./models/docteur");
+const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
-const fetch = require("node-fetch");
-fetch("https://api.github.com/users")
-	.then((res) => res.json())
-	.then((data) => console.log(data));
-
-// import fetch from 'node-fetch';
-
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
-
 const {
 	checkAuthenticated,
 	checkNotAuthenticated,
@@ -28,8 +24,11 @@ const initializePassport = require("./passport-config");
 initializePassport(
 	passport,
 	async (email) => {
+		
 		const userFound = await User.findOne({ email });
 		return userFound;
+		
+		
 	},
 	async (id) => {
 		const userFound = await User.findOne({ _id: id });
@@ -75,7 +74,6 @@ app.get("/", (req, res) => {
 		titrePage: "Accueil",
 		titreSite: titreSite,
 	});
-	console.log(data);
 });
 
 // pour charger la page de connexion
@@ -84,6 +82,9 @@ app.get("/connexion", checkNotAuthenticated, (req, res) => {
 		titrePage: "Connexion",
 		titreSite: titreSite,
 	});
+	if (checkNotAuthenticated) {
+		currentlyConnectedUser = null;
+	}
 });
 
 // pour charger la page d'inscription
@@ -94,7 +95,82 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 	});
 });
 
+app.get("/rendezvous", checkAuthenticated, (req, res) => {
+
+
+		
+	
+	
+		User.find({user_type : "docteur"}, function(err, users) {
+			res.render("rendezvous", {
+				titrePage: "Prise de Rendez-Vous",
+				titreSite: titreSite,
+				ListDocteur : users,
+			});
+	
+});
+});
+
+
+app.post("/rendezvous", checkAuthenticated, async (req, res) => {
+		d_id = req.body.nom_doc;
+		const userFound = await User.findOne({ _id : d_id, user_type : "docteur"});
+
+		if(userFound){
+
+
+
+		var startdate = req.body.tripstart;
+		var time = req.body.time;
+
+
+		Rdv.findOne({date : startdate, docteur_id : d_id, heure : time}, async function(err, Rendezvous) {
+			
+
+			if(Rendezvous == null){
+					try {
+						const rdv = new Rdv({
+							docteur_id : d_id,
+							client_id : currentlyConnectedUser._id,
+							type : req.body.type,
+							date : startdate,
+							heure : time
+						});
+			
+						await rdv.save();
+		
+						console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " +  currentlyConnectedUser.last_name);
+					
+			
+						res.redirect("/");
+					} catch (error) {
+						console.log(error);
+						res.redirect("/rendezvous");
+					}
+				}else{
+					console.log("Rendez-Vous existe déja dans la plage horaire");
+					res.redirect("/rendezvous");
+				}
+			
+				
+
+
+
+		});
+		
+	
+
+	
+
+		/*	
+			*/
+		
+		}
+
+});
+
 // pour verifier la connexion
+/*
 app.post(
 	"/connexion",
 	checkNotAuthenticated,
@@ -102,12 +178,58 @@ app.post(
 		successRedirect: "/profil",
 		failureRedirect: "/connexion",
 		failureFlash: true,
+
+
+
 	})
+
+
+
 );
+*/
+app.post(
+	"/connexion",
+	StoreUser,
+	checkNotAuthenticated,
+	passport.authenticate("local", {
+		successRedirect: "/profil",
+		failureRedirect: "/connexion",
+		failureFlash: true,
+	}),
+	async (req, res) => {}
+);
+
+app.post("/connexiond", StoreUser, checkNotAuthenticated, 
+passport.authenticate("local", {
+	successRedirect: "/profil",
+	failureRedirect: "/connexion",
+	failureFlash: true,
+}), async (req, res) => {
+	
+
+	
+
+	
+	
+	
+});
+
+async function StoreUser(req, res, next) {
+	const userFound = await User.findOne({ email: req.body.email });
+
+	if (userFound) {
+		currentlyConnectedUser = userFound;
+	} else {
+		console.log("Lol t'existe pas");
+	}
+
+	next();
+}
 
 // pour faire l'inscription
 app.post("/inscription", checkNotAuthenticated, async (req, res) => {
-	const userFound = await User.findOne({ email: req.body.email });
+	var userFound = await User.findOne({ email: req.body.email });
+	
 
 	if (userFound) {
 		req.flash(
@@ -119,9 +241,11 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 		try {
 			const hashedPassword = await bcrypt.hash(req.body.password, 10);
 			const user = new User({
-				name: req.body.name,
+				first_name: req.body.firstname,
+				last_name: req.body.lastname,
 				email: req.body.email,
 				password: hashedPassword,
+				user_type: "client"
 			});
 
 			await user.save();
@@ -135,28 +259,22 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 
 // pour se deconnecter
 app.delete("/deconnexion", (req, res) => {
+	currentlyConnectedUser = null;
 	req.logOut();
 	res.redirect("/connexion");
 });
 
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
+	//const userFound = await User.findOne({ email });
+
 	res.render("profil", {
 		titrePage: "Votre profil",
 		titreSite: titreSite,
-		name: req.user.name,
-	});
-	console.log(req.user.name);
-});
-
-/**
- * SECTION DEBUG ET TESTS
- */
-// pour charger la page d'inscription
-app.get("/page_test_ajax", checkNotAuthenticated, (req, res) => {
-	res.render("page_test_ajax", {
-		titrePage: "Test AJAX",
-		titreSite: titreSite,
+		name:
+			currentlyConnectedUser.first_name +
+			" " +
+			currentlyConnectedUser.last_name,
 	});
 });
 

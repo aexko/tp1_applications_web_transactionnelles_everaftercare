@@ -1,12 +1,14 @@
-const express = require('express')
-const app = express()
+const tabs = document.querySelectorAll('[data-tab-value]')
+const tabInfos = document.querySelectorAll('[data-tab-info]')
 
-app.use(express.static("public"));
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const target = document
+            .querySelector(tab.dataset.tabValue);
 
-app.get('/menu', (req, res) => {
-    res.render('pages/menu.ejs')
+        tabInfos.forEach(tabInfo => {
+            tabInfo.classList.remove('active')
+        })
+        target.classList.add('active');
+    })
 })
-app.get('/services', (req, res) => {
-    res.render('services.ejs')
-})
-app.listen(3000)
