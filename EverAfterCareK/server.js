@@ -286,8 +286,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 // Connexion à MongoDB
 mongoose
 	.connect(
-		// pourmongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac?retryWrites=true&w=majority
-		"mongodb://127.0.0.1:27017/eac",
+		"mongodb+srv://eac:eac@eac.igvhj.mongodb.net/test",
 		{
 			useUnifiedTopology: true,
 			useNewUrlParser: true,
