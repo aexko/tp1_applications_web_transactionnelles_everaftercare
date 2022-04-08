@@ -100,7 +100,6 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 app.get("/rdv/confirm/:rdvid", checkAuthenticated,async (req, res) => {
 
 frlid = req.params.rdvid;
-console.log(frlid);
 
 var thatrdv = await Rdv.findOneAndUpdate({_id : frlid, docteur_id : currentlyConnectedUser._id, confirme : false}, {confirme : true});
 
@@ -115,7 +114,6 @@ res.redirect("/");
 app.get("/rdv/refuse/:rdvid", checkAuthenticated,async (req, res) => {
 
 	frlid = req.params.rdvid;
-	console.log(frlid);
 	
 	var thatrdv = await Rdv.findOneAndDelete({_id : frlid, docteur_id : currentlyConnectedUser._id, confirme : false});
 	
