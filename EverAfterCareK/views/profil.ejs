@@ -24,7 +24,7 @@
 
             <select id="champ1" name="nom_doc" onkeyup="verifierChamps()">
                 <% userFound_rdv.forEach(function(item,index){%>
-                <option value="<%= item.id %>">
+                <option >
                     <%= item.docteur_id %>
                         <%= item.date %>
                 </option>
@@ -34,7 +34,11 @@
             </input>
             <p>Entrez votre mot de passe</p>
             <input name="password" id="champ2" onkeyup="verifierChamps()" /> <br>
-            <button type="submit" id="buttonA">Confirmer </button>
+            <form action="/annuler_rdv?_method=DELETE" method="POST">
+
+                <input type="button" id="buttonA">Confirmer </input>
+            </form>
+
         </form>
     </div>
     <form action="/deconnexion?_method=DELETE" method="POST">

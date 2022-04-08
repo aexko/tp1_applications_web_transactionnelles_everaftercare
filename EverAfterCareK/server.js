@@ -21,6 +21,7 @@ const {
     checkNotAuthenticated,
 } = require("./middlewares/auth");
 const initializePassport = require("./passport-config");
+const { db } = require("./models/client");
 initializePassport(
     passport,
     async(email) => {
@@ -322,26 +323,36 @@ app.delete("/deconnexion", (req, res) => {
     req.logOut();
     res.redirect("/connexion");
 });
+app.delete("/annuler_rdv", (req, res) => {
+
+    if (currentlyConnectedUser.password = req.body.password) {
+        Rdv.remove()
+    }
+    res.redirect("/profil");
+});
+
 
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
     //const userFound = await User.findOne({ email });
+    Rdv.find({ client_id: currentlyConnectedUser._id }, function(err, RDVs) {
+        res.render("profil", {
+            titrePage: titreSite,
+            titreSite: titreSite,
+            name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
+            Cuser: currentlyConnectedUser,
+            userFound_rdv: RDVs
 
-    res.render("profil", {
-        titrePage: "Votre profil",
-        titreSite: titreSite,
-        name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
-        Cuser: currentlyConnectedUser,
-        //Rdv : Rendezvous,
-        userFound_rdv: await RDV.find({
-            client_id: currentlyConnectedUser._id
-        }),
+        });
+
+
+
     });
 });
 
 // Connexion à MongoDB
 mongoose
-    .connect("mongodb://127.0.0.1:27017/eac", {
+    .connect("mongodb://localhost:27017", {
         useUnifiedTopology: true,
         useNewUrlParser: true,
     })
@@ -350,3 +361,4 @@ mongoose
             console.log("listening on port 3000");
         });
     });
+// mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
