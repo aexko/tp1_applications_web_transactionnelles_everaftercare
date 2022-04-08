@@ -19,12 +19,12 @@
     </h1>
 
     <div class="annuler_RDV">
-        <form action="/annuler_rdv" value="disable">
+        <form action="/annuler_rdv" method="post">
             <label for="rendezvous">Sélectionnner le rendez-vous à annuler:</label>
 
-            <select id="champ1" name="nom_doc" onkeyup="verifierChamps()">
+            <select id="champ1" name="selected_rdv" onkeyup="verifierChamps()">
                 <% userFound_rdv.forEach(function(item,index){%>
-                <option >
+                <option value="<%= item._id%>" >
                     <%= item.docteur_id %>
                         <%= item.date %>
                 </option>
@@ -34,26 +34,25 @@
             </input>
             <p>Entrez votre mot de passe</p>
             <input name="password" id="champ2" onkeyup="verifierChamps()" /> <br>
-            <form action="/annuler_rdv?_method=DELETE" method="POST">
 
-                <input type="button" id="buttonA">Confirmer </input>
-            </form>
+            <button submit id="buttonA ">Confirmer </input>
+        
 
         </form>
     </div>
-    <form action="/deconnexion?_method=DELETE" method="POST">
+    <form action="/deconnexion?_method=DELETE " method="POST ">
 
-        <button type="submit">Déconnexion</button>
-    </form>
-    <script>
-        function verifierChamps() {
-            if (champ1.value.length > 0 && champ2.value.length > 0) {
-                document.getElementById('buttonA').disabled = false;
-            } else {
-                document.getElementById('buttonA').disabled = true;
+        <button type="submit ">Déconnexion</button>
+        </form>
+        <script>
+            function verifierChamps() {
+                if (champ1.value.length > 0 && champ2.value.length > 0) {
+                    document.getElementById('buttonA').disabled = false;
+                } else {
+                    document.getElementById('buttonA').disabled = true;
+                }
+
             }
-
-        }
-    </script>
+        </script>
 
 </body>

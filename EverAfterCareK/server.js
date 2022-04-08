@@ -362,12 +362,20 @@ app.delete("/deconnexion", (req, res) => {
     req.logOut();
     res.redirect("/connexion");
 });
-app.delete("/annuler_rdv", (req, res) => {
-
-    if (currentlyConnectedUser.password = req.body.password) {
-        Rdv.remove()
-    }
+app.post("/annuler_rdv", async(req, res) => {
+    s_rdv = req.body.selected_rdv;
+    console.log(s_rdv);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    //    var frlid = req.params.rdvid;
+    console.log(hashedPassword + ' -- | -- ' + currentlyConnectedUser.password);
+    //   if (currentlyConnectedUser.password === hashedPassword) {
+    console.log("Va dormir zbi");
+    var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv })
+    console.log(thisrdv._id);
+    console.log("Devrait etre delete");
     res.redirect("/profil");
+    //  }
+
 });
 
 
@@ -391,7 +399,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 
 // Connexion à MongoDB
 mongoose
-    .connect("mongodb://localhost:27017", {
+    .connect("mongodb://localhost:27017/eac", {
         useUnifiedTopology: true,
         useNewUrlParser: true,
     })
