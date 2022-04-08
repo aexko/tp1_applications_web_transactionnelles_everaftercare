@@ -192,87 +192,72 @@ app.get("/mailchange/:confirmid", checkAuthenticated, (req, res) => {
 });
 
 
-app.post("/rendezvous", checkAuthenticated, async(req, res) => {
-    d_id = req.body.nom_doc;
-    const userFound = await User.findOne({ _id: d_id, user_type: "docteur" });
 
-    if (userFound) {
+app.post("/rendezvous", checkAuthenticated, async (req, res) => {
+	d_id = req.body.nom_doc;
+	const userFound = await User.findOne({ _id : d_id, user_type : "docteur"});
 
-
-
-        var startdate = req.body.tripstart;
-        var time = req.body.time;
-
-
-        Rdv.findOne({ date: startdate, docteur_id: d_id, heure: time }, async function(err, Rendezvous) {
-
-
-            if (Rendezvous == null) {
-                try {
-                    const rdv = new Rdv({
-                        docteur_id: d_id,
-                        client_id: currentlyConnectedUser._id,
-                        type: req.body.type,
-                        date: startdate,
-                        heure: time
-                    });
-
-                    if (Rendezvous == null) {
-
-
-                        Rdv.findOne({ date: startdate, client_id: currentlyConnectedUser._id, heure: time }, async function(err, crdv) {
-                            if (crdv == null) {
-                                try {
-                                    const rdv = new Rdv({
-                                        docteur_id: d_id,
-                                        client_id: currentlyConnectedUser._id,
-                                        type: req.body.type,
-                                        date: startdate,
-                                        heure: time
-                                    });
-
-                                    await rdv.save();
-
-                                    console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name);
-
-
-                                    res.redirect("/");
-                                } catch (error) {
-                                    console.log(error);
-                                    res.redirect("/rendezvous");
-                                }
-                            } else {
-
-                                console.log("Rendez-Vous existe déja dans la plage horaire pour le client");
-                                res.redirect("/rendezvous");
-                            }
-                        });
-
-                    } else {
-                        console.log("Rendez-Vous existe déja dans la plage horaire pour le docteur");
-                        res.redirect("/rendezvous");
-                    }
+	if(userFound){
 
 
 
-                    console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name);
+	var startdate = req.body.tripstart;
+	var time = req.body.time;
 
 
-                    res.redirect("/");
-                } catch (error) {
-                    console.log(error);
-                    res.redirect("/rendezvous");
-                }
-            } else {
-                console.log("Rendez-Vous existe déja dans la plage horaire");
-                res.redirect("/rendezvous");
-            }
+	Rdv.findOne({date : startdate, docteur_id : d_id, heure : time}, async function(err, Rendezvous) {
+		
+
+		if(Rendezvous == null){
+
+			
+	Rdv.findOne({date : startdate, client_id : currentlyConnectedUser._id , heure : time}, async function(err, crdv) {
+		if(crdv == null){
+			try {
+				const rdv = new Rdv({
+					docteur_id : d_id,
+					client_id : currentlyConnectedUser._id,
+					type : req.body.type,
+					date : startdate,
+					heure : time
+				});
+	
+				await rdv.save();
+
+				console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " +  currentlyConnectedUser.last_name);
+			
+	
+				res.redirect("/");
+			} catch (error) {
+				console.log(error);
+				res.redirect("/rendezvous");
+			}
+		}else{
+		
+			console.log("Rendez-Vous existe déja dans la plage horaire pour le client");
+			res.redirect("/rendezvous");	
+		}
+	});
+				
+			}else{
+				console.log("Rendez-Vous existe déja dans la plage horaire pour le docteur");
+				res.redirect("/rendezvous");
+			}
+		
+			
 
 
-        });
+
+	});
+	
 
 
-    }
+
+
+	/*	
+		*/
+	
+	}
 
 });
 
@@ -408,7 +393,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 
 // Connexion à MongoDB
 mongoose
-    .connect("mongodb://localhost:27017/eac", {
+    .connect("mongodb://127.0.0.1:27017/eac", {
         useUnifiedTopology: true,
         useNewUrlParser: true,
     })
