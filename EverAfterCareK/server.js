@@ -99,17 +99,28 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 app.get("/rendezvous", checkAuthenticated, (req, res) => {
 
 
+    if (currentlyConnectedUser.user_type == "client") {
 
 
 
-    User.find({ user_type: "docteur" }, function(err, users) {
-        res.render("rendezvous", {
-            titrePage: "Prise de Rendez-Vous",
-            titreSite: titreSite,
-            ListDocteur: users,
+        User.find({ user_type: "docteur" }, function(err, users) {
+            res.render("rendezvous", {
+                titrePage: "Prise de Rendez-Vous",
+                titreSite: titreSite,
+                ListDocteur: users,
+            });
+
         });
 
-    });
+    } else if (currentlyConnectedUser.user_type == "docteur") {
+        Rdv.find({ docteur_id: currentlyConnectedUser._id, confirme: false }, function(err, rdvs) {
+
+
+
+        });
+    } else if (currentlyConnectedUser.user_type == "admin") {
+
+    }
 });
 
 app.get("/lol", checkAuthenticated, async(req, res) => {
