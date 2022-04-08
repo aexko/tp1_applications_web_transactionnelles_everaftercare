@@ -98,7 +98,8 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 app.get("/rendezvous", checkAuthenticated, (req, res) => {
 
 
-		
+		if(currentlyConnectedUser.user_type == "client"){
+
 	
 	
 		User.find({user_type : "docteur"}, function(err, users) {
@@ -109,6 +110,12 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 			});
 	
 });
+
+}else if(currentlyConnectedUser.user_type == "docteur"){
+
+}else if(currentlyConnectedUser.user_type == "admin"){
+	
+}
 });
 
 app.get("/lol", checkAuthenticated, async (req, res) => {
