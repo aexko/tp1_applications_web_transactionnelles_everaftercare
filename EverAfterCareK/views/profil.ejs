@@ -4,18 +4,52 @@
 <head>
     <%- include('./partials/head'); %>
         <title>
-            <%- titreSite %> - <%- titrePage %>
+            <%- titreSite %> -
+                <%- titrePage %>
         </title>
 </head>
-
+<link rel="stylesheet" href="profil.css" />
 <header>
     <%- include('./partials/header'); %>
 </header>
 
 <body>
-    <h1>Hello <%= name %>
+    <h1>Hello
+        <%= name %>
     </h1>
+
+    <div class="annuler_RDV">
+        <form action="/annuler_rdv" value="disable">
+            <label for="rendezvous">Sélectionnner le rendez-vous à annuler:</label>
+
+            <select id="champ1" name="nom_doc" onkeyup="verifierChamps()">
+                <% userFound_rdv.forEach(function(item,index){%>
+                <option value="<%= item.id %>">
+                    <%= item.docteur_id %>
+                        <%= item.date %>
+                </option>
+                <%}); %>
+
+            </select>
+            </input>
+            <p>Entrez votre mot de passe</p>
+            <input name="password" id="champ2" onkeyup="verifierChamps()" /> <br>
+            <button type="submit" id="buttonA">Confirmer </button>
+        </form>
+    </div>
     <form action="/deconnexion?_method=DELETE" method="POST">
+
         <button type="submit">Déconnexion</button>
     </form>
+    <script>
+        function verifierChamps() {
+            if (champ1.value.length > 0 && champ2.value.length > 0) {
+                document.getElementById('buttonA').disabled = false;
+            } else {
+                document.getElementById('buttonA').disabled = true;
+            }
+
+        }
+    </script>
+
 </body>

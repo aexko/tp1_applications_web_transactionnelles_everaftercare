@@ -1,0 +1,8 @@
+.annuler_RDV {
+    position: fixed;
+    top: 150px;
+    left: 600px;
+    width: 250px;
+    border: 2px solid blue;
+    text-align: center;
+}
