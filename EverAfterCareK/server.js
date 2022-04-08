@@ -257,6 +257,9 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 	/*	
 		*/
 	
+	}else{
+		
+		res.redirect("/");
 	}
 
 });
