@@ -112,7 +112,11 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 });
 
 }else if(currentlyConnectedUser.user_type == "docteur"){
+	Rdv.find({docteur_id : currentlyConnectedUser._id, confirme : false}, function(err, rdvs) {
 
+
+
+	});
 }else if(currentlyConnectedUser.user_type == "admin"){
 	
 }
