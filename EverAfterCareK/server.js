@@ -374,16 +374,16 @@ app.delete("/deconnexion", (req, res) => {
 });
 app.post("/annuler_rdv", async(req, res) => {
     s_rdv = req.body.selected_rdv;
-    console.log(s_rdv);
+
     //const hashedPassword = await bcrypt.hash(req.body.password, 10);
     //    var frlid = req.params.rdvid;
     //console.log(hashedPassword + ' -- | -- ' + currentlyConnectedUser.password);
-    //   if (currentlyConnectedUser.password === hashedPassword) {
+
+
     var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv })
 
-
     res.redirect("/profil");
-    //  }
+
 
 });
 
