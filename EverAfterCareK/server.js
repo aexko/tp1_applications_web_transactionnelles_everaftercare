@@ -11,7 +11,7 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
-//const Docteur = require("./models/docteur");
+const Confirms = require("./models/confirmation");
 const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 require("dotenv").config();
@@ -111,6 +111,36 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
     });
 });
 
+app.get("/lol", checkAuthenticated, async(req, res) => {
+
+    const confirm = new Confirms({
+        client_id: currentlyConnectedUser._id,
+        type: "mdp",
+        newpass: "mdp"
+    });
+
+    await confirm.save();
+
+    res.redirect("/");
+
+});
+
+app.get("/mailchange/:confirmid", checkAuthenticated, (req, res) => {
+
+
+
+
+
+    User.find({ user_type: "docteur" }, function(err, users) {
+        res.render("rendezvous", {
+            titrePage: "Prise de Rendez-Vous",
+            titreSite: titreSite,
+            ListDocteur: users,
+        });
+
+    });
+});
+
 
 app.post("/rendezvous", checkAuthenticated, async(req, res) => {
     d_id = req.body.nom_doc;
@@ -137,7 +167,43 @@ app.post("/rendezvous", checkAuthenticated, async(req, res) => {
                         heure: time
                     });
 
-                    await rdv.save();
+                    if (Rendezvous == null) {
+
+
+                        Rdv.findOne({ date: startdate, client_id: currentlyConnectedUser._id, heure: time }, async function(err, crdv) {
+                            if (crdv == null) {
+                                try {
+                                    const rdv = new Rdv({
+                                        docteur_id: d_id,
+                                        client_id: currentlyConnectedUser._id,
+                                        type: req.body.type,
+                                        date: startdate,
+                                        heure: time
+                                    });
+
+                                    await rdv.save();
+
+                                    console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name);
+
+
+                                    res.redirect("/");
+                                } catch (error) {
+                                    console.log(error);
+                                    res.redirect("/rendezvous");
+                                }
+                            } else {
+
+                                console.log("Rendez-Vous existe déja dans la plage horaire pour le client");
+                                res.redirect("/rendezvous");
+                            }
+                        });
+
+                    } else {
+                        console.log("Rendez-Vous existe déja dans la plage horaire pour le docteur");
+                        res.redirect("/rendezvous");
+                    }
+
+
 
                     console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name);
 
@@ -192,14 +258,14 @@ app.post(
     async(req, res) => {}
 );
 
+
+
 app.post("/connexiond", StoreUser, checkNotAuthenticated,
     passport.authenticate("local", {
         successRedirect: "/profil",
         failureRedirect: "/connexion",
         failureFlash: true,
     }), async(req, res) => {
-
-
 
 
 
@@ -264,9 +330,9 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
     res.render("profil", {
         titrePage: "Votre profil",
         titreSite: titreSite,
-        name: currentlyConnectedUser.first_name +
-            " " +
-            currentlyConnectedUser.last_name,
+        name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
+        Cuser: currentlyConnectedUser,
+        //Rdv : Rendezvous,
         userFound_rdv: await RDV.find({
             client_id: currentlyConnectedUser._id
         }),
