@@ -1,0 +1,5 @@
+_id,email,first_name,last_name,password,user_type
+62475c251fe49e2ee0600512,Adam@Adam,Adam,Adam,$2a$10$O29UH.cdwoaK3/kiN8lW7OjvNh/3UMfrQHcQI4GQnGRqEfYElMwEC,client
+62475c3b1fe49e2ee0600518,Yvan@Yvan,Yvan,Yvan,$2a$10$rB0/LDJg8/rT8I7yjYd8LOMpxb.MuEYG0VeuGXLsWvmLKsqK3J2Ra,client
+62475c441fe49e2ee060051b,Lyna@Lyna,Lyna,Lyna,$2a$10$ERcnH3d1RswJ2VrxL8yWzuUZz8UiEU9xD0kg0W.TPoY.ekqR4ef3q,docteur
+62475c4d1fe49e2ee060051e,Alex@Alex,Alex,Alex,$2a$10$cLeqx8s7YnMNWR/JRgtnreJLZFjXRYSLNvjJ4hJ6H26n8K.hxQb8.,docteur

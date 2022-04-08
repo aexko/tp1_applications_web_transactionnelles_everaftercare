@@ -21,7 +21,7 @@ const {
     checkNotAuthenticated,
 } = require("./middlewares/auth");
 const initializePassport = require("./passport-config");
-const { db } = require("./models/client");
+const rdv = require("./models/rdv");
 initializePassport(
     passport,
     async(email) => {
@@ -96,6 +96,21 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
     });
 });
 
+
+app.get("/rdv/confirm/:rdvid", checkAuthenticated, async(req, res) => {
+
+    frlid = req.params.rdvid;
+    console.log(frlid);
+
+    var thatrdv = await Rdv.findOneAndUpdate({ _id: frlid, docteur_id: currentlyConnectedUser._id }, { confirme: true });
+
+
+    res.redirect("/");
+
+
+
+});
+
 app.get("/rendezvous", checkAuthenticated, (req, res) => {
 
 
@@ -103,14 +118,12 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 
 
 
-        User.find({ user_type: "docteur" }, function(err, users) {
-            res.render("rendezvous", {
-                titrePage: "Prise de Rendez-Vous",
-                titreSite: titreSite,
-                ListDocteur: users,
-            });
-
+        res.render("publicrdv", {
+            titrePage: "Prise de Rendez-Vous",
+            titreSite: titreSite,
+            rdv: rdvs,
         });
+
 
     } else if (currentlyConnectedUser.user_type == "docteur") {
         Rdv.find({ docteur_id: currentlyConnectedUser._id, confirme: false }, function(err, rdvs) {

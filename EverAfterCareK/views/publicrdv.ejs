@@ -13,8 +13,6 @@
 </header>
 
 <body>
-    <h1>Hello <%= name %>
-    </h1>
 
 
 
@@ -23,31 +21,32 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th style="width:1%;text-align:center">Numéro client</th>
                     <th style="width:20%">Nom du client</th>
                     <th style="width:20%">Docteur Responsable</th>
-                    <th style="width:39%">Type d'examen</th>
-                    <th style="width:39%">Confirmer</th>
-                    <th style="width:39%">Refuser</th>
+                    <th style="width:30%">Type d'examen</th>
+                    <th style="width:30%">Action</th>
                 </tr>
             </thead>
             <tbody>
 
                 <% rdv.forEach(function(rd,index){ %>
                     <tr>
-                        <td style="width:1%;text-align:center">
-                            <%= rd.client_id %>
-                        </td>
                         <td style="width:20%">
-                            <%= items[0].first_name + " " + items[0].last_name %>
+                            caca
                         </td>
 
                         <td style="width:20%">
                             <%= rd.first_name + " " + rd.last_name%>
                         </td>
-                        <td style="width:39%">
+                        <td style="width:30%">
                             <%= rd.type %>
                         </td>
+                        
+                        <td style="width:30%">
+                            <a href="/rdv/confirm/<%=rd._id%>" class="btn btn-success">Edit </a>
+                            <a href="/rdv/refuse/<%=rd._id%>" class="btn btn-danger">Delete </a>
+                        </td>
+                        
                     </tr>
                     <%}); %>
             </tbody>
