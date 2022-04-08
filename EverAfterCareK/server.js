@@ -132,17 +132,27 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
     if (currentlyConnectedUser.user_type == "client") {
 
 
+        User.find({ user_type: "docteur" }, function(err, users) {
 
-        res.render("publicrdv", {
-            titrePage: "Prise de Rendez-Vous",
-            titreSite: titreSite,
-            rdv: rdvs,
+            res.render("rendezvous", {
+
+                titrePage: "Prise de Rendez-Vous",
+                titreSite: titreSite,
+                ListDocteur: users,
+            })
+
+
         });
-
 
     } else if (currentlyConnectedUser.user_type == "docteur") {
         Rdv.find({ docteur_id: currentlyConnectedUser._id, confirme: false }, function(err, rdvs) {
 
+
+            res.render("publicrdv", {
+                titrePage: "Prise de Rendez-Vous",
+                titreSite: titreSite,
+                rdv: rdvs,
+            });
 
 
         });
@@ -365,14 +375,13 @@ app.delete("/deconnexion", (req, res) => {
 app.post("/annuler_rdv", async(req, res) => {
     s_rdv = req.body.selected_rdv;
     console.log(s_rdv);
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    //const hashedPassword = await bcrypt.hash(req.body.password, 10);
     //    var frlid = req.params.rdvid;
-    console.log(hashedPassword + ' -- | -- ' + currentlyConnectedUser.password);
+    //console.log(hashedPassword + ' -- | -- ' + currentlyConnectedUser.password);
     //   if (currentlyConnectedUser.password === hashedPassword) {
-    console.log("Va dormir zbi");
     var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv })
-    console.log(thisrdv._id);
-    console.log("Devrait etre delete");
+
+
     res.redirect("/profil");
     //  }
 
