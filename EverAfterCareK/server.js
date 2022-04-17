@@ -373,6 +373,15 @@ app.get('/recherche', (req, res) => {
 
 })
 
+app.post('/getUtilisateurs', async (req, res) => {
+	let payload = req.body.payload.trim();
+	let search = await User.find({email: {$regex: new RegExp('^' + payload +'.*', 'i')}}).exec();
+	search = search.slice(0,10);
+	res.send({payload: search});
+});
+
+
+
 // Connexion à MongoDB
 mongoose
 	.connect("mongodb://127.0.0.1:27017/eac", {
