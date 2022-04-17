@@ -23,7 +23,7 @@
     <script>
         function sendData(e) {
             const searchResults = document.getElementById("searchResults");
-            fetch('getFruits', {
+            fetch('getUtilisateurs', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ payload: e.value })

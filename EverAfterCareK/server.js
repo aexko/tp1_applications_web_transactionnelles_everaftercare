@@ -64,6 +64,7 @@ app.use(passport.initialize());
 // pour activer session du passport
 app.use(passport.session());
 
+// pour activer methodeOverride
 app.use(methodOverride("_method"));
 
 // pour charger la page d'accueil
