@@ -364,6 +364,15 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 	});
 });
 
+// ajax
+app.get('/recherche', (req, res) => {
+	res.render('recherche', {
+		titrePage: "Recherche",
+		titreSite: titreSite,
+	});
+
+})
+
 // Connexion à MongoDB
 mongoose
 	.connect("mongodb://127.0.0.1:27017/eac", {
