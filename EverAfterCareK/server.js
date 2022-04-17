@@ -16,6 +16,7 @@ const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
+const bodyParser = require("body-parser");
 const {
 	checkAuthenticated,
 	checkNotAuthenticated,
@@ -66,6 +67,9 @@ app.use(passport.session());
 
 // pour activer methodeOverride
 app.use(methodOverride("_method"));
+
+// pour parse json
+app.use(bodyParser.json());
 
 // pour charger la page d'accueil
 app.get("/", (req, res) => {
