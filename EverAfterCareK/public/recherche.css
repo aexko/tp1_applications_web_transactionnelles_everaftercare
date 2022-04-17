@@ -1,13 +1,13 @@
 * {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-h1{
-    text-align:center;
+h1 {
+    text-align: center;
     padding: 60px 0;
-    background-color:white;
+    background-color: white;
     font-size: 3.3rem;
 
 }
@@ -22,7 +22,7 @@ input[type="text"] {
 
 button, input, select, textarea {
     font-family: inherit;
-    font-size:  100%;
+    font-size: 100%;
 }
 
 #searchResults {
@@ -36,7 +36,6 @@ hr {
     border: 1px solid blue;
 }
 
-p{
+p {
     margin: 10px 0;
 }
-

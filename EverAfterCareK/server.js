@@ -369,22 +369,21 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 });
 
 // ajax
-app.get('/recherche', (req, res) => {
-	res.render('recherche', {
+app.get("/recherche", (req, res) => {
+	res.render("recherche", {
 		titrePage: "Recherche",
 		titreSite: titreSite,
 	});
-
-})
-
-app.post('/getUtilisateurs', async (req, res) => {
-	let payload = req.body.payload.trim();
-	let search = await User.find({email: {$regex: new RegExp('^' + payload +'.*', 'i')}}).exec();
-	search = search.slice(0,10);
-	res.send({payload: search});
 });
 
-
+app.post("/getUtilisateurs", async (req, res) => {
+	let payload = req.body.payload.trim();
+	let search = await User.find({
+		email: { $regex: new RegExp("^" + payload + ".*", "i") },
+	}).exec();
+	search = search.slice(0, 10);
+	res.send({ payload: search });
+});
 
 // Connexion à MongoDB
 mongoose
@@ -397,4 +396,5 @@ mongoose
 			console.log("listening on port 3000");
 		});
 	});
+
 // mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
