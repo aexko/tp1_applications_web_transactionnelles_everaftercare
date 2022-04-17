@@ -18,4 +18,30 @@
     <h1>Recherche utilisateurs</h1>
     <input type="text" id="search-box" onkeyup="sendData(this)">
     <section id="searchResults"></section>
+
+    <script>
+        function sendData(e) {
+            const searchResults = document.getElementById("searchResults");
+            fetch('getFruits', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ payload: e.value })
+            }).then(res => res.json()).then(data => {
+                let payload = data.payload;
+                searchResults.innerHTML = '';
+                if (payload.length < 1) {
+                    searchResults.innerHTML = '<p>Pas d\'utilisateur trouve</p>';
+                    return;
+
+                }
+                payload.forEach((item, index) => {
+                    if (index > 0) searchResults.innerHTML += '<hr>';
+                    searchResults.innerHTML += `<p>Prénom : ${item.first_name}</p>`;
+                    searchResults.innerHTML += `<p>Nom de famille : ${item.last_name}</p>`;
+                    searchResults.innerHTML += `<p>Adresse courriel : ${item.email}</p>`;
+                });
+                return;
+            });
+        }
+    </script>
 </body>
