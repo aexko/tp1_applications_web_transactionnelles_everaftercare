@@ -3,8 +3,8 @@
 const mongoose = require('mongoose');
 const confirmationSchema = new mongoose.Schema({
     client_id: { type: String, required: true},
-    type: { type: String, required: true},//useless for now
-    newpass: { type: String, required: true},
+    type: { type: String, required: true, default : 'newpass'},//useless for now
+    newpass: { type: String, required: true, default : 'lol'},
 });
 
 const confirmation = mongoose.model('confirmation',confirmationSchema);
