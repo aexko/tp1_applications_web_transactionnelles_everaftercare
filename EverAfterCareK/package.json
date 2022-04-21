@@ -22,7 +22,8 @@
     "mongoose": "^6.2.7",
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "stripe": "^8.218.0"
   },
   "devDependencies": {
     "jsdoc": "^3.6.10"
