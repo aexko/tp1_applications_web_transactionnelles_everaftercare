@@ -16,23 +16,25 @@ const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
-const bodyParser = require("body-parser");
 const {
-	checkAuthenticated,
-	checkNotAuthenticated,
+    checkAuthenticated,
+    checkNotAuthenticated,
 } = require("./middlewares/auth");
 const initializePassport = require("./passport-config");
 const rdv = require("./models/rdv");
 initializePassport(
-	passport,
-	async (email) => {
-		const userFound = await User.findOne({ email });
-		return userFound;
-	},
-	async (id) => {
-		const userFound = await User.findOne({ _id: id });
-		return userFound;
-	}
+    passport,
+    async(email) => {
+
+        const userFound = await User.findOne({ email });
+        return userFound;
+
+
+    },
+    async(id) => {
+        const userFound = await User.findOne({ _id: id });
+        return userFound;
+    }
 );
 
 // pour activer le module ejs
@@ -52,11 +54,11 @@ app.use(flash());
 
 // pour activer le module session
 app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-		resave: true,
-		saveUnitialized: true,
-	})
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: true,
+        saveUnitialized: true,
+    })
 );
 
 // pour utiliser la fonction intialize() dans passport
@@ -65,178 +67,207 @@ app.use(passport.initialize());
 // pour activer session du passport
 app.use(passport.session());
 
-// pour activer methodeOverride
 app.use(methodOverride("_method"));
-
-// pour parse json
-app.use(bodyParser.json());
 
 // pour charger la page d'accueil
 app.get("/", (req, res) => {
-	res.render("index", {
-		titrePage: "Accueil",
-		titreSite: titreSite,
-	});
+    res.render("index", {
+        titrePage: "Accueil",
+        titreSite: titreSite,
+    });
 });
 
 // pour charger la page de connexion
 app.get("/connexion", checkNotAuthenticated, (req, res) => {
-	res.render("connexion", {
-		titrePage: "Connexion",
-		titreSite: titreSite,
-	});
-	if (checkNotAuthenticated) {
-		currentlyConnectedUser = null;
-	}
+    res.render("connexion", {
+        titrePage: "Connexion",
+        titreSite: titreSite,
+    });
+    if (checkNotAuthenticated) {
+        currentlyConnectedUser = null;
+    }
 });
 
 // pour charger la page d'inscription
 app.get("/inscription", checkNotAuthenticated, (req, res) => {
-	res.render("inscription", {
-		titrePage: "Inscription",
-		titreSite: titreSite,
-	});
+    res.render("inscription", {
+        titrePage: "Inscription",
+        titreSite: titreSite,
+    });
 });
 
-app.get("/rdv/confirm/:rdvid", checkAuthenticated, async (req, res) => {
-	frlid = req.params.rdvid;
 
-	var thatrdv = await Rdv.findOneAndUpdate(
-		{ _id: frlid, docteur_id: currentlyConnectedUser._id, confirme: false },
-		{ confirme: true }
-	);
+app.get("/rdv/confirm/:rdvid", checkAuthenticated, async(req, res) => {
 
-	res.redirect("/");
+    frlid = req.params.rdvid;
+
+    var thatrdv = await Rdv.findOneAndUpdate({ _id: frlid, docteur_id: currentlyConnectedUser._id, confirme: false }, { confirme: true });
+
+
+    res.redirect("/");
+
+
+
 });
 
-app.get("/rdv/refuse/:rdvid", checkAuthenticated, async (req, res) => {
-	frlid = req.params.rdvid;
 
-	var thatrdv = await Rdv.findOneAndDelete({
-		_id: frlid,
-		docteur_id: currentlyConnectedUser._id,
-		confirme: false,
-	});
+app.get("/rdv/refuse/:rdvid", checkAuthenticated, async(req, res) => {
 
-	res.redirect("/");
+    frlid = req.params.rdvid;
+
+
+
+    var thatrdv = await Rdv.findOneAndDelete({ _id: frlid, docteur_id: currentlyConnectedUser._id, confirme: false });
+
+
+    res.redirect("/");
+
+
+
 });
 
 app.get("/rendezvous", checkAuthenticated, (req, res) => {
-	if (currentlyConnectedUser.user_type == "client") {
-		User.find({ user_type: "docteur" }, function (err, users) {
-			res.render("rendezvous", {
-				titrePage: "Prise de Rendez-Vous",
-				titreSite: titreSite,
-				ListDocteur: users,
-			});
-		});
-	} else if (currentlyConnectedUser.user_type == "docteur") {
-		Rdv.find(
-			{ docteur_id: currentlyConnectedUser._id, confirme: false },
-			function (err, rdvs) {
-				res.render("publicrdv", {
-					titrePage: "Prise de Rendez-Vous",
-					titreSite: titreSite,
-					rdv: rdvs,
-				});
-			}
-		);
-	} else if (currentlyConnectedUser.user_type == "admin") {
-	}
+
+
+    if (currentlyConnectedUser.user_type == "client") {
+
+
+        User.find({ user_type: "docteur" }, function(err, users) {
+
+            res.render("rendezvous", {
+
+                titrePage: "Prise de Rendez-Vous",
+                titreSite: titreSite,
+                ListDocteur: users,
+            })
+
+
+        });
+
+    } else if (currentlyConnectedUser.user_type == "docteur") {
+        Rdv.find({ docteur_id: currentlyConnectedUser._id, confirme: false }, function(err, rdvs) {
+        User.find({}, function(err, us) {
+
+            res.render("publicrdv", {
+                titrePage: "Prise de Rendez-Vous",
+                titreSite: titreSite,
+                rdv: rdvs,
+                users: us,
+
+            });
+        });
+
+        });
+    } else if (currentlyConnectedUser.user_type == "admin") {
+
+    }
 });
 
-app.get("/lol", checkAuthenticated, async (req, res) => {
-	const confirm = new Confirms({
-		client_id: currentlyConnectedUser._id,
-		type: "mdp",
-		newpass: "mdp",
-	});
+app.get("/TestDebug", checkAuthenticated, async(req, res) => {
 
-	await confirm.save();
+    const confirm = new Confirms({
+        client_id: currentlyConnectedUser._id,
+        type: "mdp",
+        newpass: "mdp"
+    });
 
-	res.redirect("/");
+    await confirm.save();
+
+    res.redirect("/");
+
 });
 
 app.get("/mailchange/:confirmid", checkAuthenticated, (req, res) => {
-	User.find({ user_type: "docteur" }, function (err, users) {
-		res.render("rendezvous", {
-			titrePage: "Prise de Rendez-Vous",
-			titreSite: titreSite,
-			ListDocteur: users,
-		});
-	});
+
+
+
+
+
+    User.find({ user_type: "docteur" }, function(err, users) {
+        res.render("rendezvous", {
+            titrePage: "Prise de Rendez-Vous",
+            titreSite: titreSite,
+            ListDocteur: users,
+        });
+
+    });
 });
+
+
 
 app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 	d_id = req.body.nom_doc;
-	const userFound = await User.findOne({ _id: d_id, user_type: "docteur" });
+	const userFound = await User.findOne({ _id : d_id, user_type : "docteur"});
+	if(userFound){
 
-	if (userFound) {
-		var startdate = req.body.tripstart;
-		var time = req.body.time;
 
-		Rdv.findOne(
-			{ date: startdate, docteur_id: d_id, heure: time },
-			async function (err, Rendezvous) {
-				if (Rendezvous == null) {
-					Rdv.findOne(
-						{
-							date: startdate,
-							client_id: currentlyConnectedUser._id,
-							heure: time,
-						},
-						async function (err, crdv) {
-							if (crdv == null) {
-								try {
-									const rdv = new Rdv({
-										docteur_id: d_id,
-										client_id: currentlyConnectedUser._id,
-										type: req.body.type,
-										date: startdate,
-										heure: time,
-									});
 
-									await rdv.save();
+	var startdate = req.body.tripstart;
+	var time = req.body.time;
 
-									console.log(
-										"RDV with docteur : " +
-											userFound.first_name +
-											" " +
-											userFound.last_name +
-											" | Client : " +
-											currentlyConnectedUser.first_name +
-											" " +
-											currentlyConnectedUser.last_name
-									);
 
-									res.redirect("/");
-								} catch (error) {
-									console.log(error);
-									res.redirect("/rendezvous");
-								}
-							} else {
-								console.log(
-									"Rendez-Vous existe déja dans la plage horaire pour le client"
-								);
-								res.redirect("/rendezvous");
-							}
-						}
-					);
-				} else {
-					console.log(
-						"Rendez-Vous existe déja dans la plage horaire pour le docteur"
-					);
-					res.redirect("/rendezvous");
-				}
+	Rdv.findOne({date : startdate, docteur_id : d_id, heure : time}, async function(err, Rendezvous) {
+		
+
+		if(Rendezvous == null){
+
+			
+	Rdv.findOne({date : startdate, client_id : currentlyConnectedUser._id , heure : time}, async function(err, crdv) {
+		if(crdv == null){
+			try {
+				const rdv = new Rdv({
+					docteur_id : d_id,
+					client_id : currentlyConnectedUser._id,
+					type : req.body.type,
+					date : startdate,
+					heure : time
+				});
+	
+				await rdv.save();
+
+				console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " +  currentlyConnectedUser.last_name);
+			
+	
+				res.redirect("/");
+			} catch (error) {
+				console.log(error);
+				res.redirect("/rendezvous");
 			}
-		);
+		}else{
+            
+            alert("Rendez-Vous existe déja dans la plage horaire pour le client");
+			console.log("Rendez-Vous existe déja dans la plage horaire pour le client");
+			res.redirect("/rendezvous");	
+		}
+	});
+				
+			}else{
+                alert("Rendez-Vous existe déja dans la plage horaire pour le docteur");
+				console.log("Rendez-Vous existe déja dans la plage horaire pour le docteur");
+				res.redirect("/rendezvous");
+			}
+		
+			
 
-		/*
-		 */
-	} else {
+
+
+	});
+	
+
+
+
+
+	/*	
+		*/
+	
+	}else{
+		
 		res.redirect("/");
 	}
+
 });
+
+
 
 // pour verifier la connexion
 /*
@@ -257,144 +288,145 @@ app.post(
 );
 */
 app.post(
-	"/connexion",
-	StoreUser,
-	checkNotAuthenticated,
-	passport.authenticate("local", {
-		successRedirect: "/profil",
-		failureRedirect: "/connexion",
-		failureFlash: true,
-	}),
-	async (req, res) => {}
+    "/connexion",
+    StoreUser,
+    checkNotAuthenticated,
+    passport.authenticate("local", {
+        successRedirect: "/profil",
+        failureRedirect: "/connexion",
+        failureFlash: true,
+    }),
+    async(req, res) => {}
 );
 
-app.post(
-	"/connexiond",
-	StoreUser,
-	checkNotAuthenticated,
-	passport.authenticate("local", {
-		successRedirect: "/profil",
-		failureRedirect: "/connexion",
-		failureFlash: true,
-	}),
-	async (req, res) => {}
-);
+
+
+app.post("/connexiond", StoreUser, checkNotAuthenticated,
+    passport.authenticate("local", {
+        successRedirect: "/profil",
+        failureRedirect: "/connexion",
+        failureFlash: true,
+    }), async(req, res) => {
+
+
+
+
+
+    });
 
 async function StoreUser(req, res, next) {
-	const userFound = await User.findOne({ email: req.body.email });
+    const userFound = await User.findOne({ email: req.body.email });
 
-	if (userFound) {
-		currentlyConnectedUser = userFound;
-	} else {
-		console.log("Lol t'existe pas");
-	}
+    if (userFound) {
+        currentlyConnectedUser = userFound;
+    } else {
+        console.log("Lol t'existe pas");
+    }
 
-	next();
+    next();
 }
 
 // pour faire l'inscription
-app.post("/inscription", checkNotAuthenticated, async (req, res) => {
-	var userFound = await User.findOne({ email: req.body.email });
+app.post("/inscription", checkNotAuthenticated, async(req, res) => {
+    var userFound = await User.findOne({ email: req.body.email });
 
-	if (userFound) {
-		req.flash(
-			"error",
-			"Il existe déjà un utilisateur avec cette adresse courriel."
-		);
-		res.redirect("/inscription");
-	} else {
-		try {
-			const hashedPassword = await bcrypt.hash(req.body.password, 10);
-			const user = new User({
-				first_name: req.body.firstname,
-				last_name: req.body.lastname,
-				email: req.body.email,
-				password: hashedPassword,
-				user_type: "client",
-			});
 
-			await user.save();
-			res.redirect("/connexion");
-		} catch (error) {
-			console.log(error);
-			res.redirect("/inscription");
-		}
-	}
+    if (userFound) {
+        req.flash(
+            "error",
+            "Il existe déjà un utilisateur avec cette adresse courriel."
+        );
+        res.redirect("/inscription");
+    } else {
+        try {
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+            const user = new User({
+                first_name: req.body.firstname,
+                last_name: req.body.lastname,
+                email: req.body.email,
+                password: hashedPassword,
+                user_type: "client"
+            });
+
+            await user.save();
+            res.redirect("/connexion");
+        } catch (error) {
+            console.log(error);
+            res.redirect("/inscription");
+        }
+    }
 });
 
 // pour se deconnecter
 app.delete("/deconnexion", (req, res) => {
-	currentlyConnectedUser = null;
-	req.logOut();
-	res.redirect("/connexion");
+    currentlyConnectedUser = null;
+    req.logOut();
+    res.redirect("/connexion");
 });
-app.post("/annuler_rdv", async (req, res) => {
-	s_rdv = req.body.selected_rdv;
+app.post("/annuler_rdv", async(req, res) => {
+    s_rdv = req.body.selected_rdv;
 
-	try {
-		if (
-			await bcrypt.compare(
-				req.body.password,
-				currentlyConnectedUser.password
-			)
-		) {
-			var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv });
+    
+    try {
+        if (await bcrypt.compare(req.body.password, currentlyConnectedUser.password)) {
+            var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv })
+ù
+                
+        
+            res.redirect("/profil");
+            console.log("Bon MDP");
+              }else{
+                  
+            alert("Mot De Passe Erroné.");
+                  res.redirect("/profil");
+                  console.log("Mauvais MDP");
+              }
+    } catch (err) {
+        return done(e);
+    }
+   
 
-			res.redirect("/profil");
-			console.log("Bon MDP");
-		} else {
-			res.redirect("/profil");
-			console.log("Mauvais MDP");
-		}
-	} catch (err) {
-		return done(e);
-	}
 });
+
+
+function convertDate(inputFormat) {
+    function pad(s) { return (s < 10) ? '0' + s : s; }
+    var d = new Date(inputFormat)
+    return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
+  }
 
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
-	//const userFound = await User.findOne({ email });
-	Rdv.find({ client_id: currentlyConnectedUser._id }, function (err, RDVs) {
-		res.render("profil", {
-			titrePage: titreSite,
-			titreSite: titreSite,
-			name:
-				currentlyConnectedUser.first_name +
-				" " +
-				currentlyConnectedUser.last_name,
-			Cuser: currentlyConnectedUser,
-			userFound_rdv: RDVs,
-		});
-	});
-});
+    //const userFound = await User.findOne({ email });
+    Rdv.find({ client_id: currentlyConnectedUser._id }, function(err, RDVs) {
+        res.render("profil", {
+            titrePage: titreSite,
+            titreSite: titreSite,
+            name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
+            Cuser: currentlyConnectedUser,
+            userFound_rdv: RDVs
 
-// ajax
-app.get("/recherche", (req, res) => {
-	res.render("recherche", {
-		titrePage: "Recherche",
-		titreSite: titreSite,
-	});
-});
 
-app.post("/getUtilisateurs", async (req, res) => {
-	let payload = req.body.payload.trim();
-	let search = await User.find({
-		email: { $regex: new RegExp("^" + payload + ".*", "i") },
-	}).exec();
-	search = search.slice(0, 10);
-	res.send({ payload: search });
+
+
+        });
+
+        
+
+
+
+    });
 });
 
 // Connexion à MongoDB
 mongoose
-	.connect("mongodb://127.0.0.1:27017/eac", {
-		useUnifiedTopology: true,
-		useNewUrlParser: true,
-	})
-	.then(() => {
-		app.listen(3000, () => {
-			console.log("listening on port 3000");
-		});
-	});
-
+    .connect("mongodb://127.0.0.1:27017/eac", {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+    })
+    .then(() => {
+        app.listen(3000, () => {
+            console.log("listening on port 3000");
+        });
+    });
 // mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac

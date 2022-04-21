@@ -32,11 +32,27 @@
                 <% rdv.forEach(function(rd,index){ %>
                     <tr>
                         <td style="width:20%">
-                            caca
+                            
+                <% users.forEach(function(client,index){ %>
+                    <% if(rd.client_id == client._id.toString()){ %>
+                       
+
+                   
+                        <%=client.first_name + " " + client.last_name %>
+                            
+                    <% }}); %>
                         </td>
 
                         <td style="width:20%">
-                            <%= rd.first_name + " " + rd.last_name%>
+                            <% users.forEach(function(client,index){ %>
+                    
+                                <% if(rd.docteur_id == client._id.toString()){ %>
+                                   
+            
+                               
+                                    <%=client.first_name + " " + client.last_name %>
+                                        
+                                <% }}); %>
                         </td>
                         <td style="width:30%">
                             <%= rd.type %>
