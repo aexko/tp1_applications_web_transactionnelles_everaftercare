@@ -12,7 +12,7 @@ const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
 let tableauUsers = [];
-let dataUsersString = "[]";
+let dataUsersString;
 const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 const fs = require("fs");
@@ -204,6 +204,7 @@ async function StoreUser(req, res, next) {
 
 	if (userFound) {
 		currentlyConnectedUser = userFound;
+
 		const userData = {
 			first_name: currentlyConnectedUser.first_name,
 			last_name: currentlyConnectedUser.last_name,
@@ -212,10 +213,22 @@ async function StoreUser(req, res, next) {
 			user_type: "client"
 		};
 		tableauUsers.push(userData);
+
 		for (let i = 0; i < tableauUsers.length; i++) {
-			dataUsersString += JSON.stringify(tableauUsers[i], null, 4) + ",\n";
-			console.log(tableauUsers[i]);
+			if (i == 0) {
+				dataUsersString += "[";
+			}
+
+			if (i == tableauUsers.length) {
+				dataUsersString += JSON.stringify(tableauUsers[i], null, 4);
+				dataUsersString += "\n]";
+
+			} else{
+				dataUsersString += JSON.stringify(tableauUsers[i], null, 4)  + ",\n";
+			}
 		}
+
+
 		fs.writeFile('users.json', dataUsersString, (err) => {
 			if (err) {
 				throw err;
@@ -285,8 +298,9 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 
 // Connexion à MongoDB
 mongoose
+// mongodb+srv://eac:eac@eac.igvhj.mongodb.net/test
 	.connect(
-		"mongodb+srv://eac:eac@eac.igvhj.mongodb.net/test",
+		"mongodb://127.0.0.1:27017/eac",
 		{
 			useUnifiedTopology: true,
 			useNewUrlParser: true,
