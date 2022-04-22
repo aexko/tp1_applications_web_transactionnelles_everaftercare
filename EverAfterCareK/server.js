@@ -11,6 +11,7 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
+//const Docteur = require("./models/docteur");
 let tableauUsers = [];
 let dataUsersString;
 const Rdv = require("./models/rdv");
@@ -26,8 +27,11 @@ const initializePassport = require("./passport-config");
 initializePassport(
 	passport,
 	async (email) => {
+		
 		const userFound = await User.findOne({ email });
 		return userFound;
+		
+		
 	},
 	async (id) => {
 		const userFound = await User.findOne({ _id: id });
@@ -95,66 +99,77 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 });
 
 app.get("/rendezvous", checkAuthenticated, (req, res) => {
-	User.find({ user_type: "docteur" }, function (err, users) {
-		res.render("rendezvous", {
-			titrePage: "Prise de Rendez-Vous",
-			titreSite: titreSite,
-			ListDocteur: users,
-		});
-	});
+
+
+		
+	
+	
+		User.find({user_type : "docteur"}, function(err, users) {
+			res.render("rendezvous", {
+				titrePage: "Prise de Rendez-Vous",
+				titreSite: titreSite,
+				ListDocteur : users,
+			});
+	
+});
 });
 
-app.post("/rendezvous", checkAuthenticated, async (req, res) => {
-	d_id = req.body.nom_doc;
-	const userFound = await User.findOne({ _id: d_id, user_type: "docteur" });
 
-	if (userFound) {
+app.post("/rendezvous", checkAuthenticated, async (req, res) => {
+		d_id = req.body.nom_doc;
+		const userFound = await User.findOne({ _id : d_id, user_type : "docteur"});
+
+		if(userFound){
+
+
+
 		var startdate = req.body.tripstart;
 		var time = req.body.time;
 
-		Rdv.findOne(
-			{ date: startdate, docteur_id: d_id, heure: time },
-			async function (err, Rendezvous) {
-				if (Rendezvous == null) {
+
+		Rdv.findOne({date : startdate, docteur_id : d_id, heure : time}, async function(err, Rendezvous) {
+			
+
+			if(Rendezvous == null){
 					try {
 						const rdv = new Rdv({
-							docteur_id: d_id,
-							client_id: currentlyConnectedUser._id,
-							type: req.body.type,
-							date: startdate,
-							heure: time,
+							docteur_id : d_id,
+							client_id : currentlyConnectedUser._id,
+							type : req.body.type,
+							date : startdate,
+							heure : time
 						});
-
+			
 						await rdv.save();
-
-						console.log(
-							"RDV with docteur : " +
-								userFound.first_name +
-								" " +
-								userFound.last_name +
-								" | Client : " +
-								currentlyConnectedUser.first_name +
-								" " +
-								currentlyConnectedUser.last_name
-						);
-
+		
+						console.log("RDV with docteur : " + userFound.first_name + " " + userFound.last_name + " | Client : " + currentlyConnectedUser.first_name + " " +  currentlyConnectedUser.last_name);
+					
+			
 						res.redirect("/");
 					} catch (error) {
 						console.log(error);
 						res.redirect("/rendezvous");
 					}
-				} else {
-					console.log(
-						"Rendez-Vous existe déja dans la plage horaire"
-					);
+				}else{
+					console.log("Rendez-Vous existe déja dans la plage horaire");
 					res.redirect("/rendezvous");
 				}
-			}
-		);
+			
+				
 
-		/*
-		 */
-	}
+
+
+		});
+		
+	
+
+	
+
+		/*	
+			*/
+		
+		}
+
 });
 
 // pour verifier la connexion
@@ -187,17 +202,20 @@ app.post(
 	async (req, res) => {}
 );
 
-app.post(
-	"/connexiond",
-	StoreUser,
-	checkNotAuthenticated,
-	passport.authenticate("local", {
-		successRedirect: "/profil",
-		failureRedirect: "/connexion",
-		failureFlash: true,
-	}),
-	async (req, res) => {}
-);
+app.post("/connexiond", StoreUser, checkNotAuthenticated, 
+passport.authenticate("local", {
+	successRedirect: "/profil",
+	failureRedirect: "/connexion",
+	failureFlash: true,
+}), async (req, res) => {
+	
+
+	
+
+	
+	
+	
+});
 
 async function StoreUser(req, res, next) {
 	const userFound = await User.findOne({ email: req.body.email });
@@ -239,7 +257,7 @@ async function StoreUser(req, res, next) {
 
 
 	} else {
-		console.log("Utilisateur non existant");
+		console.log("Lol t'existe pas");
 	}
 
 	next();
@@ -248,10 +266,11 @@ async function StoreUser(req, res, next) {
 // pour faire l'inscription
 app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 	var userFound = await User.findOne({ email: req.body.email });
+	
 
 	if (userFound) {
 		req.flash(
-			"Erreur",
+			"error",
 			"Il existe déjà un utilisateur avec cette adresse courriel."
 		);
 		res.redirect("/inscription");
@@ -263,7 +282,7 @@ app.post("/inscription", checkNotAuthenticated, async (req, res) => {
 				last_name: req.body.lastname,
 				email: req.body.email,
 				password: hashedPassword,
-				user_type: "client",
+				user_type: "client"
 			});
 
 			await user.save();
