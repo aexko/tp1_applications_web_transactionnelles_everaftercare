@@ -1,0 +1,100 @@
+
+app.post("/resetPassword",checkNotAuthenticated, async (req, res) => {
+
+
+
+	if(req.body.password != req.body.passwordc){
+			alert("Les mots de passes ne sont pas les mêmes");
+	}	else{
+
+	
+	const userFound = await User.findOne({ email: req.body.email });
+
+	if (!userFound) {
+		req.flash(
+			"error",
+			"Cet utilisateur n'existe pas avec cette adresse courriel."
+		);
+		
+	} else {
+
+		const confirmcurrent = new Confirmes({
+			client_id : userFound._id,
+			type : "forgotpassword",
+			newpass : req.body.password,
+		});
+        
+
+		var confirm = await confirmcurrent.save();
+
+
+
+		
+ const link = `${process.env.CLIENT_URL}/resetPass/` + confirm._id;
+ sendEmail(userFound.email,"Password Reset Request",{name: userFound.first_name,link: link,},"./requeteResetPassword.handlebars");
+		}
+	}
+	
+	res.redirect("/");
+});
+
+app.get("/changepass", checkAuthenticated, async (req, res) => {
+	res.render("changepass", {
+		titrePage: "Changement de mot-de-passe",
+		titreSite: titreSite,
+	});
+
+
+
+});
+
+
+app.post("/changepass", checkAuthenticated, async (req, res) => {
+
+	if(req.body.newpass != req.body.confirmnewpass){
+
+		alert("Les mots de passes ne sont pas les mêmes");
+}	else{
+
+	if(await bcrypt.compare(req.body.oldpass, currentlyConnectedUser.password)){
+		console.log("tkt");
+		const hashednewPass = await bcrypt.hash(req.body.newpass, 10);
+
+		currentlyConnectedUser.password = hashednewPass;
+
+		const temp = await User.findOneAndUpdate({_id : currentlyConnectedUser._id}, {password : hashednewPass});
+		//currentlyConnectedUser = temp;
+
+	}else{
+		
+	}
+
+}
+	res.redirect("/profil");
+
+});
+
+app.get("/resetPass/:cid",checkNotAuthenticated, async (req, res) => {
+	console.log(req.params.cid);
+	var confirmid = req.params.cid;
+	const objectid = confirmid;
+	var confirmation = await Confirmes.findOne({_id : objectid});
+	
+			const hashNewpass = await bcrypt.hash(confirmation.newpass,10);
+			console.log(hashNewpass);
+			await User.findOneAndUpdate({_id : confirmation.client_id},{password : hashNewpass});
+        
+			await Confirmes.findOneAndDelete({_id : confirmid});
+        
+
+
+	
+	res.redirect("/profil");
+
+});
+
+app.get("/resetPassword",checkNotAuthenticated, async (req, res) => {
+	res.render("resetPassword", {
+		titrePage: "resetPassword",
+		titreSite: titreSite,
+	});

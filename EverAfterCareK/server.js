@@ -1,17 +1,21 @@
 /**
  * Initialisation des modules
  */
+const sendEmail = require("./sendEmail");
 const titreSite = "EverAfterCare";
 const express = require("express");
+const handlebars = require("handlebars");
 const mongoose = require("mongoose");
 const app = express();
 const moment = require("moment");
+const nodemailer = require('nodemailer');
 currentlyConnectedUser = null;
 const passport = require("passport");
+//const {google} = require("googleapis");
 const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
-const Confirms = require("./models/confirmation");
+const Confirmes = require("./models/confirmation");
 const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 require("dotenv").config();
@@ -389,12 +393,6 @@ app.post("/annuler_rdv", async(req, res) => {
 });
 
 
-function convertDate(inputFormat) {
-    function pad(s) { return (s < 10) ? '0' + s : s; }
-    var d = new Date(inputFormat)
-    return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/')
-  }
-
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
     //const userFound = await User.findOne({ email });
@@ -418,6 +416,107 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
     });
 });
 
+
+app.post("/resetPassword",checkNotAuthenticated, async (req, res) => {
+
+
+
+	if(req.body.password != req.body.passwordc){
+			alert("Les mots de passes ne sont pas les mêmes");
+	}	else{
+
+	
+	const userFound = await User.findOne({ email: req.body.email });
+
+	if (!userFound) {
+		req.flash(
+			"error",
+			"Cet utilisateur n'existe pas avec cette adresse courriel."
+		);
+		
+	} else {
+
+		const confirmcurrent = new Confirmes({
+			client_id : userFound._id,
+			type : "forgotpassword",
+			newpass : req.body.password,
+		});
+        
+
+		var confirm = await confirmcurrent.save();
+
+
+
+		
+ const link = `${process.env.CLIENT_URL}/resetPass/` + confirm._id;
+ sendEmail(userFound.email,"Password Reset Request",{name: userFound.first_name,link: link,},"./requeteResetPassword.handlebars");
+		}
+	}
+	
+	res.redirect("/");
+});
+
+app.get("/changepass", checkAuthenticated, async (req, res) => {
+	res.render("changepass", {
+		titrePage: "Changement de mot-de-passe",
+		titreSite: titreSite,
+	});
+
+
+
+});
+
+
+app.post("/changepass", checkAuthenticated, async (req, res) => {
+
+	if(req.body.newpass != req.body.confirmnewpass){
+
+		alert("Les mots de passes ne sont pas les mêmes");
+}	else{
+
+	if(await bcrypt.compare(req.body.oldpass, currentlyConnectedUser.password)){
+		console.log("tkt");
+		const hashednewPass = await bcrypt.hash(req.body.newpass, 10);
+
+		currentlyConnectedUser.password = hashednewPass;
+
+		const temp = await User.findOneAndUpdate({_id : currentlyConnectedUser._id}, {password : hashednewPass});
+		//currentlyConnectedUser = temp;
+
+	}else{
+		
+	}
+
+}
+	res.redirect("/profil");
+
+});
+
+app.get("/resetPass/:cid",checkNotAuthenticated, async (req, res) => {
+	console.log(req.params.cid);
+	var confirmid = req.params.cid;
+	const objectid = confirmid;
+	var confirmation = await Confirmes.findOne({_id : objectid});
+	
+			const hashNewpass = await bcrypt.hash(confirmation.newpass,10);
+			console.log(hashNewpass);
+			await User.findOneAndUpdate({_id : confirmation.client_id},{password : hashNewpass});
+        
+			await Confirmes.findOneAndDelete({_id : confirmid});
+        
+
+
+	
+	res.redirect("/profil");
+
+});
+
+app.get("/resetPassword",checkNotAuthenticated, async (req, res) => {
+	res.render("resetPassword", {
+		titrePage: "resetPassword",
+		titreSite: titreSite,
+	});
+});
 // stripe
 
 // Connexion à MongoDB
