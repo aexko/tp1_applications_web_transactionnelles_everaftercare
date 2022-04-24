@@ -387,17 +387,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 
 // stripe
 
-// Connexion à MongoDB
-mongoose
-	.connect("mongodb://127.0.0.1:27017/eac", {
-		useUnifiedTopology: true,
-		useNewUrlParser: true,
-	})
-	.then(() => {
-		app.listen(3000, () => {
-			console.log("listening on port 3000");
-		});
-	});
+
 // mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
 // ajax
 app.get("/recherche", (req, res) => {
@@ -510,7 +500,7 @@ app.get("/resetPassword",checkNotAuthenticated, async (req, res) => {
 });
 // stripe
 app.post("/getUtilisateurs", async (req, res) => {
-	let payload = req.body.payload.trim();
+	let payload = typeof req.body.temp === 'string' ? req.body.temp.trim() : '';
 	let search = await User.find({
 		email: { $regex: new RegExp("^" + payload + ".*", "i") },
 	}).exec();
