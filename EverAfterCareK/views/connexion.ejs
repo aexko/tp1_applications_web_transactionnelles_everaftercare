@@ -22,24 +22,10 @@
                     <input type="email" name="email" placeholder="Adresse courriel" id="champ1" onkeyup="verifierChamps()" /> <br>
                     <input type="password" name="password" placeholder="Mot de passe" id="champ2" onkeyup="verifierChamps()" /> <br>
                     <button id="buttonc" disabled>Connexion</button>
+                    <a href = "/resetPassword">mot de passe oublié?</a>
                 </form>
 
-    </div>
 
-    <div class="containerConnexion1">
-        <h1>Connexion des docteurs</h1>
-        <% if (messages) { %>
-            <p>
-                <%= messages.error %>
-            </p>
-            <% } %>
-                <form action="/connexiond" method="POST">
-                    <input type="email" name="email" placeholder="Adresse courriel" id="champ3" onkeyup="verifierChamps()" /> <br>
-                    <input type="password" name="password" placeholder="Mot de passe" id="champ4" onkeyup="verifierChamps()" /> <br>
-                    <button id="buttond" disabled>Connexion</button>
-                </form>
-
-    </div>
 
     <script>
         function verifierChamps() {
@@ -47,14 +33,6 @@
                 document.getElementById('buttonc').disabled = false;
             } else {
                 document.getElementById('buttonc').disabled = true;
-            }
-
-
-
-            if (champ3.value.length > 0 && champ4.value.length > 0) {
-                document.getElementById('buttond').disabled = false;
-            } else {
-                document.getElementById('buttond').disabled = true;
             }
         }
     </script>

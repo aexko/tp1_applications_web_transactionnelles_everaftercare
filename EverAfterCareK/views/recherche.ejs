@@ -23,10 +23,11 @@
     <script>
         function sendData(e) {
             const searchResults = document.getElementById("searchResults");
+            
             fetch('getUtilisateurs', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ payload: e.value })
+                body: JSON.stringify({ temp : e.value })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 searchResults.innerHTML = '';
@@ -40,6 +41,7 @@
                     searchResults.innerHTML += `<p>Prénom : ${item.first_name}</p>`;
                     searchResults.innerHTML += `<p>Nom de famille : ${item.last_name}</p>`;
                     searchResults.innerHTML += `<p>Adresse courriel : ${item.email}</p>`;
+                    searchResults.innerHTML += `<p>Type d'utilisateur : ${item.user_type}</p>`;
                 });
                 return;
             });

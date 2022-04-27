@@ -1,22 +1,25 @@
 /**
  * Initialisation des modules
  */
+const sendEmail = require("./sendEmail");
 const titreSite = "EverAfterCare";
 const express = require("express");
+const handlebars = require("handlebars");
 const mongoose = require("mongoose");
 const app = express();
 const moment = require("moment");
+const nodemailer = require('nodemailer');
 currentlyConnectedUser = null;
 const passport = require("passport");
+//const {google} = require("googleapis");
 const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
-const Confirms = require("./models/confirmation");
+const Confirmes = require("./models/confirmation");
 const Rdv = require("./models/rdv");
 const methodOverride = require("method-override");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
-const bodyParser = require("body-parser");
 const {
     checkAuthenticated,
     checkNotAuthenticated,
@@ -65,11 +68,7 @@ app.use(passport.initialize());
 // pour activer session du passport
 app.use(passport.session());
 
-// pour activer methodeOverride
 app.use(methodOverride("_method"));
-
-// pour parse json
-app.use(bodyParser.json());
 
 // pour charger la page d'accueil
 app.get("/", (req, res) => {
@@ -130,17 +129,20 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
     } else if (currentlyConnectedUser.user_type == "docteur") {
         Rdv.find({ docteur_id: currentlyConnectedUser._id, confirme: false },
             function(err, rdvs) {
-                res.render("publicrdv", {
-                    titrePage: "Prise de Rendez-Vous",
-                    titreSite: titreSite,
-                    rdv: rdvs,
+                User.find({}, function(err, us) {
+                    res.render("publicrdv", {
+                        titrePage: "Prise de Rendez-Vous",
+                        titreSite: titreSite,
+                        rdv: rdvs,
+                        users: us,
+                    });
                 });
             }
         );
     } else if (currentlyConnectedUser.user_type == "admin") {}
 });
 
-app.get("/lol", checkAuthenticated, async(req, res) => {
+app.get("/TestDebug", checkAuthenticated, async(req, res) => {
     const confirm = new Confirms({
         client_id: currentlyConnectedUser._id,
         type: "mdp",
@@ -165,7 +167,6 @@ app.get("/mailchange/:confirmid", checkAuthenticated, (req, res) => {
 app.post("/rendezvous", checkAuthenticated, async(req, res) => {
     d_id = req.body.nom_doc;
     const userFound = await User.findOne({ _id: d_id, user_type: "docteur" });
-
     if (userFound) {
         var startdate = req.body.tripstart;
         var time = req.body.time;
@@ -208,6 +209,9 @@ app.post("/rendezvous", checkAuthenticated, async(req, res) => {
                                     res.redirect("/rendezvous");
                                 }
                             } else {
+                                alert(
+                                    "Rendez-Vous existe déja dans la plage horaire pour le client"
+                                );
                                 console.log(
                                     "Rendez-Vous existe déja dans la plage horaire pour le client"
                                 );
@@ -216,6 +220,9 @@ app.post("/rendezvous", checkAuthenticated, async(req, res) => {
                         }
                     );
                 } else {
+                    alert(
+                        "Rendez-Vous existe déja dans la plage horaire pour le docteur"
+                    );
                     console.log(
                         "Rendez-Vous existe déja dans la plage horaire pour le docteur"
                     );
@@ -332,10 +339,12 @@ app.post("/annuler_rdv", async(req, res) => {
             )
         ) {
             var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv });
+            ù;
 
             res.redirect("/profil");
             console.log("Bon MDP");
         } else {
+            alert("Mot De Passe Erroné.");
             res.redirect("/profil");
             console.log("Mauvais MDP");
         }
@@ -343,6 +352,14 @@ app.post("/annuler_rdv", async(req, res) => {
         return done(e);
     }
 });
+
+function convertDate(inputFormat) {
+    function pad(s) {
+        return s < 10 ? "0" + s : s;
+    }
+    var d = new Date(inputFormat);
+    return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("/");
+}
 
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
@@ -360,6 +377,10 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
     });
 });
 
+// stripe
+
+
+// mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
 // ajax
 app.get("/recherche", (req, res) => {
     res.render("recherche", {
@@ -368,16 +389,116 @@ app.get("/recherche", (req, res) => {
     });
 });
 
+
+app.post("/resetPassword", checkNotAuthenticated, async(req, res) => {
+
+
+
+    if (req.body.password != req.body.passwordc) {
+        alert("Les mots de passes ne sont pas les mêmes");
+    } else {
+
+
+        const userFound = await User.findOne({ email: req.body.email });
+
+        if (!userFound) {
+            req.flash(
+                "error",
+                "Cet utilisateur n'existe pas avec cette adresse courriel."
+            );
+
+        } else {
+
+            const confirmcurrent = new Confirmes({
+                client_id: userFound._id,
+                type: "forgotpassword",
+                newpass: req.body.password,
+            });
+
+
+            var confirm = await confirmcurrent.save();
+
+
+
+
+            const link = `${process.env.CLIENT_URL}/resetPass/` + confirm._id;
+            sendEmail(userFound.email, "Password Reset Request", { name: userFound.first_name, link: link, }, "./requeteResetPassword.handlebars");
+        }
+    }
+
+    res.redirect("/");
+});
+
+app.get("/changepass", checkAuthenticated, async(req, res) => {
+    res.render("changepass", {
+        titrePage: "Changement de mot-de-passe",
+        titreSite: titreSite,
+    });
+
+
+
+});
+
+
+app.post("/changepass", checkAuthenticated, async(req, res) => {
+
+    if (req.body.newpass != req.body.confirmnewpass) {
+
+        alert("Les mots de passes ne sont pas les mêmes");
+    } else {
+
+        if (await bcrypt.compare(req.body.oldpass, currentlyConnectedUser.password)) {
+            console.log("tkt");
+            const hashednewPass = await bcrypt.hash(req.body.newpass, 10);
+
+            currentlyConnectedUser.password = hashednewPass;
+
+            const temp = await User.findOneAndUpdate({ _id: currentlyConnectedUser._id }, { password: hashednewPass });
+            //currentlyConnectedUser = temp;
+
+        } else {
+
+        }
+
+    }
+    res.redirect("/profil");
+
+});
+
+app.get("/resetPass/:cid", checkNotAuthenticated, async(req, res) => {
+    console.log(req.params.cid);
+    var confirmid = req.params.cid;
+    const objectid = confirmid;
+    var confirmation = await Confirmes.findOne({ _id: objectid });
+
+    const hashNewpass = await bcrypt.hash(confirmation.newpass, 10);
+    console.log(hashNewpass);
+    await User.findOneAndUpdate({ _id: confirmation.client_id }, { password: hashNewpass });
+
+    await Confirmes.findOneAndDelete({ _id: confirmid });
+
+
+
+
+    res.redirect("/profil");
+
+});
+
+app.get("/resetPassword", checkNotAuthenticated, async(req, res) => {
+    res.render("resetPassword", {
+        titrePage: "resetPassword",
+        titreSite: titreSite,
+    });
+});
+// stripe
 app.post("/getUtilisateurs", async(req, res) => {
-    let payload = req.body.payload.trim();
+    let payload = typeof req.body.temp === 'string' ? req.body.temp.trim() : '';
     let search = await User.find({
         email: { $regex: new RegExp("^" + payload + ".*", "i") },
     }).exec();
     search = search.slice(0, 10);
     res.send({ payload: search });
 });
-
-// stripe
 
 // Connexion à MongoDB
 mongoose
@@ -390,5 +511,4 @@ mongoose
             console.log("listening on port 3000");
         });
     });
-
 // mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
