@@ -17,9 +17,17 @@ const session = require("express-session");
 const User = require("./models/client");
 const Confirmes = require("./models/confirmation");
 const Rdv = require("./models/rdv");
+const Service = require("./models/service");
 const methodOverride = require("method-override");
+const bodyparser = require('body-parser');
+const path = require('path');
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
+var Publishable_Key = 'pk_test_51Kt9oSCnmso28bfJvG5lopyYW1LRp5FvU6fRpwbMQm16wwYoCVU71crPRwJ7oITPr62FOiHeLzNt4dJkcVMDke3Q00LZhLTgqt'
+var Secret_Key = 'sk_test_51Kt9oSCnmso28bfJ8EKLGYNsZAt1qy9KjCtp3fncIbfgRCkzF59rKmZKXdhvupqxfbWcwEYFVR4Tesqsft8xhDpx00g7gCIL70'
+const stripe = require('stripe')(Secret_Key)
+var total = 5000
+
 const {
     checkAuthenticated,
     checkNotAuthenticated,
@@ -97,6 +105,7 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
     });
 });
 
+
 app.get("/rdv/confirm/:rdvid", checkAuthenticated, async(req, res) => {
     frlid = req.params.rdvid;
 
@@ -116,14 +125,27 @@ app.get("/rdv/refuse/:rdvid", checkAuthenticated, async(req, res) => {
 
     res.redirect("/");
 });
-
+app.get("/services", (req, res) => {
+    Service.find({}, function(err, services) {
+        res.render("services", {
+            titrePage: "Services",
+            titreSite: titreSite,
+            ListServices: services,
+        });
+    });
+});
 app.get("/rendezvous", checkAuthenticated, (req, res) => {
     if (currentlyConnectedUser.user_type == "client") {
         User.find({ user_type: "docteur" }, function(err, users) {
-            res.render("rendezvous", {
-                titrePage: "Prise de Rendez-Vous",
-                titreSite: titreSite,
-                ListDocteur: users,
+            Service.find({}, function(err, services) {
+                res.render("rendezvous", {
+                    titrePage: "Prise de Rendez-Vous",
+                    titreSite: titreSite,
+                    ListDocteur: users,
+                    ListServices: services,
+                    key: Publishable_Key,
+                    total: total,
+                });
             });
         });
     } else if (currentlyConnectedUser.user_type == "docteur") {
@@ -178,6 +200,7 @@ app.post("/rendezvous", checkAuthenticated, async(req, res) => {
                             date: startdate,
                             client_id: currentlyConnectedUser._id,
                             heure: time,
+
                         },
                         async function(err, crdv) {
                             if (crdv == null) {
@@ -188,6 +211,7 @@ app.post("/rendezvous", checkAuthenticated, async(req, res) => {
                                         type: req.body.type,
                                         date: startdate,
                                         heure: time,
+
                                     });
 
                                     await rdv.save();
@@ -267,7 +291,10 @@ app.post(
     }),
     async(req, res) => {}
 );
-
+app.post("/services", async(req, res) => {
+    console.log("fait chier")
+    res.redirect("/rendezvous");
+});
 app.post(
     "/connexiond",
     StoreUser,
@@ -373,6 +400,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
                 currentlyConnectedUser.last_name,
             Cuser: currentlyConnectedUser,
             userFound_rdv: RDVs,
+
         });
     });
 });
@@ -500,7 +528,54 @@ app.post("/getUtilisateurs", async(req, res) => {
     res.send({ payload: search });
 });
 
-// Connexion à MongoDB
+
+
+app.use(bodyparser.urlencoded({ extended: false }))
+app.use(bodyparser.json())
+
+// View Engine Setup
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+app.get('/', function(req, res) {
+    res.render('Home', {
+        key: Publishable_Key
+    })
+})
+
+app.post('/payment', function(req, res) {
+
+        // Moreover you can take more details from user
+        // like Address, Name, etc from form
+        stripe.customers.create({
+                email: req.body.stripeEmail,
+                source: req.body.stripeToken,
+                name: 'Gourav Hammad',
+                address: {
+                    line1: 'TC 9/4 Old MES colony',
+                    postal_code: '452331',
+                    city: 'Indore',
+                    state: 'Madhya Pradesh',
+                    country: 'India',
+                }
+            })
+            .then((customer) => {
+
+                return stripe.charges.create({
+                    amount: 3000,
+                    description: 'Web Development Product',
+                    currency: 'CAD',
+                    customer: customer.id
+                });
+            })
+            .then((charge) => {
+                res.send("Success") // If no error occurs
+            })
+            .catch((err) => {
+                res.send(err) // If some error occurs
+            });
+    })
+    // Connexion à MongoDB
 mongoose
     .connect("mongodb://127.0.0.1:27017/eac", {
         useUnifiedTopology: true,
