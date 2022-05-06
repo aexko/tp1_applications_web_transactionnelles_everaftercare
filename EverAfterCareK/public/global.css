@@ -32,9 +32,7 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
-body {
-	line-height: 1;
-}
+
 
 ol, ul {
 	list-style: none;
@@ -76,7 +74,11 @@ footer {
 	text-align: center;
 	background-color: teal;
 }
-
+body {
+	line-height: 1;
+    background-image: url("images/bg.png");
+    background-size: 100%;
+}
 /*----------- connexion --------------*/
 
 /* .containerConnexion1 {
