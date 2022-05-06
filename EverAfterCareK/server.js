@@ -243,9 +243,7 @@ app.post("/rendezvous", checkAuthenticated, async(req, res) => {
                                     res.redirect("/rendezvous");
                                 }
                             } else {
-                                alert(
-                                    "Rendez-Vous existe déja dans la plage horaire pour le client"
-                                );
+
                                 console.log(
                                     "Rendez-Vous existe déja dans la plage horaire pour le client"
                                 );
