@@ -25,7 +25,8 @@ const bcrypt = require("bcryptjs");
 var Publishable_Key = 'pk_test_51Kt9oSCnmso28bfJvG5lopyYW1LRp5FvU6fRpwbMQm16wwYoCVU71crPRwJ7oITPr62FOiHeLzNt4dJkcVMDke3Q00LZhLTgqt'
 var Secret_Key = 'sk_test_51Kt9oSCnmso28bfJ8EKLGYNsZAt1qy9KjCtp3fncIbfgRCkzF59rKmZKXdhvupqxfbWcwEYFVR4Tesqsft8xhDpx00g7gCIL70'
 const stripe = require('stripe')(Secret_Key)
-var total = 50
+var total;
+var rdv_choisi;
 
 const {
     checkAuthenticated,
@@ -282,12 +283,12 @@ app.post(
     async(req, res) => {}
 );
 app.post("/services", async(req, res) => {
-
+    rdv_choisi = req.body.nom_service
+    total = req.body.prix_service
+    console.log(total);
     res.redirect("/rendezvous");
 });
-app.post('/services', (req, res) => {
-    res.redirect("/rendezvous");
-})
+
 app.post(
     "/connexiond",
     StoreUser,
