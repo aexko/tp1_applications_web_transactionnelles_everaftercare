@@ -546,29 +546,91 @@ app.get('/', function(req, res) {
     })
 })
 
-app.post('/payment', function(req, res) {
+app.post("/payment", checkAuthenticated, async(req, res) => {
+        console.log("La page marche déja");
+        d_id = req.body.nom_doc;
+        console.log(req.body.testing);
+        console.log(d_id);
+        const userFound = await User.findOne({ _id: d_id, user_type: "docteur" });
+        if (userFound) {
+            var startdate = req.body.tripstart;
+            var time = req.body.time;
 
-        stripe.customers.create({
-                email: req.body.stripeEmail,
-                source: req.body.stripeToken,
-                name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
+            Rdv.findOne({ date: startdate, docteur_id: d_id, heure: time },
+                async function(err, Rendezvous) {
+                    console.log(Rendezvous);
+                    if (Rendezvous == null) {
+                        Rdv.findOne({
+                                date: startdate,
+                                client_id: currentlyConnectedUser._id,
+                                heure: time,
 
-            })
-            .then((customer) => {
+                            },
+                            async function(err, crdv) {
+                                console.log(crdv);
+                                if (crdv == null) {
+                                    console.log("aucun rdv à cet heure");
+                                    try {
+                                        const rdv = new Rdv({
+                                            docteur_id: d_id,
+                                            client_id: currentlyConnectedUser._id,
+                                            type: req.body.type,
+                                            date: startdate,
+                                            heure: time,
 
-                return stripe.charges.create({
-                    amount: total * 100,
-                    description: 'Rendez vous ',
-                    currency: 'CAD',
-                    customer: customer.id
-                });
-            })
-            .then((charge) => {
-                res.redirect("/") // If no error occurs
-            })
-            .catch((err) => {
-                res.send(err) // If some error occurs
-            });
+                                        });
+
+                                        await rdv.save();
+
+
+                                        stripe.customers.create({
+                                                email: req.body.stripeEmail,
+                                                source: req.body.stripeToken,
+                                                name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
+                                            })
+                                            .then((customer) => {
+                                                return stripe.charges.create({
+                                                    amount: total * 100,
+                                                    description: 'Rendez vous ',
+                                                    currency: 'CAD',
+                                                    customer: customer.id
+                                                });
+                                            })
+                                            .then((charge) => {
+                                                res.redirect("/") // If no error occurs
+                                            })
+
+                                        res.redirect("/");
+                                    } catch (error) {
+                                        console.log(error);
+                                        res.redirect("/rendezvous");
+                                    }
+                                } else {
+                                    alert(
+                                        "Rendez-Vous existe déja dans la plage horaire pour le client"
+                                    );
+
+                                    res.redirect("/rendezvous");
+                                }
+                            }
+                        );
+                    } else {
+                        alert(
+                            "Rendez-Vous existe déja dans la plage horaire pour le docteur"
+                        );
+                        console.log(
+                            "Rendez-Vous existe déja dans la plage horaire pour le docteur"
+                        );
+                        res.redirect("/rendezvous");
+                    }
+                }
+            );
+
+            /*
+             */
+        } else {
+            res.redirect("/");
+        }
     })
     // Connexion à MongoDB
 mongoose

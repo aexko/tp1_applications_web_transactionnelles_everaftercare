@@ -15,14 +15,18 @@
 
     <div class="formulaire">
         <div class="Choix">
-            <h1>
-                Selection service</h1>
-            <form class="container7 ">
+            <form name="rdv" action="/rendezvous" method="post" class="container1">
 
+
+                <input type="submit" name="submit" value="Confirmer" class="btn btn-primary btn-lg">
+            </form>
+            <form name="pay" action="payment" method="POST">
                 <div class="form-group row ">
-                    <label for="services"></label>
+                    <label for="services">
+                        
+                            Selection service</label>
 
-                    <select name="nom_service " size="3">
+                    <select id="type" name="type" size="3">
                 <% ListServices.forEach(function(item,index){%>
                 <option value="<%=item.id %>">
                     <%=item.nom %>
@@ -31,12 +35,12 @@
                         <%}); %>
                             </select>
                 </div>
-                <form action="/rendezvous" method="post" class="container1">
 
-                    <div class="form-group row">
-                        <label for="rendezvous">Sélectionnner votre médecin:</label>
 
-                        <select id="nom_doc" name="nom_doc">
+                <div class="form-group row">
+                    <label for="rendezvous">Sélectionnner votre médecin:</label>
+
+                    <select id="nom_doc" name="nom_doc">
                     <% ListDocteur.forEach(function(item,index){%>
                     <option value="<%= item.id %>">
                         <%= item.last_name %>
@@ -45,24 +49,21 @@
                     <%}); %>
 
                 </select>
-                    </div>
+                </div>
 
-                    <div class="container2">
-                        <label for="start">Choisissez une date:</label>
+                <div class="container2">
+                    <label for="start">Choisissez une date:</label>
 
-                        <input type="date" id="start" name="tripstart" value="2022-02-22" max="2030-01-01" min="2022-02-01">
-                    </div>
-                    <div class="container2">
-                        <label for="time">Choisissez l'heure:</label>
+                    <input type="date" id="start" name="tripstart" value="2022-02-22" max="2030-01-01" min="2022-02-01">
+                </div>
+                <div class="container2">
+                    <label for="time">Choisissez l'heure:</label>
 
-                        <input type="time" id="time" name="time" value="08:00" min="08:00" max="19:00" step="3600" required>
-                    </div>
-                    <input type="submit" name="submit" value="Confirmer" class="btn btn-primary btn-lg">
-                </form>
-                <form action="payment" method="POST">
-                    <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="<%= key %>" data-amount="<%= total*100 %>" data-currency="CAD" data-name="Paiement" data-description="EverAfterCare" data-locale="auto">
-                    </script>
-                </form>
+                    <input type="time" id="time" name="time" value="08:00" min="08:00" max="19:00" step="3600" required>
+                </div>
+                <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="<%= key %>" data-amount="<%= total*100 %>" data-currency="CAD" data-name="Paiement" data-description="EverAfterCare" data-locale="auto">
+                </script>
+            </form>
         </div>
         <script>
             function masquer_div(id) {
