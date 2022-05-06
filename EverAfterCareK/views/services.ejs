@@ -11,12 +11,12 @@
 
 <body>
     <link rel="stylesheet" href="services.css" />
-    <% ListServices.forEach(function(item,index){%>
+    <div class="service">
+        <% ListServices.forEach(function(item,index){%>
 
-        <div class="service">
-            <h1>
+            <p>
                 <%=item.nom %>
-            </h1>
+            </p>
 
             <p>
                 <%=item.description %> <br> Prix:
@@ -27,6 +27,6 @@
             <%}); %>
 
 
-        </div>
+    </div>
 
 </body>

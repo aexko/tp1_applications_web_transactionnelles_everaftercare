@@ -137,6 +137,7 @@ app.get("/services", (req, res) => {
             titrePage: "Services",
             titreSite: titreSite,
             ListServices: services,
+            ConnectedUser: currentlyConnectedUser,
         });
     });
 });
@@ -151,6 +152,7 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
                     ListServices: services,
                     key: Publishable_Key,
                     total: total,
+                    ConnectedUser: currentlyConnectedUser,
                 });
             });
         });
@@ -163,6 +165,7 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
                         titreSite: titreSite,
                         rdv: rdvs,
                         users: us,
+                        ConnectedUser: currentlyConnectedUser,
                     });
                 });
             }
@@ -178,6 +181,7 @@ app.get("/TestDebug", checkAuthenticated, async(req, res) => {
         client_id: currentlyConnectedUser._id,
         type: "mdp",
         newpass: "mdp",
+        ConnectedUser: currentlyConnectedUser,
     });
 
 

@@ -28,22 +28,20 @@
                         </div>
                         <form class="login-form" action="/connexion" method="POST">
                             <div class="form-control">
-                                <input type="email" name="email" placeholder="Adresse courriel" id="champ1"
-                                    onkeyup="verifierChamps()" /> <br>
+                                <input type="email" name="email" placeholder="Adresse courriel" id="champ1" onkeyup="verifierChamps()" /> <br>
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="form-control">
-                                <input type="password" name="password" placeholder="Mot de passe" id="champ2"
-                                    onkeyup="verifierChamps()" /> <br>
+                                <input type="password" name="password" placeholder="Mot de passe" id="champ2" onkeyup="verifierChamps()" /> <br>
                                 <i class="fas fa-lock"></i>
                             </div>
+                            <button class="submit" id="buttonc" disabled>Connexion</button>
                         </form>
 
                         <div class="form-control">
                             <a class="password-forgotten" href="/resetPassword">Mot de passe oublié ?</a>
 
                         </div>
-                        <button class="submit" id="buttonc" disabled>Connexion</button>
 
         </div>
 
