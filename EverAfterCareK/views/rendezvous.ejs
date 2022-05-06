@@ -38,11 +38,11 @@
 
                     <select id="nom_doc" name="nom_doc">
                     <% ListDocteur.forEach(function(item,index){%>
-                    <option value="<%= item.id %>">
-                        <%= item.last_name %>
-                            <%= item.first_name %>
-                    </option>
-                    <%}); %>
+                        <option value="<%= item.id %>">
+                            <%= item.last_name %>
+                                <%= item.first_name %>
+                        </option>
+                        <%}); %>
 
                 </select>
                 </div>

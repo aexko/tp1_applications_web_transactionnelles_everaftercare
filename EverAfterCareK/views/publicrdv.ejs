@@ -13,10 +13,6 @@
 </header>
 
 <body>
-
-
-
-
     <% if (rdv !==undefined && rdv.length>0) {%>
         <table class="table">
             <thead>
@@ -32,37 +28,37 @@
                 <% rdv.forEach(function(rd,index){ %>
                     <tr>
                         <td style="width:20%">
-                            
-                <% users.forEach(function(client,index){ %>
-                    <% if(rd.client_id == client._id.toString()){ %>
-                       
 
-                   
-                        <%=client.first_name + " " + client.last_name %>
-                            
-                    <% }}); %>
+                            <% users.forEach(function(client,index){ %>
+                                <% if(rd.client_id==client._id.toString()){ %>
+
+
+
+                                    <%=client.first_name + " " + client.last_name %>
+
+                                        <% }}); %>
                         </td>
 
                         <td style="width:20%">
                             <% users.forEach(function(client,index){ %>
-                    
-                                <% if(rd.docteur_id == client._id.toString()){ %>
-                                   
-            
-                               
+
+                                <% if(rd.docteur_id==client._id.toString()){ %>
+
+
+
                                     <%=client.first_name + " " + client.last_name %>
-                                        
-                                <% }}); %>
+
+                                        <% }}); %>
                         </td>
                         <td style="width:30%">
                             <%= rd.type %>
                         </td>
-                        
+
                         <td style="width:30%">
                             <a href="/rdv/confirm/<%=rd._id%>" class="btn btn-success">Accepter </a>
                             <a href="/rdv/refuse/<%=rd._id%>" class="btn btn-danger">Refuser </a>
                         </td>
-                        
+
                     </tr>
                     <%}); %>
             </tbody>
@@ -70,11 +66,5 @@
         <% }else {%>
             <p><strong> Aucun rendez-vous </strong></p>
             <% } %>
-
-
-    
-
-
-
 
 </body>

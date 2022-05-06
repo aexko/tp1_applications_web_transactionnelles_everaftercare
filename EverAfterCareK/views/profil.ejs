@@ -24,11 +24,11 @@
 
             <select id="champ1" name="selected_rdv" onkeyup="verifierChamps()">
                 <% userFound_rdv.forEach(function(item,index){%>
-                <option value="<%= item._id%>" >
-                   
-                        <%= item.date %>
-                </option>
-                <%}); %>
+                    <option value="<%= item._id%>">
+                        <%= item.docteur_id %>
+                            <%= item.date %>
+                    </option>
+                    <%}); %>
 
             </select>
             </input>
@@ -36,7 +36,7 @@
             <input name="password" id="champ2" onkeyup="verifierChamps()" /> <br>
 
             <button submit id="buttonA ">Confirmer </input>
-        
+
 
         </form>
     </div>
