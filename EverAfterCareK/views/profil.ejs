@@ -40,20 +40,41 @@
 
         </form>
     </div>
+    <div class="Afficher_RDV">
+        <form action="/annuler_rdv" method="post">
+          
 
+            <ul id="----" name="----" onkeyup="verifierChamps()">
+                <% userFound_rdv.forEach(function(item,index){%>
+                <il value="<%= item._id%>" >
+                   
+                        <%= item.date %>
+                </il>
+                <%}); %>
+
+            </select>
+            </input>
+           
+
+         
+        
+
+        </form>
+    </div>
+   
     <form action="/deconnexion?_method=DELETE" method="POST">
         <button type="submit">Déconnexion</button>
-        <a href="/changepass">Changer mot de passe?</a>
-    </form>
-    <script>
-        function verifierChamps() {
-            if (champ1.value.length > 0 && champ2.value.length > 0) {
-                document.getElementById('buttonA').disabled = false;
-            } else {
-                document.getElementById('buttonA').disabled = true;
-            }
+            <a href="/changepass">Changer mot de passe?</a>
+        </form>
+        <script>
+            function verifierChamps() {
+                if (champ1.value.length > 0 && champ2.value.length > 0) {
+                    document.getElementById('buttonA').disabled = false;
+                } else {
+                    document.getElementById('buttonA').disabled = true;
+                }
 
-        }
-    </script>
+            }
+        </script>
 
 </body>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <%- include('./partials/head'); %>
+</head>
+
+<header>
+    <%- include('./partials/header'); %>
+</header>
+
+<body>
+    <link rel="stylesheet" href="services.css" />
+    <div class="service">
+        <% ListServices.forEach(function(item,index){%>
+
+            <p>
+                <%=item.nom %>
+            </p>
+
+            <p>
+                <%=item.description %> <br> Prix:
+                    <%=item.prix %>
+            </p>
+            <a href="/rendezvous" id=" buttonrdv ">
+                <input type="button" value="Prendre un RDV" /> </a>
+            <%}); %>
+
+
+    </div>
+
+</body>
