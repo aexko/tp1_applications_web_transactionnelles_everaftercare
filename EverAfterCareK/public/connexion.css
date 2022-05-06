@@ -2,7 +2,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	color: #303433;
+	color: black;
 }
 
 body {
@@ -15,6 +15,12 @@ section {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 }
 
 /* section.side {
@@ -80,8 +86,8 @@ button {
 }
 
 input {
-	width: 100%;
-	background: #e6e6e6;
+	width: 75%;
+	background: lightgray;
 	color: #333;
 	letter-spacing: 0.5px;
 	padding: 14px 64px;
@@ -128,4 +134,12 @@ button.submit:hover {
 	.side {
 		display: none;
 	}
+}
+
+.vertical-center {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
 }
