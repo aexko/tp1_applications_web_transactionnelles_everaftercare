@@ -55,6 +55,7 @@ table {
 	border-spacing: 0;
 }
 
+
 nav {
 	background-color: red;
 	overflow: hidden;
@@ -78,9 +79,8 @@ footer {
 
 /*----------- connexion --------------*/
 
-.containerConnexion1 {
-	border-top: solid 1px rgb(154, 154, 154);
-
+.containerConnexion1{
+	
 }
 
 .containerConnexion1 form label {

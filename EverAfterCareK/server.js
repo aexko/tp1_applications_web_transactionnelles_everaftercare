@@ -74,6 +74,7 @@ app.get("/", (req, res) => {
 	res.render("index", {
 		titrePage: "Accueil",
 		titreSite: titreSite,
+		ConnectedUser : currentlyConnectedUser,
 	});
 });
 
@@ -82,6 +83,7 @@ app.get("/connexion", checkNotAuthenticated, (req, res) => {
 	res.render("connexion", {
 		titrePage: "Connexion",
 		titreSite: titreSite,
+		ConnectedUser : currentlyConnectedUser,
 	});
 	if (checkNotAuthenticated) {
 		currentlyConnectedUser = null;
@@ -93,6 +95,7 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 	res.render("inscription", {
 		titrePage: "Inscription",
 		titreSite: titreSite,
+		ConnectedUser : currentlyConnectedUser,
 	});
 });
 
@@ -103,7 +106,7 @@ app.get("/rdv/confirm/:rdvid", checkAuthenticated, async (req, res) => {
 		{ _id: frlid, docteur_id: currentlyConnectedUser._id, confirme: false },
 		{ confirme: true }
 	);
-
+		
 	res.redirect("/");
 });
 
@@ -126,6 +129,7 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 				titrePage: "Prise de Rendez-Vous",
 				titreSite: titreSite,
 				ListDocteur: users,
+				ConnectedUser : currentlyConnectedUser,
 			});
 		});
 	} else if (currentlyConnectedUser.user_type == "docteur") {
@@ -138,11 +142,15 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 						titreSite: titreSite,
 						rdv: rdvs,
 						users: us,
+						ConnectedUser : currentlyConnectedUser,
 					});
 				});
 			}
 		);
 	} else if (currentlyConnectedUser.user_type == "admin") {
+
+
+
 	}
 });
 
@@ -165,6 +173,7 @@ app.get("/mailchange/:confirmid", checkAuthenticated, (req, res) => {
 			titrePage: "Prise de Rendez-Vous",
 			titreSite: titreSite,
 			ListDocteur: users,
+			ConnectedUser : currentlyConnectedUser,
 		});
 	});
 });
@@ -326,16 +335,17 @@ app.post("/annuler_rdv", async (req, res) => {
 			)
 		) {
 			var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv });
+			
 
 			res.redirect("/profil");
 			console.log("Bon MDP");
 		} else {
-			alert("Mot De Passe Erroné.");
+			//alert("Mot De Passe Erroné.");
 			res.redirect("/profil");
 			console.log("Mauvais MDP");
 		}
 	} catch (err) {
-		return done(e);
+		return err;
 	}
 });
 
@@ -360,6 +370,7 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 				currentlyConnectedUser.last_name,
 			Cuser: currentlyConnectedUser,
 			userFound_rdv: RDVs,
+			ConnectedUser : currentlyConnectedUser,
 		});
 	});
 });
@@ -369,6 +380,7 @@ app.get("/recherche", (req, res) => {
 	res.render("recherche", {
 		titrePage: "Recherche",
 		titreSite: titreSite,
+		ConnectedUser : currentlyConnectedUser,
 	});
 });
 
@@ -420,6 +432,7 @@ app.get("/changepass", checkAuthenticated, async (req, res) => {
 	res.render("changepass", {
 		titrePage: "Changement de mot-de-passe",
 		titreSite: titreSite,
+		ConnectedUser : currentlyConnectedUser,
 	});
 });
 
@@ -471,6 +484,7 @@ app.get("/resetPassword", checkNotAuthenticated, async (req, res) => {
 	res.render("resetPassword", {
 		titrePage: "resetPassword",
 		titreSite: titreSite,
+		ConnectedUser : currentlyConnectedUser,
 	});
 });
 
