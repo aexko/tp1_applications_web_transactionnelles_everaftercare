@@ -1,6 +1,6 @@
 /* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
+v2.0 | 20110126
+License: none (public domain)
 */
 /*----------------------------------------------------------------
 /* pour reset la mise en page de chaque navigateur */
@@ -14,8 +14,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -25,25 +25,31 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
+
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -52,9 +58,12 @@ table {
 nav {
 	background-color: red;
 	overflow: hidden;
-	position: fixed; /* Set the navbar to fixed position */
-	top: 0; /* Position the navbar at the top of the page */
-	width: 100%; /* Full width */
+	position: fixed;
+	/* Set the navbar to fixed position */
+	top: 0;
+	/* Position the navbar at the top of the page */
+	width: 100%;
+	/* Full width */
 }
 
 footer {
@@ -64,74 +73,79 @@ footer {
 	width: 100%;
 	color: white;
 	text-align: center;
-    background-color: teal;
+	background-color: teal;
 }
+
 /*----------- connexion --------------*/
 
-.containerConnexion1{
-	border-top: solid 1px rgb(154,154,154);
+.containerConnexion1 {
+	border-top: solid 1px rgb(154, 154, 154);
 
 }
 
-.containerConnexion1 form label{
- display: flex;
-flex-direction: row;
- justify-content: center;
- padding: 12px 20px;
+.containerConnexion1 form label {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding: 12px 20px;
 }
-.containerConnexion1 form tt{
+
+.containerConnexion1 form tt {
 	background-color: lightgray;
 }
-.containerConnexion1 form input{
+
+.containerConnexion1 form input {
 	padding: 15px 30px;
-    
-    font-size: 15px;
-    border: solid 2px rgb(219,219,219);
-    border-radius: 10px;
-	text-align:center;
-    display: block;
-    margin: 0 auto 1em auto;
-	
+
+	font-size: 15px;
+	border: solid 2px rgb(219, 219, 219);
+	border-radius: 10px;
+	text-align: center;
+	display: block;
+	margin: 0 auto 1em auto;
+
 }
 
 
-.containerConnexion1 form .tt{
+.containerConnexion1 form .tt {
 	margin: auto;
 	width: 50%;
 	border: 3px solid green;
 	padding: 10px;
-  
+
 }
-.containerConnexion1 form button{
+
+.containerConnexion1 form button {
 	color: rgb(0, 0, 0);
-    background-color:rgb(255,255,255);
-    font-weight: 500;
-    font-size: 15px;
-    text-transform: uppercase;
-    padding: 12px 20px;
-    border-radius: 30px;
-    border: solid 2px rgb(123,119,119);
-	text-align:center;
-    display: block;
-    margin: 0 auto 1em auto;
+	background-color: rgb(255, 255, 255);
+	font-weight: 500;
+	font-size: 15px;
+	text-transform: uppercase;
+	padding: 12px 20px;
+	border-radius: 30px;
+	border: solid 2px rgb(123, 119, 119);
+	text-align: center;
+	display: block;
+	margin: 0 auto 1em auto;
 }
 
 
-.containerConnexion1 form button:disabled{
-	color: rgb(121,119,119);
-    background-color:rgb(255,255,255);
-    font-weight: 500;
-    font-size: 15px;
-    text-transform: uppercase;
-    padding: 12px 20px;
-    border-radius: 30px;
-    border: solid 2px rgb(123,119,119);
-	text-align:center;
-    display: block;
-    margin: 0 auto 1em auto;
+.containerConnexion1 form button:disabled {
+	color: rgb(121, 119, 119);
+	background-color: rgb(255, 255, 255);
+	font-weight: 500;
+	font-size: 15px;
+	text-transform: uppercase;
+	padding: 12px 20px;
+	border-radius: 30px;
+	border: solid 2px rgb(123, 119, 119);
+	text-align: center;
+	display: block;
+	margin: 0 auto 1em auto;
 }
-h2{
+
+h2 {
 	font-size: 30px;
-text-align: center;
-font-style: italic;
+	text-align: center;
+	font-style: italic;
 }

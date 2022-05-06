@@ -23,11 +23,11 @@
     <script>
         function sendData(e) {
             const searchResults = document.getElementById("searchResults");
-            
+
             fetch('getUtilisateurs', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ temp : e.value })
+                body: JSON.stringify({ temp: e.value })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
                 searchResults.innerHTML = '';

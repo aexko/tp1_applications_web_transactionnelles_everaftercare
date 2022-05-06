@@ -19,23 +19,25 @@
             </p>
             <% } %>
                 <form action="/connexion" method="POST">
-                    <input type="email" name="email" placeholder="Adresse courriel" id="champ1" onkeyup="verifierChamps()" /> <br>
-                    <input type="password" name="password" placeholder="Mot de passe" id="champ2" onkeyup="verifierChamps()" /> <br>
+                    <input type="email" name="email" placeholder="Adresse courriel" id="champ1"
+                        onkeyup="verifierChamps()" /> <br>
+                    <input type="password" name="password" placeholder="Mot de passe" id="champ2"
+                        onkeyup="verifierChamps()" /> <br>
                     <button id="buttonc" disabled>Connexion</button>
-                    <a href = "/resetPassword">mot de passe oublié?</a>
+                    <a href="/resetPassword">mot de passe oublié?</a>
                 </form>
 
 
 
-    <script>
-        function verifierChamps() {
-            if (champ1.value.length > 0 && champ2.value.length > 0) {
-                document.getElementById('buttonc').disabled = false;
-            } else {
-                document.getElementById('buttonc').disabled = true;
-            }
-        }
-    </script>
+                <script>
+                    function verifierChamps() {
+                        if (champ1.value.length > 0 && champ2.value.length > 0) {
+                            document.getElementById('buttonc').disabled = false;
+                        } else {
+                            document.getElementById('buttonc').disabled = true;
+                        }
+                    }
+                </script>
 
 </body>
 

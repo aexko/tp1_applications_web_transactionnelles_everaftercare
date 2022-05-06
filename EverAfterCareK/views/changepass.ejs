@@ -13,22 +13,26 @@
 </header>
 
 <body>
-    <form action="/changepass" method="POST" >
-        <input type="password" name="oldpass" placeholder="Ancien mot de passe" id="champ3" onkeyup="verifierChamps()"/> <br>
-        <input type="password" name="newpass" placeholder="Nouveau Mot De Passe" id="champ2" onkeyup="verifierChamps()"/> <br>
-        <input type="password" name="confirmnewpass" placeholder="Confirmer Nouveau Mot De Passe" id="champ1" onkeyup="verifierChamps()"/> <br>
-        <button id="button" disabled submit >Changer Mot-de-Passe</button>
+    <form action="/changepass" method="POST">
+        <input type="password" name="oldpass" placeholder="Ancien mot de passe" id="champ3"
+            onkeyup="verifierChamps()" /> <br>
+        <input type="password" name="newpass" placeholder="Nouveau Mot De Passe" id="champ2"
+            onkeyup="verifierChamps()" /> <br>
+        <input type="password" name="confirmnewpass" placeholder="Confirmer Nouveau Mot De Passe" id="champ1"
+            onkeyup="verifierChamps()" /> <br>
+        <button id="button" disabled submit>Changer Mot-de-Passe</button>
     </form>
     <script>
-          function verifierChamps() {
- if (champ3.value.length > 0 && champ2.value.length > 0 &&  champ1.value.length > 0) {
-        document.getElementById('button').disabled = false;
-    } else {
-        document.getElementById('button').disabled = true;
-    }
-}
+        function verifierChamps() {
+            if (champ3.value.length > 0 && champ2.value.length > 0 && champ1.value.length > 0) {
+                document.getElementById('button').disabled = false;
+            } else {
+                document.getElementById('button').disabled = true;
+            }
+        }
     </script>
-   </body>
-   </html>
+</body>
 
-   <%- include('partials/footer') %>
+</html>
+
+<%- include('partials/footer') %>

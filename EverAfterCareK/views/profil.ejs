@@ -24,11 +24,11 @@
 
             <select id="champ1" name="selected_rdv" onkeyup="verifierChamps()">
                 <% userFound_rdv.forEach(function(item,index){%>
-                <option value="<%= item._id%>" >
-                    <%= item.docteur_id %>
-                        <%= item.date %>
-                </option>
-                <%}); %>
+                    <option value="<%= item._id%>">
+                        <%= item.docteur_id %>
+                            <%= item.date %>
+                    </option>
+                    <%}); %>
 
             </select>
             </input>
@@ -36,24 +36,24 @@
             <input name="password" id="champ2" onkeyup="verifierChamps()" /> <br>
 
             <button submit id="buttonA ">Confirmer </input>
-        
+
 
         </form>
     </div>
-    
+
     <form action="/deconnexion?_method=DELETE" method="POST">
         <button type="submit">Déconnexion</button>
-        <a href = "/changepass">Changer mot de passe?</a>
+        <a href="/changepass">Changer mot de passe?</a>
     </form>
-        <script>
-            function verifierChamps() {
-                if (champ1.value.length > 0 && champ2.value.length > 0) {
-                    document.getElementById('buttonA').disabled = false;
-                } else {
-                    document.getElementById('buttonA').disabled = true;
-                }
-
+    <script>
+        function verifierChamps() {
+            if (champ1.value.length > 0 && champ2.value.length > 0) {
+                document.getElementById('buttonA').disabled = false;
+            } else {
+                document.getElementById('buttonA').disabled = true;
             }
-        </script>
+
+        }
+    </script>
 
 </body>

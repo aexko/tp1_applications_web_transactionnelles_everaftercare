@@ -1,6 +1,5 @@
-
 // schema pour user
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
 	first_name: {
 		type: String,
@@ -31,7 +30,7 @@ const userSchema = new mongoose.Schema({
 	},
 });
 
-const user = mongoose.model('client', userSchema);
+const user = mongoose.model("client", userSchema);
 
 // pour l'acces dans les autres fichiers
 module.exports = user;

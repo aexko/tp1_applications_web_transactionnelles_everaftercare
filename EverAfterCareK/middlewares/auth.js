@@ -1,8 +1,8 @@
 /**
  * fonction qui verifie l'authentification du user
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  * @returns redirection vers la page d'accueil
  */
 function checkNotAuthenticated(req, res, next) {
@@ -14,9 +14,9 @@ function checkNotAuthenticated(req, res, next) {
 
 /**
  * fonction qui verifie l'authentification du user
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  * @returns redirection vers la page de connexion
  */
 function checkAuthenticated(req, res, next) {
