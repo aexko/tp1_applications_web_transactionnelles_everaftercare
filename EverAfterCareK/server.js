@@ -146,6 +146,7 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 	}
 });
 
+// DEBUG
 app.get("/TestDebug", checkAuthenticated, async (req, res) => {
 	const confirm = new Confirms({
 		client_id: currentlyConnectedUser._id,
@@ -313,6 +314,7 @@ app.delete("/deconnexion", (req, res) => {
 	req.logOut();
 	res.redirect("/connexion");
 });
+
 app.post("/annuler_rdv", async (req, res) => {
 	s_rdv = req.body.selected_rdv;
 
@@ -324,7 +326,6 @@ app.post("/annuler_rdv", async (req, res) => {
 			)
 		) {
 			var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv });
-			ù;
 
 			res.redirect("/profil");
 			console.log("Bon MDP");
@@ -363,9 +364,6 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 	});
 });
 
-// stripe
-
-// mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
 // ajax
 app.get("/recherche", (req, res) => {
 	res.render("recherche", {
