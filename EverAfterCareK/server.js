@@ -26,7 +26,7 @@ const bcrypt = require("bcryptjs");
 var Publishable_Key = 'pk_test_51Kt9oSCnmso28bfJvG5lopyYW1LRp5FvU6fRpwbMQm16wwYoCVU71crPRwJ7oITPr62FOiHeLzNt4dJkcVMDke3Q00LZhLTgqt'
 var Secret_Key = 'sk_test_51Kt9oSCnmso28bfJ8EKLGYNsZAt1qy9KjCtp3fncIbfgRCkzF59rKmZKXdhvupqxfbWcwEYFVR4Tesqsft8xhDpx00g7gCIL70'
 const stripe = require('stripe')(Secret_Key)
-var total = 5000
+var total = 50
 
 const {
     checkAuthenticated,
@@ -292,9 +292,12 @@ app.post(
     async(req, res) => {}
 );
 app.post("/services", async(req, res) => {
-    console.log("fait chier")
+
     res.redirect("/rendezvous");
 });
+app.post('/services', (req, res) => {
+    res.redirect("/rendezvous");
+})
 app.post(
     "/connexiond",
     StoreUser,
@@ -545,31 +548,23 @@ app.get('/', function(req, res) {
 
 app.post('/payment', function(req, res) {
 
-        // Moreover you can take more details from user
-        // like Address, Name, etc from form
         stripe.customers.create({
                 email: req.body.stripeEmail,
                 source: req.body.stripeToken,
-                name: 'Gourav Hammad',
-                address: {
-                    line1: 'TC 9/4 Old MES colony',
-                    postal_code: '452331',
-                    city: 'Indore',
-                    state: 'Madhya Pradesh',
-                    country: 'India',
-                }
+                name: currentlyConnectedUser.first_name + " " + currentlyConnectedUser.last_name,
+
             })
             .then((customer) => {
 
                 return stripe.charges.create({
-                    amount: 3000,
-                    description: 'Web Development Product',
+                    amount: total * 100,
+                    description: 'Rendez vous ',
                     currency: 'CAD',
                     customer: customer.id
                 });
             })
             .then((charge) => {
-                res.send("Success") // If no error occurs
+                res.redirect("/") // If no error occurs
             })
             .catch((err) => {
                 res.send(err) // If some error occurs

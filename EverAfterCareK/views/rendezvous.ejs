@@ -60,7 +60,7 @@
                     <input type="submit" name="submit" value="Confirmer" class="btn btn-primary btn-lg">
                 </form>
                 <form action="payment" method="POST">
-                    <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="<%= key %>" data-amount="<%= total %>" data-currency="CAD" data-name="Paiement" data-description="EverAfterCare" data-locale="auto">
+                    <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="<%= key %>" data-amount="<%= total*100 %>" data-currency="CAD" data-name="Paiement" data-description="EverAfterCare" data-locale="auto">
                     </script>
                 </form>
         </div>
