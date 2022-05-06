@@ -7,38 +7,62 @@
 
 <header>
     <%- include('./partials/header'); %>
+        <link rel="stylesheet" href="connexion.css" />
+
 </header>
 
 <body>
+    <br>
+    <section class="main">
+        <div class="login-container">
+            <p class="title">Connexion des clients</h1>
+                <% if (messages) { %>
+                    <p>
+                        <%= messages.error %>
+                    </p>
+                    <% } %>
+                        <div class="separator"></div>
+                        <div class="form-control">
+                            <p>Veuillez-vous connecter pour accéder à nos services</p>
 
-    <div class="containerConnexion1">
-        <h1>Connexion des clients</h1>
-        <% if (messages) { %>
-            <p>
-                <%= messages.error %>
-            </p>
-            <% } %>
-                <form action="/connexion" method="POST">
-                    <input type="email" name="email" placeholder="Adresse courriel" id="champ1"
-                        onkeyup="verifierChamps()" /> <br>
-                    <input type="password" name="password" placeholder="Mot de passe" id="champ2"
-                        onkeyup="verifierChamps()" /> <br>
-                    <button id="buttonc" disabled>Connexion</button>
-                    <a href="/resetPassword">mot de passe oublié?</a>
-                </form>
+                        </div>
+                        <form class="login-form" action="/connexion" method="POST">
+                            <div class="form-control">
+                                <input type="email" name="email" placeholder="Adresse courriel" id="champ1"
+                                    onkeyup="verifierChamps()" /> <br>
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="form-control">
+                                <input type="password" name="password" placeholder="Mot de passe" id="champ2"
+                                    onkeyup="verifierChamps()" /> <br>
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </form>
+
+                        <div class="form-control">
+                            <a class="password-forgotten" href="/resetPassword">Mot de passe oublié ?</a>
+
+                        </div>
+                        <button class="submit" id="buttonc" disabled>Connexion</button>
+
+        </div>
 
 
 
-                <script>
-                    function verifierChamps() {
-                        if (champ1.value.length > 0 && champ2.value.length > 0) {
-                            document.getElementById('buttonc').disabled = false;
-                        } else {
-                            document.getElementById('buttonc').disabled = true;
-                        }
-                    }
-                </script>
+        </div>
 
+    </section>
+
+
+    <script>
+        function verifierChamps() {
+            if (champ1.value.length > 0 && champ2.value.length > 0) {
+                document.getElementById('buttonc').disabled = false;
+            } else {
+                document.getElementById('buttonc').disabled = true;
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -78,7 +78,7 @@ footer {
 
 /*----------- connexion --------------*/
 
-.containerConnexion1 {
+/* .containerConnexion1 {
 	border-top: solid 1px rgb(154, 154, 154);
 
 }
@@ -148,4 +148,9 @@ h2 {
 	font-size: 30px;
 	text-align: center;
 	font-style: italic;
+} */
+
+* {
+	/* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
 }
+
