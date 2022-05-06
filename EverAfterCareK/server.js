@@ -100,10 +100,7 @@ app.get("/connexion", checkNotAuthenticated, (req, res) => {
 
 // pour charger la page d'inscription
 app.get("/inscription", checkNotAuthenticated, (req, res) => {
-    res.render("inscription", {
-        titrePage: "Inscription",
-        titreSite: titreSite,
-    });
+ 
     res.render("inscription", {
         titrePage: "Inscription",
         titreSite: titreSite,
