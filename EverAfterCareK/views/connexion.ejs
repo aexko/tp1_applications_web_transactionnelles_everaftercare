@@ -14,31 +14,31 @@
 <body>
     <section class="main">
         <div class="login-container">
-            <p class="title">Connexion des clients</h1>
-                <% if (messages) { %>
-                    <p>
-                        <%= messages.error %>
-                    </p>
-                    <% } %>
+            <p class="title">Connexion</p>
+
                         <div class="separator"></div>
                         <div class="form-control">
                             <p>Veuillez-vous connecter pour accéder à nos services</p>
-
+                            <% if (messages) { %>
+                                <p>
+                                    <%= messages.error %>
+                                </p>
+                                <% } %>
                         </div>
                         <form class="login-form" action="/connexion" method="POST">
                             <div class="form-control">
-                                <input type="email" name="email" placeholder="Adresse courriel" id="champ1" onkeyup="verifierChamps()" /> <br>
+                                <input type="email" name="email" placeholder="Adresse courriel"  class="login-input" id="champ1" onkeyup="verifierChamps()" /> <br>
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="form-control">
-                                <input type="password" name="password" placeholder="Mot de passe" id="champ2" onkeyup="verifierChamps()" /> <br>
+                                <input type="password" name="password" class="login-input" placeholder="Mot de passe" id="champ2" onkeyup="verifierChamps()" /> <br>
                                 <i class="fas fa-lock"></i>
                             </div>
                             <div class="form-control">
                                 <a class="password-forgotten" href="/resetPassword">Mot de passe oublié ?</a>
 
                             </div>
-                            <button class="submit" id="buttonc" disabled>Connexion</button>
+                            <button class="submit" id="buttonc" disabled>Se connecter</button>
 
                         </form>
 
