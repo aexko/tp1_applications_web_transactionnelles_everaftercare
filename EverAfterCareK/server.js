@@ -138,7 +138,8 @@ app.get("/services", (req, res) => {
         });
     });
 });
-app.get("/rendezvous", checkAuthenticated, (req, res) => {
+app.post("/services", checkAuthenticated, (req, res) => {
+	var total = req.body.prix;
     if (currentlyConnectedUser.user_type == "client") {
         User.find({ user_type: "docteur" }, function(err, users) {
             Service.find({}, function(err, services) {

@@ -14,16 +14,21 @@
     <div class="service">
         <% ListServices.forEach(function(item,index){%>
 
+            <form  action="/services" method="POST">
             <p>
                 <%=item.nom %>
             </p>
-
+            
             <p>
                 <%=item.description %> <br> Prix:
                     <%=item.prix %>
             </p>
-            <a href="/rendezvous" id=" buttonrdv ">
-                <input type="button" value="Prendre un RDV" /> </a>
+
+            <input type="text" name="prix" id="prix" hidden value="<%=item.prix %>" />
+            
+
+                    <button submit>Prendre Un RDV</button>
+                </form>
             <%}); %>
 
 
