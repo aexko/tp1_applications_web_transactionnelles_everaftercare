@@ -450,6 +450,7 @@ app.get("/changepass", checkAuthenticated, async(req, res) => {
     res.render("changepass", {
         titrePage: "Changement de mot-de-passe",
         titreSite: titreSite,
+        ConnectedUser: currentlyConnectedUser,
     });
 });
 
@@ -547,6 +548,7 @@ app.get("/resetPassword", checkNotAuthenticated, async(req, res) => {
     res.render("resetPassword", {
         titrePage: "resetPassword",
         titreSite: titreSite,
+        ConnectedUser: currentlyConnectedUser,
     });
 });
 // stripe
