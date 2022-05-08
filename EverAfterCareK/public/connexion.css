@@ -21,6 +21,8 @@ section {
 	left: 50%;
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
+	border: 1px solid black;
+	box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 /* section.side {
@@ -43,8 +45,8 @@ section {
 
 .title {
 	text-transform: uppercase;
-	font-size: 3em;
 	font-weight: bold;
+	font-size: 3em;
 	text-align: center;
 	letter-spacing: 1px;
 }
@@ -86,8 +88,9 @@ button {
 }
 
 input {
-	width: 75%;
+	width: 100%;
 	background: lightgray;
+	border: 1px solid black;
 	color: #333;
 	letter-spacing: 0.5px;
 	padding: 14px 64px;
@@ -136,10 +139,7 @@ button.submit:hover {
 	}
 }
 
-.vertical-center {
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
+.login-input::placeholder {
+	font-family: 'Times New Roman', Times, serif;
+	opacity: 1;
 }
