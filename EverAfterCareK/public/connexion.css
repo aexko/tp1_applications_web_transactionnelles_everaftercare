@@ -45,6 +45,7 @@ section {
 
 .title {
 	text-transform: uppercase;
+	font-family: 'Montserrat', sans-serif;
 	font-weight: bold;
 	font-size: 3em;
 	text-align: center;
@@ -140,6 +141,6 @@ button.submit:hover {
 }
 
 .login-input::placeholder {
-	font-family: 'Times New Roman', Times, serif;
+	font-family: 'Montserrat', sans-serif;
 	opacity: 1;
 }
