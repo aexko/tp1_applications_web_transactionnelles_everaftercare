@@ -9,8 +9,8 @@
     <%- include('./partials/header'); %>
         <link rel="stylesheet" href="connexion.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
 </header>
 
@@ -19,39 +19,39 @@
         <div class="login-container">
             <p class="title">Connexion</p>
 
-                        <div class="separator"></div>
-                        <div class="form-control">
-                            <p>Veuillez-vous connecter pour accéder à nos services</p>
-                            <% if (messages) { %>
-                                <p>
-                                    <%= messages.error %>
-                                </p>
-                                <% } %>
-                        </div>
-                        <form class="login-form" action="/connexion" method="POST">
-                            <div class="form-control">
-                                <input type="email" name="email" placeholder="Adresse courriel"  class="login-input" id="champ1" onkeyup="verifierChamps()" /> <br>
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="form-control">
-                                <input type="password" name="password" class="login-input" placeholder="Mot de passe" id="champ2" onkeyup="verifierChamps()" /> <br>
-                                <i class="fas fa-lock"></i>
-                            </div>
-                            <div class="form-control">
-                                <a class="password-forgotten" href="/resetPassword">Mot de passe oublié ?</a>
+            <div class="separator"></div>
+            <div class="form-control">
+                <p>Veuillez-vous connecter pour accéder à nos services</p>
+                <% if (messages) { %>
+                    <p>
+                        <%= messages.error %>
+                    </p>
+                    <% } %>
+            </div>
+            <form class="login-form" action="/connexion" method="POST">
+                <div class="form-control">
+                    <input type="email" name="email" placeholder="Adresse courriel" class="login-input" id="champ1"
+                        onkeyup="verifierChamps()" /> <br>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="form-control">
+                    <input type="password" name="password" class="login-input" placeholder="Mot de passe" id="champ2"
+                        onkeyup="verifierChamps()" /> <br>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="form-control">
+                    <a class="password-forgotten" href="/resetPassword">Mot de passe oublié ?</a>
 
-                            </div>
-                            <button class="submit" id="buttonc" disabled>Se connecter</button>
+                </div>
+                <div class="form-control">
+                    <button class="submit" id="buttonc" disabled>Se connecter</button>
 
-                        </form>
+                </div>
 
-
-
+            </form>
+            <a href="inscription">Vous n'avez pas un compte ?</a>
         </div>
 
-
-
-        </div>
 
     </section>
 
