@@ -22,7 +22,7 @@
             <p class="title">Inscription</p>
             <div class="separator"></div>
 
-            <form action="/inscription" method="POST">
+            <form class="login-form" action="/inscription" method="POST">
                 <div class="form-control">
                     <p>Bienvenue chez EverAfterCare !</p>
                     <% if (messages) { %>
@@ -62,9 +62,10 @@
 
                 </div>
                 <div class="form-control">
-                    <button class="submit" disabled>S'inscrire</button>
+                    <button class="submit" type="submit" id="button" disabled>Se connecter</button>
                 </div>
             </form>
+
             <a href="connexion">Vous avez déjà un compte ?</a>
 
         </div>
