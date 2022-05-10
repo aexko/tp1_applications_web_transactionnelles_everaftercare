@@ -1,50 +1,94 @@
-<head>
-    <link rel="stylesheet" href="navbar.css">
-</head>
-
-
 <nav>
-
-    <div class="center">
-        <!-- Code pour le menu -->
-        <a href="/"><img class="logo" src="/images/logo.png" alt="Logo"> </a>
-        <!-- <div class="section" >
-     <div class="type">
-         <a href="/">Accueil</a>
-     </div>
-
-    <div class="type">
-        <a href="rendezvous">Rendez-vous </a>
+    <div class="logo">
+        <img class="logo-img" src="/images/Logo_feuille.png" alt="Logo">
+        <h4>
+            <a href="/">EverAfterCare</a>
+        </h4>
     </div>
-
-    <div class="type">
-        <a href="inscription">Inscription </a>
-    </div>
-
-    <div class="type">
-        <a href="connexion">Connexion </a>
-    </div>
-</div> -->
-
-        <a href="services">Services</a>
-
-
+    <ul class="nav-links">
+        <li>
+            <a href="/">Accueil</a>
+        </li>
         <% if (ConnectedUser) { %>
-            <a href="profil">Votre profil</a>
-            <a onclick="document.getElementById('form1').submit();">Deconnexion</a>
 
-            <form id="form1" action="deconnexion?_method=DELETE" method="post">
+            <% if (ConnectedUser.user_type == "admin") { %>
+                <li>
+                    <a href="recherche">Recherche</a>
+                </li>
+                <% }else{ %>
+                    <li>
+                        <a href="services">Services</a>
+                    </li>
+                    <% } %>
+                        <li>
+                            <a href="profil">Votre profil</a>
+                        </li>
+                        <li>
+                            <a onclick="document.getElementById('form1').submit();">Déconnexion</a>
+                        </li>
 
-            </form>
-            <% }else{ %>
+                        <form id="form1" action="deconnexion?_method=DELETE" method="post">
+
+                        </form>
+                        <% }else{ %>
+                            <li>
+                                <a href="services">Services</a>
+                            </li>
+                            <li>
+                                <a href="inscription">Inscription</a>
+                            </li>
+                            <li>
+                                <a href="connexion">Connexion</a>
+                            </li>
+                            <% } %>
+    </ul>
+
+    <<<<<<< HEAD <% if (ConnectedUser) { %>
+        <a href="profil">Votre profil</a>
+        <a onclick="document.getElementById('form1').submit();">Deconnexion</a>
+
+        <form id="form1" action="deconnexion?_method=DELETE" method="post">
+
+        </form>
+        <% }else{ %>
 
 
-                <a href="inscription">Inscription</a>
-                <a href="connexion">Connexion</a>
-                <% } %>
+            <a href="inscription">Inscription</a>
+            <a href="connexion">Connexion</a>
+            <% } %>
 
-                    <!-- peut-etre mettre le nom du user dans le navbar? -->
-                    <div class="animation start-home"></div>
-    </div>
-
+                <!-- peut-etre mettre le nom du user dans le navbar? -->
+                <div class="animation start-home"></div>
+                </div>
+                =======
+                <div class="burger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
 </nav>
+
+<script>
+    const navSlide = () => {
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.nav-links');
+        const navLinks = document.querySelectorAll('.nav-links li');
+
+        burger.addEventListener("click", () => {
+            nav.classList.toggle("nav-active");
+            navLinks.forEach((link, index) => {
+                console.log(index);
+                if (link.style.animation) {
+                    link.style.animation = "";
+                } else {
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`;
+                }
+            });
+
+            burger.classList.toggle("toggle");
+        });
+    }
+
+    navSlide(); >>>
+    >>> > 98010 c872d2cc380f51ce6951b12d377ad37fc96
+</script>

@@ -21,6 +21,8 @@ section {
 	left: 50%;
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
+	border: 1px solid black;
+	box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 /* section.side {
@@ -34,17 +36,22 @@ section {
 } */
 
 .login-container {
-	max-width: 450px;
-	padding: 24px;
+	max-width: 475px;
+	padding:60px 60px 60px 60px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	background-color: white;
+	caret-color: white;
+	cursor: default;
+
 }
 
 .title {
 	text-transform: uppercase;
-	font-size: 3em;
+	font-family: 'Montserrat', sans-serif;
 	font-weight: bold;
+	font-size: 3em;
 	text-align: center;
 	letter-spacing: 1px;
 }
@@ -81,13 +88,14 @@ input,
 button {
 	border: none;
 	outline: none;
-	border-radius: 30px;
+	border-radius: 20px;
 	font-size: 1.1em;
 }
 
 input {
-	width: 75%;
+	width: 85%;
 	background: lightgray;
+	border: 1px solid black;
 	color: #333;
 	letter-spacing: 0.5px;
 	padding: 14px 64px;
@@ -108,7 +116,7 @@ input:focus~i {
 
 button.submit {
 	color: #fff;
-	padding: 14px 64px;
+	padding: 14px 24px;
 	margin: auto;
 	text-transform: uppercase;
 	letter-spacing: 2px;
@@ -136,10 +144,15 @@ button.submit:hover {
 	}
 }
 
-.vertical-center {
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%);
+.login-input::placeholder {
+	font-family: 'Montserrat', sans-serif;
+	opacity: 1;
+}
+
+p {
+	font-family: 'Montserrat', sans-serif;
+}
+
+a {
+	font-family: 'Montserrat', sans-serif;
 }

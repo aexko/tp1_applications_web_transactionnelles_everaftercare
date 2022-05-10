@@ -295,7 +295,7 @@ app.post(
         successRedirect: "/profil",
         failureRedirect: "/connexion",
         failureFlash: true,
-    }),
+    }), checkAuthenticated,
     async(req, res) => {}
 );
 
@@ -445,7 +445,6 @@ app.post("/resetPassword", checkNotAuthenticated, async(req, res) => {
             sendEmail(userFound.email, "Password Reset Request", { name: userFound.first_name, link: link, }, "./requeteResetPassword.handlebars");
         }
     }
-
     res.redirect("/");
 });
 
@@ -453,10 +452,8 @@ app.get("/changepass", checkAuthenticated, async(req, res) => {
     res.render("changepass", {
         titrePage: "Changement de mot-de-passe",
         titreSite: titreSite,
+        ConnectedUser: currentlyConnectedUser,
     });
-
-
-
 });
 
 
@@ -482,7 +479,6 @@ app.post("/changepass", checkAuthenticated, async(req, res) => {
 
     }
     res.redirect("/profil");
-
 });
 
 app.get("/resetPass/:cid", checkNotAuthenticated, async(req, res) => {
@@ -497,15 +493,6 @@ app.get("/resetPass/:cid", checkNotAuthenticated, async(req, res) => {
 
     await Confirmes.findOneAndDelete({ _id: confirmid });
 
-
-
-
-    const link = `${process.env.CLIENT_URL}/resetPass/` + confirm._id;
-    sendEmail(
-        userFound.email,
-        "Password Reset Request", { name: userFound.first_name, link: link },
-        "./requeteResetPassword.handlebars"
-    );
 
     res.redirect("/");
 });
@@ -558,11 +545,13 @@ app.get("/resetPassword", checkNotAuthenticated, async(req, res) => {
     res.render("resetPassword", {
         titrePage: "resetPassword",
         titreSite: titreSite,
+        ConnectedUser: currentlyConnectedUser,
     });
 });
 // stripe
 app.post("/getUtilisateurs", async(req, res) => {
-    let payload = typeof req.body.temp === 'string' ? req.body.temp.trim() : '';
+    let payload = req.body.temp.trim();
+    console.log(payload);
     let search = await User.find({
         email: { $regex: new RegExp("^" + payload + ".*", "i") },
     }).exec();
@@ -574,15 +563,13 @@ app.post("/getUtilisateurs", async(req, res) => {
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(bodyparser.json())
 
-// View Engine Setup
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
 
-app.get('/', function(req, res) {
-    res.render('Home', {
-        key: Publishable_Key
-    })
-})
+
+// app.get('/', function(req, res) {
+//     res.render('Home', {
+//         key: Publishable_Key
+//     })
+// })
 
 app.post("/payment", checkAuthenticated, async(req, res) => {
         console.log("La page marche déja");
@@ -666,8 +653,6 @@ app.post("/payment", checkAuthenticated, async(req, res) => {
                 }
             );
 
-            /*
-             */
         } else {
             res.redirect("/");
         }
