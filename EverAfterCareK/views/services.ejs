@@ -11,26 +11,29 @@
 
 <body>
     <link rel="stylesheet" href="services.css" />
-    <div class="service">
+    <div class="service" method="POST">
         <% ListServices.forEach(function(item,index){%>
 
-            <form  action="/services" method="POST">
-            <p>
-                <%=item.nom %>
-            </p>
-            
-            <p>
-                <%=item.description %> <br> Prix:
+            <form action="/services" method="POST">
+                <p>
+                    <%=item.nom %>
+                </p>
+
+                <p>
+                    <%=item.description %>
+                </p>
+                <p name="prix_service">
                     <%=item.prix %>
-            </p>
+                </p>
 
-            <input type="text" name="prix" id="prix" hidden value="<%=item.prix %>" />
-            
+                <input type="text" name="prix" id="prix" hidden value="<%=item._id %>" />
 
-                    <button submit>Prendre Un RDV</button>
-                </form>
-            <%}); %>
 
+                <button submit>Prendre Un RDV</button>
+            </form>
+
+
+            <% }); %>
 
     </div>
 

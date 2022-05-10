@@ -2,7 +2,7 @@
     background-color: rgb(135, 206, 235);
     opacity: 4;
     height: 430px;
-    width: 500px;
+    width: 60%;
     display: table-cell;
     font-family: 'Times New Roman', Times, serif;
     font-size: 45px;
@@ -10,15 +10,14 @@
     text-align: center;
 }
 
-h2 {
-    font-style: italic;
-    font-size: 60px;
+.container2 {
+    margin-top: 80px;
+    margin-left: 150px;
+    margin-right: 150px;
 }
 
-.container2 {
-    background-color: #777;
-    margin-top: 70px;
-    margin-left: 70px;
+p {
+    font-size: 20px
 }
 
 .diapos {
