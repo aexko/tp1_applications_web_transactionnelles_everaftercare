@@ -1,6 +1,6 @@
 <nav>
     <div class="logo">
-        <img class="logo-img" src="/images/Logo_feuille.png" alt="Logo">
+        <img class="logo-img" src="/images/logo.png" alt="Logo">
         <h4>
             <a href="/">EverAfterCare</a>
         </h4>
@@ -11,7 +11,7 @@
         </li>
         <% if (ConnectedUser) { %>
 
-            <% if (ConnectedUser.user_type == "admin") { %>
+            <% if (ConnectedUser.user_type=="admin" ) { %>
                 <li>
                     <a href="recherche">Recherche</a>
                 </li>
@@ -46,7 +46,6 @@
                             </li>
                             <% } %>
     </ul>
-
 
                 <div class="burger">
                     <div class="line1"></div>
