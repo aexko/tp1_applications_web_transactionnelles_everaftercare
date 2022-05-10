@@ -17,7 +17,7 @@
 
 <body>
     <h1>Recherche utilisateurs</h1>
-    <input type="text" id="search-box" onkeyup="sendData(this)">
+    <input type="text" id="search-box" onkeyup="sendData(this.value)">
     <section id="searchResults"></section>
 
     <script>
@@ -35,20 +35,19 @@
                     searchResults.innerHTML = '<p>Pas d\'utilisateur trouve</p>';
                     return;
 
-                }
-                payload.forEach((item, index) => {
-                   if (index > 0) searchResults.innerHTML += '<br><br>';
+                } else {
+                    payload.forEach((item, index) => {
+                    if (index > 0) searchResults.innerHTML += '<hr>';
+                    searchResults.innerHTML += `<p>Prénom : ${item.first_name}</p>`;
+                    searchResults.innerHTML += `<p>Nom de famille : ${item.last_name}</p>`;
+                    searchResults.innerHTML += `<p>Adresse courriel : ${item.email}</p>`;
+                    searchResults.innerHTML += `<p>Type d'utilisateur : ${item.user_type}</p>`;
+                    
 
-                        var temp = "";
-                    temp += `<p class="name" style="text-transform:uppercase;"> ${item.first_name}  ${item.last_name}</p>`;
-                    temp += '<hr>'
-                    temp += '<br>'
-                    temp += `<p style="text-transform:uppercase;">Adresse courriel : ${item.email}</p>`;
-                    temp += `<p style="text-transform:uppercase; font-style:underline;">Type d'utilisateur : ${item.user_type}</p>`;
-                        
-                    searchResults.innerHTML += '<div class = "UserInfo">' + temp + ' </div>';
                 });
                 return;
+                }
+
             });
         }
     </script>
