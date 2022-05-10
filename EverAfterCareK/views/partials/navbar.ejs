@@ -15,11 +15,15 @@
                 <li>
                     <a href="recherche">Recherche</a>
                 </li>
-                <% }else{ %>
+                <% }else if(ConnectedUser.user_type == "client"){ %>
                     <li>
                         <a href="services">Services</a>
                     </li>
-                    <% } %>
+                    <% }else if(ConnectedUser.user_type == "docteur"){ %>
+                        <li>
+                            <a href="rendezvous">Rendez-Vous</a>
+                        </li>
+                        <% } %>
                         <li>
                             <a href="profil">Votre profil</a>
                         </li>
@@ -43,24 +47,7 @@
                             <% } %>
     </ul>
 
-    <<<<<<< HEAD <% if (ConnectedUser) { %>
-        <a href="profil">Votre profil</a>
-        <a onclick="document.getElementById('form1').submit();">Deconnexion</a>
 
-        <form id="form1" action="deconnexion?_method=DELETE" method="post">
-
-        </form>
-        <% }else{ %>
-
-
-            <a href="inscription">Inscription</a>
-            <a href="connexion">Connexion</a>
-            <% } %>
-
-                <!-- peut-etre mettre le nom du user dans le navbar? -->
-                <div class="animation start-home"></div>
-                </div>
-                =======
                 <div class="burger">
                     <div class="line1"></div>
                     <div class="line2"></div>
@@ -89,6 +76,5 @@
         });
     }
 
-    navSlide(); >>>
-    >>> > 98010 c872d2cc380f51ce6951b12d377ad37fc96
+    navSlide();
 </script>

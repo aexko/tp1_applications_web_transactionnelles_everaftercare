@@ -33,6 +33,7 @@ const {
 } = require("./middlewares/auth");
 const initializePassport = require("./passport-config");
 const rdv = require("./models/rdv");
+const { unregisterDecorator } = require("handlebars/runtime");
 initializePassport(
     passport,
     async(email) => {
@@ -112,7 +113,19 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 app.get("/rdv/confirm/:rdvid", checkAuthenticated, async(req, res) => {
     frlid = req.params.rdvid;
 
-    var thatrdv = await Rdv.findOneAndUpdate({ _id: frlid, docteur_id: currentlyConnectedUser._id, confirme: false }, { confirme: true });
+    var thisrdv = await Rdv.findOneAndUpdate({ _id: frlid, docteur_id: currentlyConnectedUser._id, confirme: false }, { confirme: true });
+
+
+	var doctor = await User.findOne({_id : thisrdv.docteur_id});
+	var userofrdv = await User.findOne({_id : thisrdv.client_id});
+	var today = thisrdv.date;
+	var dd = String(today.getDate() + 1).padStart(2, '0');
+	var yyyy = today.getFullYear();
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+
+	today = mm + '/' + dd + '/' + yyyy;
+	sendEmail(userofrdv.email, "Rendez-vous confirmé.", { uname : userofrdv.first_name + " " + userofrdv.last_name, name: doctor.first_name + " " + doctor.last_name, rdvdate : today, rdvtime : thisrdv.heure}, "./rdvapproved.handlebars");
+
 
     res.redirect("/");
 });
@@ -120,11 +133,24 @@ app.get("/rdv/confirm/:rdvid", checkAuthenticated, async(req, res) => {
 app.get("/rdv/refuse/:rdvid", checkAuthenticated, async(req, res) => {
     frlid = req.params.rdvid;
 
-    var thatrdv = await Rdv.findOneAndDelete({
+    var thisrdv = await Rdv.findOne({
         _id: frlid,
         docteur_id: currentlyConnectedUser._id,
         confirme: false,
     });
+
+	var doctor = await User.findOne({_id : thisrdv.docteur_id});
+	var userofrdv = await User.findOne({_id : thisrdv.client_id});
+
+	sendEmail(userofrdv.email, "Rendez-vous annulé.", { uname : userofrdv.first_name + " " + userofrdv.last_name, name: doctor.first_name + " " + doctor.last_name}, "./rdvcanceled.handlebars");
+
+
+	var thisrdv = await Rdv.findOneAndDelete({
+        _id: frlid,
+        docteur_id: currentlyConnectedUser._id,
+        confirme: false,
+    });
+
 
     res.redirect("/");
 });
@@ -177,6 +203,29 @@ app.post("/services", checkAuthenticated, (req, res) => {
     });
 });
 
+app.get("/rendezvous", checkAuthenticated, (req, res) => {
+
+ 
+
+        if (currentlyConnectedUser.user_type == "docteur") {
+            Rdv.find({ docteur_id: currentlyConnectedUser._id, confirme: false },
+                function(err, rdvs) {
+                    User.find({}, function(err, us) {
+                        res.render("publicrdv", {
+                            titrePage: "Prise de Rendez-Vous",
+                            titreSite: titreSite,
+                            rdv: rdvs,
+                            users: us,
+                            ConnectedUser: currentlyConnectedUser,
+                        });
+                    });
+                }
+            );
+        } else {
+			res.redirect("/");
+		}
+
+});
 
 
 // DEBUG
@@ -360,9 +409,15 @@ app.post("/annuler_rdv", async(req, res) => {
                 currentlyConnectedUser.password
             )
         ) {
+            var thisrdv = await Rdv.findOne({ _id: s_rdv });
+			var doctor = await User.findOne({_id : thisrdv.docteur_id});
+			var userofrdv = await User.findOne({_id : thisrdv.client_id});
+
+			sendEmail(userofrdv.email, "Rendez-vous annulé.", { uname : userofrdv.first_name + " " + userofrdv.last_name, name: doctor.first_name + " " + doctor.last_name}, "./rdvcanceled.handlebars");
+
+
+
             var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv });
-
-
             res.redirect("/profil");
             console.log("Bon MDP");
         } else {
@@ -386,7 +441,7 @@ function convertDate(inputFormat) {
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
     //const userFound = await User.findOne({ email });
-    Rdv.find({ client_id: currentlyConnectedUser._id }, function(err, RDVs) {
+    Rdv.find({ client_id: currentlyConnectedUser._id, confirme : true}, function(err, RDVs) {
         res.render("profil", {
             titrePage: titreSite,
             titreSite: titreSite,
