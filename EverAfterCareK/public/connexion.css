@@ -6,9 +6,7 @@
 }
 
 body {
-	min-height: 100vh;
-	width: 100%;
-	grid-template-columns: 1fr 1fr;
+
 }
 
 section {
@@ -128,20 +126,6 @@ button.submit {
 
 button.submit:hover {
 	opacity: 0.9;
-}
-
-/* ----  Responsiveness   ----  */
-@media (max-width: 780px) {
-
-	body {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.side {
-		display: none;
-	}
 }
 
 .login-input::placeholder {

@@ -1,9 +1,7 @@
 <nav>
     <div class="logo">
-        <img class="logo-img" src="/images/logo.png" alt="Logo">
-        <h4>
-            <a href="/">EverAfterCare</a>
-        </h4>
+        <img class="logo-img" src="/images/logo.png" alt="Logo" width="300px">
+
     </div>
     <ul class="nav-links">
         <li>
@@ -31,6 +29,7 @@
                                 <a onclick="document.getElementById('form1').submit();">Déconnexion</a>
                             </li>
 
+
                             <form id="form1" action="deconnexion?_method=DELETE" method="post">
 
                             </form>
@@ -45,6 +44,7 @@
                                     <a href="connexion">Connexion</a>
                                 </li>
                                 <% } %>
+
     </ul>
 
     <div class="burger">
@@ -59,7 +59,6 @@
         const burger = document.querySelector('.burger');
         const nav = document.querySelector('.nav-links');
         const navLinks = document.querySelectorAll('.nav-links li');
-
         burger.addEventListener("click", () => {
             nav.classList.toggle("nav-active");
             navLinks.forEach((link, index) => {
@@ -70,10 +69,8 @@
                     link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`;
                 }
             });
-
             burger.classList.toggle("toggle");
         });
     }
-
     navSlide();
 </script>
