@@ -468,23 +468,25 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
 	);
 });
 
+
 // ajax
 app.get("/recherche", (req, res) => {
 	res.render("recherche", {
 		titrePage: "Recherche",
 		titreSite: titreSite,
-		ConnectedUser: currentlyConnectedUser,
 	});
 });
 
 app.post("/getUtilisateurs", async (req, res) => {
-	let payload = typeof req.body.temp === "string" ? req.body.temp.trim() : "";
+	let payload = req.body.payload.trim();
 	let search = await User.find({
 		email: { $regex: new RegExp("^" + payload + ".*", "i") },
 	}).exec();
 	search = search.slice(0, 10);
 	res.send({ payload: search });
 });
+
+
 
 // reset password
 
