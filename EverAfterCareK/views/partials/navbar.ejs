@@ -9,10 +9,17 @@
         <li>
             <a href="/">Accueil</a>
         </li>
-        <li>
-            <a href="services">Services</a>
-        </li>
         <% if (ConnectedUser) { %>
+            
+        <% if (ConnectedUser.user_type == "admin") { %>
+            <li>
+                <a href="recherche">Recherche</a>
+            </li>
+        <% }else{ %>
+            <li>
+                <a href="services">Services</a>
+            </li>
+            <% } %>
             <li>
                 <a href="profil">Votre profil</a>
             </li>
@@ -24,6 +31,9 @@
 
             </form>
             <% }else{ %>
+                <li>
+                    <a href="services">Services</a>
+                </li>
                 <li>
                     <a href="inscription">Inscription</a>
                 </li>

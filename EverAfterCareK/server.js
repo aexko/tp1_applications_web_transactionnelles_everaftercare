@@ -293,7 +293,7 @@ app.post(
         successRedirect: "/profil",
         failureRedirect: "/connexion",
         failureFlash: true,
-    }),
+    }), checkAuthenticated,
     async(req, res) => {}
 );
 
@@ -491,12 +491,7 @@ app.get("/resetPass/:cid", checkNotAuthenticated, async(req, res) => {
 
     await Confirmes.findOneAndDelete({ _id: confirmid });
 
-    const link = `${process.env.CLIENT_URL}/resetPass/` + confirm._id;
-    sendEmail(
-        userFound.email,
-        "Password Reset Request", { name: userFound.first_name, link: link },
-        "./requeteResetPassword.handlebars"
-    );
+   
     res.redirect("/");
 });
 
@@ -553,7 +548,8 @@ app.get("/resetPassword", checkNotAuthenticated, async(req, res) => {
 });
 // stripe
 app.post("/getUtilisateurs", async(req, res) => {
-    let payload = typeof req.body.temp === 'string' ? req.body.temp.trim() : '';
+    let payload = req.body.temp.trim();
+	console.log(payload);
     let search = await User.find({
         email: { $regex: new RegExp("^" + payload + ".*", "i") },
     }).exec();
