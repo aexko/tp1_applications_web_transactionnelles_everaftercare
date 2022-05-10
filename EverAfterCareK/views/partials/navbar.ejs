@@ -1,6 +1,6 @@
 <nav>
     <div class="logo">
-        <img class="logo-img" src="/images/Logo_feuille.png" alt="Logo">
+        <img class="logo-img" src="/images/logo.png" alt="Logo">
         <h4>
             <a href="/">EverAfterCare</a>
         </h4>
@@ -11,34 +11,43 @@
         </li>
         <% if (ConnectedUser) { %>
 
-            <% if (ConnectedUser.user_type == "admin") { %>
+            <% if (ConnectedUser.user_type=="admin" ) { %>
                 <li>
                     <a href="recherche">Recherche</a>
                 </li>
-                <% }else{ %>
+                <% }else if(ConnectedUser.user_type=="client" ){ %>
                     <li>
                         <a href="services">Services</a>
                     </li>
-                    <% } %>
+                    <% }else if(ConnectedUser.user_type=="docteur" ){ %>
                         <li>
-                            <a href="profil">Votre profil</a>
+                            <a href="rendezvous">Rendez-Vous</a>
                         </li>
-                        <li>
-                            <a onclick="document.getElementById('form1').submit();">Déconnexion</a>
-                        </li>
-                        <form id="form1" action="deconnexion?_method=DELETE" method="post">
-                        </form>
-                        <% }else{ %>
+                        <% } %>
                             <li>
-                                <a href="services">Services</a>
+                                <a href="profil">Votre profil</a>
                             </li>
                             <li>
-                                <a href="inscription">Inscription</a>
+                                <a onclick="document.getElementById('form1').submit();">Déconnexion</a>
                             </li>
-                            <li>
-                                <a href="connexion">Connexion</a>
-                            </li>
-                            <% } %>
+                            <<<<<<< HEAD <% } %>
+                                =======
+
+                                <form id="form1" action="deconnexion?_method=DELETE" method="post">
+
+                                </form>
+                                <% }else{ %>
+                                    <li>
+                                        <a href="services">Services</a>
+                                    </li>
+                                    <li>
+                                        <a href="inscription">Inscription</a>
+                                    </li>
+                                    <li>
+                                        <a href="connexion">Connexion</a>
+                                    </li>
+                                    <% } %>
+                                        >>>>>>> 6eea108b977326e58dea177861088327753706d5
     </ul>
 
     <div class="burger">
@@ -50,21 +59,26 @@
 
 <script>
     const navSlide = () => {
-        const burger = document.querySelector('.burger');
-        const nav = document.querySelector('.nav-links');
-        const navLinks = document.querySelectorAll('.nav-links li');
-        burger.addEventListener("click", () => {
-            nav.classList.toggle("nav-active");
-            navLinks.forEach((link, index) => {
-                console.log(index);
-                if (link.style.animation) {
-                    link.style.animation = "";
-                } else {
-                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`;
-                }
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+            burger.addEventListener("click", () => {
+                nav.classList.toggle("nav-active");
+                navLinks.forEach((link, index) => {
+                    console.log(index);
+                    if (link.style.animation) {
+                        link.style.animation = "";
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.5}s`;
+                    }
+                });
+                burger.classList.toggle("toggle");
             });
-            burger.classList.toggle("toggle");
-        });
-    }
+        } <<
+        << << < HEAD ===
+        === =
+
+        >>>
+        >>> > 6e ea108b977326e58dea177861088327753706d5
     navSlide();
 </script>

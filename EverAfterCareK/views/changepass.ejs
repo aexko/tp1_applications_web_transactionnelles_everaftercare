@@ -6,19 +6,42 @@
 </head>
 
 <header>
-    <%- include('./partials/header'); %>
+    <%- include('./partials/header'); %> <link rel="stylesheet" href="connexion.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
 </header>
 
-<body>
-    <form action="/changepass" method="POST">
+<body>  <section class="main">
+    <div class="login-container">
+        <p class="title">Changement de Mot de Passe.</p>
+
+        <div class="separator"></div>
+        <div class="form-control">
+    <form class="login-form" action="/changepass" method="POST">
+        <div class="form-control">
         <input type="password" name="oldpass" placeholder="Ancien mot de passe" id="champ3"
             onkeyup="verifierChamps()" /> <br>
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="form-control">
         <input type="password" name="newpass" placeholder="Nouveau Mot De Passe" id="champ2"
-            onkeyup="verifierChamps()" /> <br>
+            onkeyup="verifierChamps()" /> <br>       <i class="fas fa-user"></i>
+        </div>
+        <div class="form-control">
         <input type="password" name="confirmnewpass" placeholder="Confirmer Nouveau Mot De Passe" id="champ1"
-            onkeyup="verifierChamps()" /> <br>
-        <button id="button" disabled submit>Changer Mot-de-Passe</button>
+            onkeyup="verifierChamps()" /> <br>       <i class="fas fa-user"></i>
+        </div>
+        <div class="form-control">
+        <button class="submit" id="button" disabled submit>Changer Mot-de-Passe</button>
+        </div>
     </form>
+</div>
+
+
+</section>
+
     <script>
         function verifierChamps() {
             if (champ3.value.length > 0 && champ2.value.length > 0 && champ1.value.length > 0) {
