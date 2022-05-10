@@ -1,6 +1,6 @@
 <nav>
     <div class="logo">
-        <img class="logo-img" src="/images/Logo_feuille.png" alt="Logo">
+        <img class="logo-img" src="/images/logo.png" alt="Logo">
         <h4>
             <a href="/">EverAfterCare</a>
         </h4>
@@ -11,7 +11,7 @@
         </li>
         <% if (ConnectedUser) { %>
 
-            <% if (ConnectedUser.user_type == "admin") { %>
+            <% if (ConnectedUser.user_type=="admin" ) { %>
                 <li>
                     <a href="recherche">Recherche</a>
                 </li>
@@ -43,7 +43,7 @@
                             <% } %>
     </ul>
 
-    <<<<<<< HEAD <% if (ConnectedUser) { %>
+    <% if (ConnectedUser) { %>
         <a href="profil">Votre profil</a>
         <a onclick="document.getElementById('form1').submit();">Deconnexion</a>
 
@@ -52,15 +52,8 @@
         </form>
         <% }else{ %>
 
-
-            <a href="inscription">Inscription</a>
-            <a href="connexion">Connexion</a>
             <% } %>
-
-                <!-- peut-etre mettre le nom du user dans le navbar? -->
-                <div class="animation start-home"></div>
                 </div>
-                =======
                 <div class="burger">
                     <div class="line1"></div>
                     <div class="line2"></div>
@@ -89,6 +82,5 @@
         });
     }
 
-    navSlide(); >>>
-    >>> > 98010 c872d2cc380f51ce6951b12d377ad37fc96
+    navSlide();
 </script>
