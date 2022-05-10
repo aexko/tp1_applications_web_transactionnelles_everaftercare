@@ -7,7 +7,7 @@
 
     <div class="center">
         <!-- Code pour le menu -->
-        <a href="/"><img class="logo" src="/images/Logo_feuille.png" alt="Logo"> <br> Accueil </a>
+        <a href="/"><img class="logo" src="/images/logo.png" alt="Logo"> </a>
         <!-- <div class="section" >
      <div class="type">
          <a href="/">Accueil</a>
@@ -29,26 +29,22 @@
         <a href="services">Services</a>
 
 
-
-
-        
- 
         <% if (ConnectedUser) { %>
-            <a href="profil">Votre profil</a> 
-             <a onclick="document.getElementById('form1').submit();">Deconnexion</a>
-             
+            <a href="profil">Votre profil</a>
+            <a onclick="document.getElementById('form1').submit();">Deconnexion</a>
+
             <form id="form1" action="deconnexion?_method=DELETE" method="post">
-               
+
             </form>
-        <% }else{ %>
+            <% }else{ %>
 
-         
-        <a  href="inscription">Inscription</a>
-            <a  href="connexion">Connexion</a>
-        <% } %>
 
-        <!-- peut-etre mettre le nom du user dans le navbar? -->
-        <div class="animation start-home"></div>
+                <a href="inscription">Inscription</a>
+                <a href="connexion">Connexion</a>
+                <% } %>
+
+                    <!-- peut-etre mettre le nom du user dans le navbar? -->
+                    <div class="animation start-home"></div>
     </div>
 
 </nav>

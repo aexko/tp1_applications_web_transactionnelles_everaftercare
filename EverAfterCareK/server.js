@@ -25,8 +25,7 @@ const bcrypt = require("bcryptjs");
 var Publishable_Key = 'pk_test_51Kt9oSCnmso28bfJvG5lopyYW1LRp5FvU6fRpwbMQm16wwYoCVU71crPRwJ7oITPr62FOiHeLzNt4dJkcVMDke3Q00LZhLTgqt'
 var Secret_Key = 'sk_test_51Kt9oSCnmso28bfJ8EKLGYNsZAt1qy9KjCtp3fncIbfgRCkzF59rKmZKXdhvupqxfbWcwEYFVR4Tesqsft8xhDpx00g7gCIL70'
 const stripe = require('stripe')(Secret_Key)
-var total;
-var rdv_choisi;
+
 
 const {
     checkAuthenticated,
@@ -101,7 +100,7 @@ app.get("/connexion", checkNotAuthenticated, (req, res) => {
 
 // pour charger la page d'inscription
 app.get("/inscription", checkNotAuthenticated, (req, res) => {
- 
+
     res.render("inscription", {
         titrePage: "Inscription",
         titreSite: titreSite,
@@ -140,36 +139,42 @@ app.get("/services", (req, res) => {
     });
 });
 app.post("/services", checkAuthenticated, (req, res) => {
-	var total = req.body.prix;
-    if (currentlyConnectedUser.user_type == "client") {
-        User.find({ user_type: "docteur" }, function(err, users) {
-            Service.find({}, function(err, services) {
+
+    var id = req.body.prix;
+
+    Service.findOne({ _id: id }, function(err, service) {
+
+
+
+        if (currentlyConnectedUser.user_type == "client") {
+            User.find({ user_type: "docteur" }, function(err, users) {
                 res.render("rendezvous", {
                     titrePage: "Prise de Rendez-Vous",
                     titreSite: titreSite,
                     ListDocteur: users,
-                    ListServices: services,
                     key: Publishable_Key,
-                    total: total,
+                    serv: service,
                     ConnectedUser: currentlyConnectedUser,
                 });
+
             });
-        });
-    } else if (currentlyConnectedUser.user_type == "docteur") {
-        Rdv.find({ docteur_id: currentlyConnectedUser._id, confirme: false },
-            function(err, rdvs) {
-                User.find({}, function(err, us) {
-                    res.render("publicrdv", {
-                        titrePage: "Prise de Rendez-Vous",
-                        titreSite: titreSite,
-                        rdv: rdvs,
-                        users: us,
-                        ConnectedUser: currentlyConnectedUser,
+        } else if (currentlyConnectedUser.user_type == "docteur") {
+            Rdv.find({ docteur_id: currentlyConnectedUser._id, confirme: false },
+                function(err, rdvs) {
+                    User.find({}, function(err, us) {
+                        res.render("publicrdv", {
+                            titrePage: "Prise de Rendez-Vous",
+                            titreSite: titreSite,
+                            rdv: rdvs,
+                            users: us,
+                            ConnectedUser: currentlyConnectedUser,
+                        });
                     });
-                });
-            }
-        );
-    } else if (currentlyConnectedUser.user_type == "admin") {}
+                }
+            );
+        } else if (currentlyConnectedUser.user_type == "admin") {}
+
+    });
 });
 
 
@@ -240,17 +245,17 @@ app.post("/rendezvous", checkAuthenticated, async(req, res) => {
                                         currentlyConnectedUser.last_name
                                     );
 
-                                    res.redirect("/");
+                                    res.redirect("/profil");
                                 } catch (error) {
                                     console.log(error);
-                                    res.redirect("/rendezvous");
+                                    res.redirect("/profil");
                                 }
                             } else {
 
                                 console.log(
                                     "Rendez-Vous existe déja dans la plage horaire pour le client"
                                 );
-                                res.redirect("/rendezvous");
+                                res.redirect("/profil");
                             }
                         }
                     );
@@ -261,7 +266,7 @@ app.post("/rendezvous", checkAuthenticated, async(req, res) => {
                     console.log(
                         "Rendez-Vous existe déja dans la plage horaire pour le docteur"
                     );
-                    res.redirect("/rendezvous");
+                    res.redirect("/profil");
                 }
             }
         );
@@ -280,12 +285,7 @@ app.post(
     }),
     async(req, res) => {}
 );
-app.post("/services", async(req, res) => {
-    rdv_choisi = req.body.nom_service
-    total = req.body.prix_service
-    console.log(total);
-    res.redirect("/rendezvous");
-});
+
 
 app.post(
     "/connexiond",
@@ -587,7 +587,7 @@ app.get('/', function(req, res) {
 app.post("/payment", checkAuthenticated, async(req, res) => {
         console.log("La page marche déja");
         d_id = req.body.nom_doc;
-        console.log(req.body.testing);
+        total = req.body.prix;
         console.log(d_id);
         const userFound = await User.findOne({ _id: d_id, user_type: "docteur" });
         if (userFound) {
@@ -648,11 +648,11 @@ app.post("/payment", checkAuthenticated, async(req, res) => {
                                             });
                                     } catch (error) {
                                         console.log(error);
-                                        res.redirect("/rendezvous");
+                                        res.redirect("/profil");
                                     }
                                 } else {
 
-                                    res.redirect("/rendezvous");
+                                    res.redirect("/profil");
                                 }
                             }
                         );
@@ -661,7 +661,7 @@ app.post("/payment", checkAuthenticated, async(req, res) => {
                         console.log(
                             "Rendez-Vous existe déja dans la plage horaire pour le docteur"
                         );
-                        res.redirect("/rendezvous");
+                        res.redirect("/profil");
                     }
                 }
             );
