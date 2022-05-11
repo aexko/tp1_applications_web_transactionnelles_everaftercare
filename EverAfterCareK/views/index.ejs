@@ -16,21 +16,85 @@
 
     <div class="container2">
         <div class="container1">
-            <h1> Clinique dentaire Ever After Care</h1>
-            <p>Situé au coeur de Montréal, notre clinique
-                <B>Ever After Care</B> vous offre une gamme complète de service pour vous et votre famille. Nos spécialiste se feront un plaisir de vous accompagner dans tout vos besoins
-            </p>
+            <h1 class="title"> Clinique dentaire Ever After Care</h1>
+            <p class="text_accueil">Situé au coeur de Montréal, notre clinique Ever After Care vous offre une gamme complète de service pour vous et votre famille. Nos spécialistes se feront un plaisir de vous accompagner dans tous vos besoins en offrant aux enfants et adultes
+                des services dentaires de haute qualité dans un environnement convivial, et à la fine pointe de la technologie.
+
+
+                <br> <br> Inscrivez-vous dès maintenant pour prendre rendez-vous avec le médecin de votre choix! </p>
 
         </div>
 
         <div class="diapos">
 
         </div>
+        <br>
+        <div class="presentation">
+
+            <div class="tabs">
+                <span data-tab-value="#tab_1">Esthétique dentaire</span>
+                <span data-tab-value="#tab_2">Soins de bases</span>
+                <span data-tab-value="#tab_3">Spécialités dentaires</span>
+                <span data-tab-value="#tab_4">Urgences</span>
+            </div>
+
+            <div class="tab-content">
+                <div class="tabs__tab active" id="tab_1" data-tab-info>
+
+                    <h2>Esthétique dentaire</h2>
+
+
+                </div>
+                <div class="tabs__tab" id="tab_2" data-tab-info>
+
+                    <h2>Soins de base</h2>
+
+                </div>
+                <div class="tabs__tab" id="tab_3" data-tab-info>
+
+                    <h2>Spécialités dentaires</h2>
+
+                </div>
+                <div class="tabs__tab" id="tab_4" data-tab-info>
+
+                    <h2>Urgences</h2>
+
+                    <h5>Quand est-ce une urgence?</h5>
+
+                    <p class="text_accueil">Plusieurs symptomes sont signes d'une urgence: une douleur aigües, une enflure, un saignement polongé, une dent qui élance, une douleir anormale après une chirurgie,etc.</p>
+
+                    <p class="text_accueil">Vous avez une urgence dentaire ? Présentez-vous à la clinique sans rendez-vous afin de vous faire examiner . Un dentiste sera toujours les jours fériés et en soirée afin de
+                    </p>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <br>
 
 
+
+
+
+
+
+    <script type="text/javascript">
+        const tabs = document.querySelectorAll('[data-tab-value]')
+        const tabInfos = document.querySelectorAll('[data-tab-info]')
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = document
+                    .querySelector(tab.dataset.tabValue);
+
+                tabInfos.forEach(tabInfo => {
+                    tabInfo.classList.remove('active')
+                })
+                target.classList.add('active');
+            })
+        })
+    </script>
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 </body>

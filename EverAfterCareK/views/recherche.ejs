@@ -3,16 +3,12 @@
 
 <head>
     <%- include('./partials/head'); %>
-        <title>
-            <%- titreSite %> -
-                <%- titrePage %>
-        </title>
-
 </head>
-<link rel="stylesheet" href="recherche.css" />
 
 <header>
     <%- include('./partials/header'); %>
+    <link rel="stylesheet" href="recherche.css" />
+
 </header>
 
 <body>
@@ -23,13 +19,12 @@
     <script>
         function sendData(e) {
             const searchResults = document.getElementById("searchResults");
-
             fetch('getUtilisateurs', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ temp: e.value })
+                body: JSON.stringify({ payload: e.value })
             }).then(res => res.json()).then(data => {
-                let payload = data.payload;
+                let payload = data.payload.toString();
                 searchResults.innerHTML = '';
                 if (payload.length < 1) {
                     searchResults.innerHTML = '<p>Pas d\'utilisateur trouve</p>';
@@ -37,18 +32,17 @@
 
                 }
                 payload.forEach((item, index) => {
-                   if (index > 0) searchResults.innerHTML += '<br><br>';
+                    if (index > 0) searchResults.innerHTML += '<hr>';
+                    searchResults.innerHTML += `<p>Prénom : ${item.first_name}</p>`;
+                    searchResults.innerHTML += `<p>Nom de famille : ${item.last_name}</p>`;
+                    searchResults.innerHTML += `<p>Adresse courriel : ${item.email}</p>`;
+                    searchResults.innerHTML += `<p>Type d'utilisateur : ${item.user_type}</p>`;
 
-                        var temp = "";
-                    temp += `<p class="name" style="text-transform:uppercase;"> ${item.first_name}  ${item.last_name}</p>`;
-                    temp += '<hr>'
-                    temp += '<br>'
-                    temp += `<p style="text-transform:uppercase;">Adresse courriel : ${item.email}</p>`;
-                    temp += `<p style="text-transform:uppercase; font-style:underline;">Type d'utilisateur : ${item.user_type}</p>`;
-                        
-                    searchResults.innerHTML += '<div class = "UserInfo">' + temp + ' </div>';
+
                 });
                 return;
+
+
             });
         }
     </script>
