@@ -11,61 +11,73 @@
 <link rel="stylesheet" href="profil.css" />
 <header>
     <%- include('./partials/header'); %>
+    <link rel="stylesheet" href="connexion.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 </header>
 
 <body>
-    <h1>Hello
-        <%= name %>
-    </h1>
-
-    <div class="annuler_RDV">
+    
+    <section class="main" style="width:85%" >
+    <div  class="login-container" style="width:100%">
+    <p class="title">Bonjour, <%= name %></p>
+    <div class="separator"></div>
+        
+        <div class="form-control">
+            <a href="/changepass">Changer mot de passe?</a>
+            </div>
+        <br><br><br>
+        
+    
+    <% if(ConnectedUser.user_type == "client" && userFound_rdv.length > 0){ %>
+        <p class="title">Annulez Rendez-Vous</p>
+        <div class="separator"></div>
+    <div>
         <form action="/annuler_rdv" method="post">
             <label for="rendezvous">Sélectionnner le rendez-vous à annuler:</label>
 
+            <div class="form-control">
             <select id="champ1" name="selected_rdv" onkeyup="verifierChamps()">
                 <% userFound_rdv.forEach(function(item,index){%>
                     <option value="<%= item._id%>">
-                        <%= item.docteur_id %>
-                            <%= item.date %>
+
+
+
+                        <% users.forEach(function(user,index){%>
+                        <% if(user._id == item.docteur_id){ %>
+                        <%= user.first_name + " " + user.last_name + " " %>
+                        <%   var today = item.date;%>
+                        <%   var dd = String(today.getDate() + 1).padStart(2, '0');%>
+                        <%   var yyyy = today.getFullYear();%>
+                        <%   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!%>
+                      
+                        <%   today = mm + '/' + dd + '/' + yyyy; %>
+                          <%=today + " " + item.heure%>
+                          <%}; %>
+                          <%}); %>
                     </option>
                     <%}); %>
 
             </select>
-            </input>
+            </div>
+            <div class="form-control">
             <p>Entrez votre mot de passe</p>
+            </div>
+            
+            <div class="form-control">
             <input name="password" id="champ2" onkeyup="verifierChamps()" /> <br>
-
-            <button submit id="buttonA ">Confirmer </input>
-
-
-        </form>
-    </div>
-    <div class="Afficher_RDV">
-        <form action="/annuler_rdv" method="post">
-          
-
-            <ul id="----" name="----" onkeyup="verifierChamps()">
-                <% userFound_rdv.forEach(function(item,index){%>
-                <il value="<%= item._id%>" >
-                   
-                        <%= item.date %>
-                </il>
-                <%}); %>
-
-            </select>
-            </input>
-           
-
-         
-        
+</div>
+<div class="form-control">
+            <button class="submit" submit id="buttonA ">Confirmer </button>
+            </div>
 
         </form>
     </div>
+ 
+    <%}; %>
    
-    <form action="/deconnexion?_method=DELETE" method="POST">
-        <button type="submit">Déconnexion</button>
-            <a href="/changepass">Changer mot de passe?</a>
-        </form>
+
         <script>
             function verifierChamps() {
                 if (champ1.value.length > 0 && champ2.value.length > 0) {
@@ -76,5 +88,12 @@
 
             }
         </script>
+
+
+</div>
+
+
+</section>
+
 
 </body>
