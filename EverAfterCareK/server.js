@@ -127,7 +127,7 @@ app.get("/rdv/confirm/:rdvid", checkAuthenticated, async(req, res) => {
 	sendEmail(userofrdv.email, "Rendez-vous confirmé.", { uname : userofrdv.first_name + " " + userofrdv.last_name, name: doctor.first_name + " " + doctor.last_name, rdvdate : today, rdvtime : thisrdv.heure}, "./rdvapproved.handlebars");
 
 
-    res.redirect("/");
+    res.redirect("/rendezvous");
 });
 
 app.get("/rdv/refuse/:rdvid", checkAuthenticated, async(req, res) => {
@@ -152,7 +152,7 @@ app.get("/rdv/refuse/:rdvid", checkAuthenticated, async(req, res) => {
     });
 
 
-    res.redirect("/");
+    res.redirect("/rendezvous");
 });
 app.get("/services", (req, res) => {
     Service.find({}, function(err, services) {
@@ -442,6 +442,7 @@ function convertDate(inputFormat) {
 app.get("/profil/", checkAuthenticated, (req, res) => {
     //const userFound = await User.findOne({ email });
     Rdv.find({ client_id: currentlyConnectedUser._id, confirme : true}, function(err, RDVs) {
+		User.find({}, function(err, us) {
         res.render("profil", {
             titrePage: titreSite,
             titreSite: titreSite,
@@ -451,7 +452,9 @@ app.get("/profil/", checkAuthenticated, (req, res) => {
             Cuser: currentlyConnectedUser,
             userFound_rdv: RDVs,
             ConnectedUser: currentlyConnectedUser,
+			users: us,
         });
+	});
     });
 });
 

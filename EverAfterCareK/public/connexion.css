@@ -36,7 +36,8 @@ section {
 } */
 
 .login-container {
-	max-width: 475px;
+	/*max-width: 475px;*/
+	width: 100%;
 	padding:60px 60px 60px 60px;
 	display: flex;
 	flex-direction: column;
@@ -130,6 +131,10 @@ button.submit:hover {
 	opacity: 0.9;
 }
 
+button:hover {
+	opacity: 0.9;
+}
+
 /* ----  Responsiveness   ----  */
 @media (max-width: 780px) {
 
@@ -155,4 +160,38 @@ p {
 
 a {
 	font-family: 'Montserrat', sans-serif;
+}
+
+
+.btnS{
+	border:2px rgb(106, 207, 106) solid;
+	font-family: 'Montserrat', sans-serif;
+	background-color: green;
+}
+.btnD{
+	border:2px rgb(207, 106, 106) solid;
+	font-family: 'Montserrat', sans-serif;
+	background-color: rgb(155, 31, 31);
+}
+
+table, th, td{
+	font-family: 'Montserrat', sans-serif;
+	border : 1px solid;
+	border-color: rgb(51, 150, 216);
+}
+
+td{
+	text-align: center;
+	vertical-align: middle;
+	height:40px;
+	background-image: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 255, 255));
+}
+th{
+	text-align: center;
+	vertical-align: middle;
+	height:40px;
+}
+.start{
+	
+	background-image: linear-gradient(to right, rgb(122, 142, 255), rgb(130, 184, 255));
 }
