@@ -1,108 +1,116 @@
-                                .container1 {
-                                    background-color: rgb(135, 206, 235);
-                                    opacity: 4;
-                                    height: 200px;
-                                    width: 60%;
-                                    display: table-cell;
-                                    margin: 50px auto;
-                                    text-align: justify;
-                                    padding: 10px;
+                            .container1 {
+                                background-color: rgb(135, 206, 235);
+                                opacity: 4;
+                                height: 200px;
+                                width: 60%;
+                                display: table-cell;
+                                margin: 50px auto;
+                                text-align: justify;
+                                padding: 10px;
+                            }
+                            
+                            .container2 {
+                                margin-top: 80px;
+                                margin-left: 150px;
+                                margin-right: 150px;
+                            }
+                            
+                            .text_accueil {
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 16px;
+                                margin: 5px;
+                                margin-left: 30px;
+                            }
+                            
+                            .title {
+                                font-size: 35px;
+                                margin-left: 30px;
+                                margin-top: 25px;
+                                margin-bottom: 20px;
+                                font-weight: bold;
+                            }
+                            
+                            .diapos {
+                                width: 100%;
+                                height: 325px;
+                                margin: 50px auto;
+                                box-shadow: 0px 15px 10px -5px #777;
+                                background-color: #EDEDED;
+                                background-size: contain;
+                                animation: fondu 20s ease-in-out infinite both;
+                                display: table-cell;
+                            }
+                            
+                            .diapos:hover {
+                                animation-play-state: paused;
+                            }
+                            
+                            .presentation {
+                                width: 100%;
+                                height: 400px;
+                                background: rgb(255, 255, 255);
+                                border-radius: 2px;
+                                box-shadow: 0 0 10px rgb(0, 0, 0, 0.5);
+                            }
+                            
+                            [data-tab-info] {
+                                display: none;
+                            }
+                            
+                            .active[data-tab-info] {
+                                display: block;
+                            }
+                            
+                            .tab-content {
+                                margin: 60;
+                            }
+                            
+                            .tabs {
+                                font-size: 30px;
+                                color: rgb(0, 0, 0);
+                                display: flex;
+                                margin: 20;
+                                position: center;
+                                font-family: Arial, Helvetica, sans-serif;
+                            }
+                            
+                            .tabs span {
+                                background: #DCDCDC;
+                                padding: 10px;
+                                width: 25%;
+                                border: 1px solid rgb(255, 255, 255);
+                                text-align: center;
+                                height: 80px;
+                            }
+                            
+                            .tabs span:hover {
+                                background: #89cff0;
+                                cursor: pointer;
+                                color: rgb(255, 255, 255);
+                            }
+                            
+                            .image_accueil {
+                                width: 25%;
+                            }
+                            
+                            .desctiption_services {
+                                margin-left: 25%;
+                            }
+                            
+                            @keyframes fondu {
+                                0% {
+                                    background-image: url("images/diapo1.jpg");
                                 }
-                                
-                                .container2 {
-                                    margin-top: 80px;
-                                    margin-left: 150px;
-                                    margin-right: 150px;
+                                25% {
+                                    background-image: url("images/diapo2.jpg");
                                 }
-                                
-                                .text_accueil {
-                                    font-family: Arial, Helvetica, sans-serif;
-                                    font-size: 16px;
-                                    margin: 5px;
-                                    margin-left: 30px;
+                                50% {
+                                    background-image: url("images/diapo10.jpg");
                                 }
-                                
-                                .title {
-                                    font-size: 35px;
-                                    margin-left: 30px;
-                                    margin-top: 25px;
-                                    margin-bottom: 20px;
-                                    font-weight: bold;
+                                75% {
+                                    background-image: url("images/diapo9.jpg");
                                 }
-                                
-                                .diapos {
-                                    width: 100%;
-                                    height: 325px;
-                                    margin: 50px auto;
-                                    box-shadow: 0px 15px 10px -5px #777;
-                                    background-color: #EDEDED;
-                                    background-size: contain;
-                                    animation: fondu 20s ease-in-out infinite both;
-                                    display: table-cell;
+                                100% {
+                                    background-image: url("images/diapo11.jpg");
                                 }
-                                
-                                .diapos:hover {
-                                    animation-play-state: paused;
-                                }
-                                
-                                .presentation {
-                                    width: 100%;
-                                    height: 400px;
-                                    background: rgb(255, 255, 255);
-                                    border-radius: 2px;
-                                    box-shadow: 0 0 10px rgb(0, 0, 0, 0.5);
-                                }
-                                
-                                [data-tab-info] {
-                                    display: none;
-                                }
-                                
-                                .active[data-tab-info] {
-                                    display: block;
-                                }
-                                
-                                .tab-content {
-                                    margin: 60;
-                                }
-                                
-                                .tabs {
-                                    font-size: 30px;
-                                    color: rgb(0, 0, 0);
-                                    display: flex;
-                                    margin: 20;
-                                    position: center;
-                                    font-family: Arial, Helvetica, sans-serif;
-                                }
-                                
-                                .tabs span {
-                                    background: #DCDCDC;
-                                    padding: 10px;
-                                    width: 25%;
-                                    border: 1px solid rgb(255, 255, 255);
-                                    text-align: center;
-                                    height: 80px;
-                                }
-                                
-                                .tabs span:hover {
-                                    background: #89cff0;
-                                    cursor: pointer;
-                                    color: rgb(255, 255, 255);
-                                }
-                                
-                                @keyframes fondu {
-                                    0% {
-                                        background-image: url("images/diapo1.jpg");
-                                    }
-                                    25% {
-                                        background-image: url("images/diapo2.jpg");
-                                    }
-                                    50% {
-                                        background-image: url("images/diapo10.jpg");
-                                    }
-                                    75% {
-                                        background-image: url("images/diapo9.jpg");
-                                    }
-                                    100% {
-                                        background-image: url("images/diapo11.jpg");
-                                    }
-                                }
+                            }
