@@ -54,6 +54,15 @@ section {
 	letter-spacing: 1px;
 }
 
+h4 {
+	text-transform: uppercase;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: bold;
+	font-size: 2em;
+	text-align: center;
+	letter-spacing: 1px;
+}
+
 .separator {
 	width: 150px;
 	height: 4px;
@@ -125,7 +134,11 @@ button.submit {
 }
 
 button.submit:hover {
-	opacity: 0.9;
+	opacity: 0.75;
+}
+
+button.submit:disabled {
+	background-image: linear-gradient(to right, hsla(0, 0%, 50%, 0.75), hsla(0, 0%, 50%, 0.75));
 }
 
 .login-input::placeholder {

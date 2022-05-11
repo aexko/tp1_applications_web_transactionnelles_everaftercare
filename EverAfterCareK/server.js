@@ -620,7 +620,7 @@ app.get("/resetPass/:cid", checkNotAuthenticated, async (req, res) => {
 
 app.get("/resetPassword", checkNotAuthenticated, async (req, res) => {
 	res.render("resetPassword", {
-		titrePage: "resetPassword",
+		titrePage: "Réinitialisation du mot de passe",
 		titreSite: titreSite,
 		ConnectedUser: currentlyConnectedUser,
 	});
