@@ -3,21 +3,17 @@
 
 <head>
     <%- include('./partials/head'); %>
-        <title>
-            <%- titreSite %> -
-                <%- titrePage %>
-        </title>
-
 </head>
-<link rel="stylesheet" href="recherche.css" />
 
 <header>
     <%- include('./partials/header'); %>
+    <link rel="stylesheet" href="recherche.css" />
+
 </header>
 
 <body>
     <h1>Recherche utilisateurs</h1>
-    <input type="text" id="search-box" onkeyup="sendData(this.value)">
+    <input type="text" id="search-box" onkeyup="sendData(this)">
     <section id="searchResults"></section>
 
     <script>
@@ -28,7 +24,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ payload: e.value })
             }).then(res => res.json()).then(data => {
-                let payload = data.payload;
+                let payload = data.payload.toString();
                 searchResults.innerHTML = '';
                 if (payload.length < 1) {
                     searchResults.innerHTML = '<p>Pas d\'utilisateur trouve</p>';

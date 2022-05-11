@@ -10,41 +10,21 @@
         <% if (ConnectedUser) { %>
 
             <% if (ConnectedUser.user_type=="admin" ) { %>
-                <li>
-                    <a href="recherche">Recherche</a>
-                </li>
+                <li><a href="recherche">Recherche</a></li>
                 <% }else if(ConnectedUser.user_type=="client" ){ %>
-                    <li>
-                        <a href="services">Services</a>
-                    </li>
+                    <li><a href="services">Services</a></li>
                     <% }else if(ConnectedUser.user_type=="docteur" ){ %>
-                        <li>
-                            <a href="rendezvous">Rendez-Vous</a>
-                        </li>
+                        <li><a href="rendezvous">Rendez-Vous</a></li>
                         <% } %>
-                            <li>
-                                <a href="profil">Votre profil</a>
-                            </li>
-                            <li>
-                                <a onclick="document.getElementById('form1').submit();">Déconnexion</a>
-                            </li>
+                            <li><a href="profil">Votre profil</a></li>
+                            <li><a onclick="document.getElementById('form1').submit();">Déconnexion</a></li>
 
-
-                            <form id="form1" action="deconnexion?_method=DELETE" method="post">
-
-                            </form>
+                            <form id="form1" action="deconnexion?_method=DELETE" method="post"></form>
                             <% }else{ %>
-                                <li>
-                                    <a href="services">Services</a>
-                                </li>
-                                <li>
-                                    <a href="inscription">Inscription</a>
-                                </li>
-                                <li>
-                                    <a href="connexion">Connexion</a>
-                                </li>
+                                <li><a href="services">Services</a></li>
+                                <li><a href="inscription">Inscription</a></li>
+                                <li><a href="connexion">Connexion</a></li>
                                 <% } %>
-
     </ul>
 
     <div class="burger">
