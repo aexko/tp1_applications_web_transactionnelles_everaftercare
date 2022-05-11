@@ -10,17 +10,26 @@
 
 <header>
     <%- include('./partials/header'); %>
+    <link rel="stylesheet" href="connexion.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 </header>
 
 <body>
+    
+    <section class="main" style="width:85%" >
+    <div  class="login-container" style="width:100%">
+        <p class="title">Demandes de Rendez-Vous</p>
+        <div class="separator"></div>
     <% if (rdv !==undefined && rdv.length>0) {%>
-        <table class="table">
-            <thead>
+        <table style="width:85%">
+            <thead class = "start">
                 <tr>
-                    <th style="width:20%">Nom du client</th>
-                    <th style="width:20%">Docteur Responsable</th>
-                    <th style="width:30%">Type d'examen</th>
-                    <th style="width:30%">Action</th>
+                    <th class = "start" style="width:30%">Nom du client</th>
+                    <th class = "start" style="width:20%">Date et Heure</th>
+                    <th class = "start" style="width:30%">Type d'examen</th>
+                    <th class = "start" style="width:30%">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,23 +49,29 @@
                         </td>
 
                         <td style="width:20%">
-                            <% users.forEach(function(client,index){ %>
+                            
+                            
+                          <%   var today = rd.date;%>
+                          <%   var dd = String(today.getDate() + 1).padStart(2, '0');%>
+                          <%   var yyyy = today.getFullYear();%>
+                          <%   var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!%>
+                        
+                          <%   today = mm + '/' + dd + '/' + yyyy; %>
+                            <%=today + " " + rd.heure%>
+                            
 
-                                <% if(rd.docteur_id==client._id.toString()){ %>
-
-
-
-                                    <%=client.first_name + " " + client.last_name %>
-
-                                        <% }}); %>
                         </td>
                         <td style="width:30%">
                             <%= rd.type %>
                         </td>
 
                         <td style="width:30%">
-                            <a href="/rdv/confirm/<%=rd._id%>" class="btn btn-success">Accepter </a>
-                            <a href="/rdv/refuse/<%=rd._id%>" class="btn btn-danger">Refuser </a>
+                            <a href="/rdv/refuse/<%=rd._id%>"><button class="btnD">Refuser</button></a>
+                            <a href="/rdv/confirm/<%=rd._id%>"><button class="btnS">Accepter</button></a>
+
+                            
+
+
                         </td>
 
                     </tr>
@@ -67,4 +82,20 @@
             <p><strong> Aucun rendez-vous </strong></p>
             <% } %>
 
+
+    </div>
+</section>
 </body>
+
+<script>
+
+function GetDateFormat(date) {
+var today = date;
+	var dd = String(today.getDate() + 1).padStart(2, '0');
+	var yyyy = today.getFullYear();
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+
+	today = mm + '/' + dd + '/' + yyyy;
+    return today;
+}
+</script>

@@ -41,60 +41,66 @@
             <div class="tab-content">
                 <div class="tabs__tab active" id="tab_1" data-tab-info>
 
-                    <h2>Esthétique dentaire</h2>
-
+                    <div class="image_accueil">
+                        <img class="logo-img" src="/images/esthetique.jpg" alt="Logo" width="100%" height="auto" marging="5px">
+                    </div>
+                    <div class="desctiption_services ">
+                        <p class="text_accueil ">
+                            Besoin d'un blanchiment de dent,de facette ou même d'implants? Nous avons ce qu'il vous faut. <br> Un sourire éclantant et chaleureux vous rend plus sur de vous alors offrez vous le sourire dont vous rêvez!
+                            <br> Si vous n'arrivez pas à faire votre choix, nos dentistes généralistes se feront un plaisir de vous conseiller selon vos besoins.</p>
+                    </div>
 
                 </div>
-                <div class="tabs__tab" id="tab_2" data-tab-info>
+                <div class="tabs__tab " id="tab_2 " data-tab-info>
 
-                    <h2>Soins de base</h2>
+                    <div class="desctiption_services ">
+                    </div>
 
                 </div>
-                <div class="tabs__tab" id="tab_3" data-tab-info>
+                <div class="tabs__tab " id="tab_3 " data-tab-info>
 
                     <h2>Spécialités dentaires</h2>
 
                 </div>
-                <div class="tabs__tab" id="tab_4" data-tab-info>
+                <div class="tabs__tab " id="tab_4 " data-tab-info>
 
-                    <h2>Urgences</h2>
+                    <div class="desctiption_services ">
+                        <h5>Quand est-ce une urgence?</h5>
 
-                    <h5>Quand est-ce une urgence?</h5>
+                        <p class="text_accueil ">Plusieurs symptomes sont signes d'une urgence: une douleur aigües, une enflure, un saignement polongé, une dent qui élance, une douleir anormale après une chirurgie,etc.</p>
 
-                    <p class="text_accueil">Plusieurs symptomes sont signes d'une urgence: une douleur aigües, une enflure, un saignement polongé, une dent qui élance, une douleir anormale après une chirurgie,etc.</p>
+                        <p class="text_accueil ">Vous avez une urgence dentaire ? Présentez-vous à la clinique sans rendez-vous afin de vous faire examiner . Un dentiste sera toujours les jours fériés et en soirée afin de
+                        </p>
+                    </div>
 
-                    <p class="text_accueil">Vous avez une urgence dentaire ? Présentez-vous à la clinique sans rendez-vous afin de vous faire examiner . Un dentiste sera toujours les jours fériés et en soirée afin de
-                    </p>
                 </div>
-
             </div>
         </div>
-    </div>
 
-    <br>
-
+        <br>
 
 
 
 
 
 
-    <script type="text/javascript">
-        const tabs = document.querySelectorAll('[data-tab-value]')
-        const tabInfos = document.querySelectorAll('[data-tab-info]')
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const target = document
-                    .querySelector(tab.dataset.tabValue);
+        <script type="text/javascript ">
+            const tabs = document.querySelectorAll('[data-tab-value]')
+            const tabInfos = document.querySelectorAll('[data-tab-info]')
 
-                tabInfos.forEach(tabInfo => {
-                    tabInfo.classList.remove('active')
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = document
+                        .querySelector(tab.dataset.tabValue);
+
+                    tabInfos.forEach(tabInfo => {
+                        tabInfo.classList.remove('active')
+                    })
+                    target.classList.add('active');
                 })
-                target.classList.add('active');
             })
-        })
-    </script>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </script>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 </body>
