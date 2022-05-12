@@ -20,16 +20,6 @@ section {
 	box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
-/* section.side {
-	background: url(./images/bk.png) no-repeat;
-	background-size: 100% 102%;
-}
-
-.side img {
-	width: 50%;
-	max-width: 50%;
-} */
-
 .login-container {
 	/*max-width: 475px;*/
 	width: 100%;

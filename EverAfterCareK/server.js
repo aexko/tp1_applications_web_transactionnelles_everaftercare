@@ -739,4 +739,6 @@ mongoose
 			console.log("listening on port 3000");
 		});
 	});
-// mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
+// 
+// liaison bdd local
+// mongodb://127.0.0.1:27017/eac

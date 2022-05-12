@@ -1,15 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 
 h1 {
     text-align: center;
-    padding: 60px 0;
-    background-color: white;
     font-size: 3.3rem;
-
 }
 
 input[type="text"] {
