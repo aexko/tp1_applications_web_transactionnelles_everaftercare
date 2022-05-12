@@ -137,7 +137,8 @@ app.get("/rdv/confirm/:rdvid", checkAuthenticated, async (req, res) => {
 		"./rdvapproved.handlebars"
 	);
 
-	res.redirect("/");
+
+    res.redirect("/rendezvous");
 });
 
 app.get("/rdv/refuse/:rdvid", checkAuthenticated, async (req, res) => {
@@ -168,7 +169,8 @@ app.get("/rdv/refuse/:rdvid", checkAuthenticated, async (req, res) => {
 		confirme: false,
 	});
 
-	res.redirect("/");
+
+    res.redirect("/rendezvous");
 });
 app.get("/services", (req, res) => {
 	Service.find({}, function (err, services) {
@@ -449,23 +451,22 @@ function convertDate(inputFormat) {
 
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
-	//const userFound = await User.findOne({ email });
-	Rdv.find(
-		{ client_id: currentlyConnectedUser._id, confirme: true },
-		function (err, RDVs) {
-			res.render("profil", {
-				titrePage: titreSite,
-				titreSite: titreSite,
-				name:
-					currentlyConnectedUser.first_name +
-					" " +
-					currentlyConnectedUser.last_name,
-				Cuser: currentlyConnectedUser,
-				userFound_rdv: RDVs,
-				ConnectedUser: currentlyConnectedUser,
-			});
-		}
-	);
+    //const userFound = await User.findOne({ email });
+    Rdv.find({ client_id: currentlyConnectedUser._id, confirme : true}, function(err, RDVs) {
+		User.find({}, function(err, us) {
+        res.render("profil", {
+            titrePage: titreSite,
+            titreSite: titreSite,
+            name: currentlyConnectedUser.first_name +
+                " " +
+                currentlyConnectedUser.last_name,
+            Cuser: currentlyConnectedUser,
+            userFound_rdv: RDVs,
+            ConnectedUser: currentlyConnectedUser,
+			users: us,
+        });
+	});
+    });
 });
 
 // ajax
@@ -620,7 +621,7 @@ app.get("/resetPass/:cid", checkNotAuthenticated, async (req, res) => {
 
 app.get("/resetPassword", checkNotAuthenticated, async (req, res) => {
 	res.render("resetPassword", {
-		titrePage: "resetPassword",
+		titrePage: "Réinitialisation du mot de passe",
 		titreSite: titreSite,
 		ConnectedUser: currentlyConnectedUser,
 	});
@@ -729,7 +730,7 @@ app.post("/payment", checkAuthenticated, async (req, res) => {
 });
 // Connexion à MongoDB
 mongoose
-	.connect("mongodb://127.0.0.1:27017/eac", {
+	.connect("mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac", {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
 	})

@@ -1,72 +1,72 @@
-.service {
-    background-color: rgb(255, 255, 255);
-    margin-top: 5%;
-    height: auto;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding-bottom: 2px;
-}
-
-.title {
-    text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    font-size: 3em;
-    text-align: center;
-    letter-spacing: 1px;
-    padding-top: 30px;
-    margin: 10px;
-}
-
-.nom_Serv {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.unService {
-    margin: 5% 5% 8% 5%;
-}
-
-.separator {
-    width: 150px;
-    height: 4px;
-    background-color: black;
-    margin-left: 45%;
-}
-
-button {
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    font-size: 1.1em;
-    padding: 14px 64px;
-    width: 25%;
-    background: lightgray;
-    color: #333;
-    letter-spacing: 0.5px;
-    padding: 14px 64px;
-    float: right;
-}
-
-button:hover {
-    background-color: rgb(135, 206, 235);
-}
-
-.prix_service {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 5px;
-    float: right;
-}
-
-p {
-    display: inline;
-}
-
-.description_serv {
-    margin-top: 5px;
-    font-size: 20px;
-    width: 70%;
-    float: left;
-    text-align: justify;
-}
+    .service {
+        background-color: rgb(255, 255, 255);
+        margin-top: 5%;
+        height: auto;
+        margin-left: 10%;
+        margin-right: 10%;
+        padding-bottom: 2px;
+    }
+    
+    .title {
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+        font-size: 3em;
+        text-align: center;
+        letter-spacing: 1px;
+        padding-top: 30px;
+        margin: 10px;
+    }
+    
+    .nom_Serv {
+        font-size: 30px;
+        font-weight: bold;
+    }
+    
+    .unService {
+        margin: 5% 5% 8% 5%;
+    }
+    
+    .separator {
+        width: 150px;
+        height: 4px;
+        background-color: black;
+        margin-left: 45%;
+    }
+    
+    button {
+        border: none;
+        outline: none;
+        border-radius: 20px;
+        font-size: 1.1em;
+        padding: 14px 64px;
+        width: 25%;
+        background: lightgray;
+        color: #333;
+        letter-spacing: 0.5px;
+        padding: 14px 64px;
+        float: right;
+    }
+    
+    button:hover {
+        background-color: rgb(135, 206, 235);
+    }
+    
+    .prix_service {
+        font-size: 16px;
+        font-weight: bold;
+        margin: 5px;
+        float: right;
+    }
+    
+    p {
+        display: inline;
+    }
+    
+    .description_serv {
+        margin-top: 5px;
+        font-size: 20px;
+        width: 70%;
+        float: left;
+        text-align: justify;
+    }

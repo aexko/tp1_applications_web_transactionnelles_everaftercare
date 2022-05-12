@@ -5,95 +5,105 @@
 <head>
     <%- include('./partials/head'); %>
 </head>
-
 <header>
     <%- include('./partials/header'); %>
 </header>
 
-
 <body>
     <br><br>
-
     <div class="container2">
         <div class="container1">
             <h1 class="title"> Clinique dentaire Ever After Care</h1>
             <p class="text_accueil">Situé au coeur de Montréal, notre clinique Ever After Care vous offre une gamme complète de service pour vous et votre famille. Nos spécialistes se feront un plaisir de vous accompagner dans tous vos besoins en offrant aux enfants et adultes
                 des services dentaires de haute qualité dans un environnement convivial, et à la fine pointe de la technologie.
 
-
                 <br> <br> Inscrivez-vous dès maintenant pour prendre rendez-vous avec le médecin de votre choix! </p>
-
         </div>
-
         <div class="diapos">
-
         </div>
         <br>
-        <div class="presentation">
-
+        <div>
             <div class="tabs">
-                <span data-tab-value="#tab_1">Esthétique dentaire</span>
-                <span data-tab-value="#tab_2">Soins de bases</span>
+                <span data-tab-value="#tab_1">Soins de bases</span>
+                <span data-tab-value="#tab_2">Esthétique dentaire</span>
                 <span data-tab-value="#tab_3">Spécialités dentaires</span>
-                <span data-tab-value="#tab_4">Urgences</span>
+                <span data-tab-value="#tab_4">Urgence</span>
             </div>
-
             <div class="tab-content">
                 <div class="tabs__tab active" id="tab_1" data-tab-info>
-
-                    <div class="image_accueil">
-                        <img class="logo-img" src="/images/esthetique.jpg" alt="Logo" width="100%" height="auto" marging="5px">
-                    </div>
-                    <div class="desctiption_services ">
-                        <p class="text_accueil ">
-                            Besoin d'un blanchiment de dent,de facette ou même d'implants? Nous avons ce qu'il vous faut. <br> Un sourire éclantant et chaleureux vous rend plus sur de vous alors offrez vous le sourire dont vous rêvez!
-                            <br> Si vous n'arrivez pas à faire votre choix, nos dentistes généralistes se feront un plaisir de vous conseiller selon vos besoins.</p>
-                    </div>
+                    <div class="image_accueil"> <img src="images/soin_base.png" alt="" width="80%"></div>
+                    <p class="text_serv ">
+                        En plus de brosser vos dents et de passer la soie dentaire, il est recommandé de consulter votre dentiste régulièrement. Oui, car même si vous faites le maximum à la maison pour bien entretenir vos dents, les dépôts de plaque ou de tartre sont toujours
+                        présents! <br> Une hygiène dentaire inadéquate peut conduire à des problèmes de santé irréversibles qui s’aggravent avec le temps. La clinique Ever After Care offre une gamme complète de soins dentaires
+                        de base adaptés aux besoins de tous les patients. <br>Que ce soit pour un simple examen et nettoyage ou pour la pose d’un plombage ou un traitement de canal, nous sommes la référence dans la région métropolitaine de Montréal. Grâce
+                        à notre personnel qualifié et à notre clinique équipée de tous les appareils les plus récents, nous offrons une gamme complète de service, pour tous vos besoins.
+                        <br>Consultez la Section Service pour plus d'information. <br>Veuilez notez que tous les paiements s'effectuent en ligne.
+                    </p>
+                </div>
+                <div class="tabs__tab" id="tab_2" data-tab-info>
+                    <div class="image_accueil"> <img src="images/esthetique.jpg" alt="" width="80%"></div>
+                    <p class="text_serv "> Besoin d 'un blanchiment de dent,de facette ou même d'implants? Nous avons ce qu 'il vous faut. <br> Un sourire éclantant et chaleureux vous rend plus sur de vous alors offrez vous le sourire dont vous rêvez!
+                        <br>L'esthétique dentaire est l'une des spécialités les plus avancées de la médecine dentaire. Dans cette branche, il existe de nombreux traitements adaptés aux besoins de chaque patient, du blanchiment à l'orthodontie pour obtenir
+                        des dents parfaitement alignées. <br>Consultez la Section Service pour plus d'information. <br>Veuilez notez que tous les paiements s'effectuent en ligne </p>
+                </div>
+                <div class="tabs__tab" id="tab_3" data-tab-info>
+                    <div class="image_accueil"> <img src="images/radio.png" alt="" width="90%"></div>
+                    <p class="text_serv ">Notre centre dentaire propose toutes les spécialités dentaires sous un même toit, traite les cas simples comme les plus complexes, chez des patients réguliers ou d’urgence. Des professionnels multidisciplinaires réunissent leurs compétences
+                        pour vous offrir les meilleurs soins et répondre à vos besoins.Très accès sur la technologique, nous sommes en mesure de vous prodiguer des soins avancer tels que la radio 3D et la greffe de genvice. <br>Consultez la Section Service
+                        pour plus d'information. <br>Veuilez notez que tous les paiements s'effectuent en ligne.</p>
 
                 </div>
-                <div class="tabs__tab " id="tab_2 " data-tab-info>
-
-                    <div class="desctiption_services ">
-                    </div>
-
-                </div>
-                <div class="tabs__tab " id="tab_3 " data-tab-info>
-
-                    <h2>Spécialités dentaires</h2>
-
-                </div>
-                <div class="tabs__tab " id="tab_4 " data-tab-info>
-
-                    <div class="desctiption_services ">
-                        <h5>Quand est-ce une urgence?</h5>
-
-                        <p class="text_accueil ">Plusieurs symptomes sont signes d'une urgence: une douleur aigües, une enflure, un saignement polongé, une dent qui élance, une douleir anormale après une chirurgie,etc.</p>
-
-                        <p class="text_accueil ">Vous avez une urgence dentaire ? Présentez-vous à la clinique sans rendez-vous afin de vous faire examiner . Un dentiste sera toujours les jours fériés et en soirée afin de
-                        </p>
-                    </div>
-
+                <div class="tabs__tab" id="tab_4" data-tab-info>
+                    <div class="image_accueil"> <img src="images/urgence-dentaire.jpg" alt="" width="80%"></div>
+                    <p class="text_serv ">Plusieurs symptomes sont signes d'une urgence: une douleur aigües, une enflure, un saignement polongé, une dent qui élance, une douleir anormale après une chirurgie,etc.Vous avez une urgence dentaire ? Présentez-vous à la clinique
+                        sans rendez-vous afin de vous faire examiner . Un dentiste sera toujours les jours fériés et en soirée afin de vous accueillir. <br> Le paiement d'une intervention d'urgence ce fait sur place.</p>
                 </div>
             </div>
         </div>
-
-        <br>
-
-
-
-
-
-
-
-        <script type="text/javascript ">
+        <div class="text_a_propos">
+            <h4 class="a_propos">À propos de nous</h4>
+            <div class="separator"></div> <br><br><br>
+            <p class="texte">Même si nous n'existons pas depuis longtemps, notre clinique à déja fait ses peuves. À l'aide son son équipe compétente et son climat chaleureux et rescpectueux, Ever After Care vous garantis une excellente expérience en vous mettant en priorité!
+                <br>Dans notre centre dentaire, le regroupement de dentiste d’horizons différents fait notre force. Nos professionnels ont, une approche différentes, qu’ils partagent avec leurs confrères. Cet échange de savoir et savoir-faire permet à
+                chacun de s’enrichir et d’améliorer sa pratique pour vous offrir ses services. <br>Le milieu de la santé de la dentisterie est en constante évolution. C’est pourquoi les dentistes et les hygiénistes de Ever After Care dentaire ont à cœur
+                de mettre à jour leurs connaissances en suivant diverses formations. </p>
+        </div>
+        <div class="info">
+            <div class="horaire">
+                <h4 class="sous_titre">Nos horaires d'ouvertures:</h4>
+                <div class="jour">
+                    <p>Lundi <br>Mardi <br>Mercredi
+                        <br>Jeudi
+                        <br>Vendredi
+                        <br>Samedi<br>Dimanche</p>
+                </div>
+                <div class="heure">
+                    <p>8h à 19h<br>8h à 19h <br>8h à 19h
+                        <br>8h à 19h
+                        <br>8h à 19h
+                        <br>8h à 17h<br>8h à 17h</p>
+                </div>
+            </div>
+            <div class="info_adresse">
+                <h4 class="sous_titre">Notre adresse:</h4>
+                <div class="adresse">
+                    <p>
+                        65 Rue Sainte-Catherine O,H2X 1Z7, Montréal, Qc, Ca
+                    </p>
+                </div>
+                <div class="carte">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2796.037628696239!2d-73.56689638424584!3d45.509321138452144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91a4e637e72c3%3A0xc57bb2611b074279!2s65%20Rue%20Sainte-Catherine%20O%2C%20Montr%C3%A9al%2C%20QC%20H2X%201Z7!5e0!3m2!1sfr!2sca!4v1652321170813!5m2!1sfr!2sca"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <br> </div>
+        </div>
+        <script type="text/javascript">
             const tabs = document.querySelectorAll('[data-tab-value]')
             const tabInfos = document.querySelectorAll('[data-tab-info]')
-
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     const target = document
                         .querySelector(tab.dataset.tabValue);
-
                     tabInfos.forEach(tabInfo => {
                         tabInfo.classList.remove('active')
                     })
@@ -102,5 +112,5 @@
             })
         </script>
         <br><br><br><br><br><br><br><br><br><br><br><br><br>
-
 </body>
+<%- include('./partials/footer'); %>
