@@ -67,9 +67,9 @@ footer {
 
 /* Body */
 body {
-	line-height: 1;
     background-image: url("images/bg.png");
     background-size: 100%;
+	background-repeat: no-repeat;
 }
 
 /* NavBar */
