@@ -7,42 +7,57 @@
 
 <header>
     <%- include('./partials/header'); %>
-        <link rel="stylesheet" href="services.css" />
-
 </header>
 
 <body>
-    <div class="service" method="POST">
-        <h1 class="title">Nos Services</h1>
-        <div class="separator"></div>
-        <% ListServices.forEach(function(item,index){%>
-            <div class="unService">
-                <form action="/services" method="POST">
-
-                    <p class="nom_Serv">
-                        <%=item.nom %>
-                    </p>
-                    <p class="prix_service">
-                        Prix:
-                        <%=item.prix %> $
-                    </p>
-                    <br>
-                    <p class="description_serv">
-                        <%=item.description %>
-                    </p>
+    <link rel="stylesheet" href="connexion_prise_rdv.css" />
 
 
-                    <input type="text" name="prix" id="prix" hidden value="<%=item._id %>" />
+    <div class="formulaire">
+        <div class="Choix">
+
+            <form name="pay" action="payment" method="POST">
+                <div class="form-group row ">
+
+                    <input type="text" name="type" id="type" disable value="<%=serv.nom %>" /></div>
 
 
-                    <button submit>Prendre Un RDV</button>
-                </form>
-            </div>
-            <div class="separator"></div>
-            <% }); %>
+                <div class=" form-group row ">
+                    <label for="rendezvous ">Sélectionnner votre médecin:</label>
 
-    </div>
+                    <select id="nom_doc" name="nom_doc">
+                    <% ListDocteur.forEach(function(item,index){%>
+                        <option value="<%=item.id %>">
+                    <%= item.last_name %>
+                        <%= item.first_name %>
+                            </option>
+                            <%}); %>
 
+                                </select>
+                </div>
+
+                <div class="container2">
+                    <label for="start">Choisissez une date:</label>
+
+                    <input type="date" id="start" name="tripstart" value="2022-02-22" max="2030-01-01" min="2022-02-01">
+                </div>
+                <div class="container2">
+                    <label for="time">Choisissez l'heure:</label>
+
+                    <input type="time" id="time" name="time" value="08:00" min="08:00" max="19:00" step="3600" required>
+                </div>
+                <input type="text" name="prix" id="prix" hidden value="<%=serv.prix %>" />
+                <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="<%= key %>" data-amount="<%= serv.prix*100 %>" data-currency="CAD" data-name="Paiement" data-description="EverAfterCare" data-locale="auto">
+                </script>
+            </form>
+        </div>
+        <script>
+            function masquer_div(id) {
+                if (document.getElementById(id).style.display == 'none') {
+                    document.getElementById(id).style.display = 'block';
+                } else {
+                    document.getElementById(id).style.display = 'none';
+                }
+            }
+        </script>
 </body>
-
-<%- include('./partials/footer'); %>
