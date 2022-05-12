@@ -66,10 +66,12 @@ footer {
 }
 
 /* Body */
-body {
-    background-image: url("images/bg.png");
-    background-size: 100%;
-	background-repeat: no-repeat;
+html {
+	background: url("./images/bg.png") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 /* NavBar */
@@ -102,9 +104,9 @@ nav {
 	text-transform: uppercase;
 	letter-spacing: 5px;
 	font-size: 20px;
-	cursor:pointer;
+	cursor: pointer;
 	display: flex;
-	align-items:center;
+	align-items: center;
 }
 
 .logo-img {
@@ -132,7 +134,7 @@ nav {
 	letter-spacing: 3px;
 	font-weight: bold;
 	font-size: 14;
-	padding:35px;
+	padding: 35px;
 
 }
 
@@ -144,7 +146,7 @@ nav {
 	width: 25px;
 	height: 3px;
 	background-color: var(--white);
-	margin:5px;
+	margin: 5px;
 	transition: all 0.5s ease-in-out;
 }
 
@@ -175,7 +177,7 @@ nav {
 	.burger {
 		display: block;
 		cursor: pointer;
-		
+
 	}
 
 	.logo {
@@ -183,17 +185,17 @@ nav {
 		text-transform: uppercase;
 		letter-spacing: 5px;
 		font-size: 15px;
-		cursor:pointer;
+		cursor: pointer;
 		display: flex;
-		align-items:center;
+		align-items: center;
 	}
-	
+
 	.logo-img {
 		align-items: center;
 		justify-content: center;
 		height: 8vh;
 	}
-	
+
 	.logo a {
 		text-decoration: none;
 		color: var(--white);
@@ -235,7 +237,7 @@ li {
 	cursor: pointer;
 	transition: background-color 1s ease-out;
 	font-size: 14px;
-	padding:30px;
+	padding: 30px;
 
 
 }
@@ -245,8 +247,3 @@ li:hover {
 	border-radius: 5px;
 	box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
-
-/* 
- */
-
- 
