@@ -16,12 +16,12 @@
             <form name="pay" action="payment" method="POST" class="form-container">
 
                 <div>
-                    <p class="title">
-                        Rendez-vous pour :
-                        <%=serv.nom %>
-                    </p>
+                    <input class="title" id="type" name="type" value="   <%=serv.nom %>">
+
+
+                    </input>
                 </div>
-                <div class="separator"></div>
+
 
                 <div class="form-control">
                     <label for="rendezvous ">Sélectionnner votre médecin : </label>
@@ -48,10 +48,8 @@
                     <input type="text" name="prix" id="prix" hidden value="<%=serv.prix %>" />
                 </div>
                 <class class="form-control">
-                    <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="<%= key %>"
-                        data-amount="<%= serv.prix*100 %>" data-currency="CAD" data-name="Paiement"
-                        data-description="Ever After Care" data-locale="auto">
-                        </script>
+                    <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="<%= key %>" data-amount="<%= serv.prix*100 %>" data-currency="CAD" data-name="Paiement" data-description="Ever After Care" data-locale="auto">
+                    </script>
                 </class>
 
             </form>
