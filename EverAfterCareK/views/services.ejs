@@ -4,38 +4,37 @@
 <head>
     <%- include('./partials/head'); %>
 </head>
-
 <header>
     <%- include('./partials/header'); %>
-    <link rel="stylesheet" href="services.css" />
-
+        <link rel="stylesheet" href="services.css" />
 </header>
 
 <body>
     <div class="service" method="POST">
+        <h1 class="title">Nos Services</h1>
+        <div class="separator"></div>
         <% ListServices.forEach(function(item,index){%>
+            <div class="unService">
+                <form action="/services" method="POST">
+                    <p class="nom_Serv">
+                        <%=item.nom %>
+                    </p>
+                    <p class="prix_service">
+                        Prix:
+                        <%=item.prix %> $
+                    </p>
+                    <br>
+                    <p class="description_serv">
+                        <%=item.description %>
+                    </p>
 
-            <form action="/services" method="POST">
-                <p>
-                    <%=item.nom %>
-                </p>
+                    <input type="text" name="prix" id="prix" hidden value="<%=item._id %>" />
 
-                <p>
-                    <%=item.description %>
-                </p>
-                <p name="prix_service">
-                    <%=item.prix %>
-                </p>
-
-                <input type="text" name="prix" id="prix" hidden value="<%=item._id %>" />
-
-
-                <button submit>Prendre Un RDV</button>
-            </form>
-
-
+                    <button submit>Prendre Un RDV</button>
+                </form>
+            </div>
+            <div class="separator"></div>
             <% }); %>
-
     </div>
-
 </body>
+<%- include('./partials/footer'); %>
