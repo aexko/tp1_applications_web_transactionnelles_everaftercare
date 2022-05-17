@@ -1,40 +1,28 @@
 /**
  * Initialisation des modules
  */
-const sendEmail = require("./sendEmail");
 const titreSite = "EverAfterCare";
 const express = require("express");
-// const handlebars = require("handlebars");
 const mongoose = require("mongoose");
 const app = express();
-// const moment = require("moment");
-// const nodemailer = require("nodemailer");
+const moment = require("moment");
 currentlyConnectedUser = null;
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const User = require("./models/client");
-const Confirmes = require("./models/confirmation");
+const Confirms = require("./models/confirmation");
 const Rdv = require("./models/rdv");
-const Service = require("./models/service");
 const methodOverride = require("method-override");
-const bodyparser = require("body-parser");
-const path = require("path");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
-var Publishable_Key =
-	"pk_test_51Kt9oSCnmso28bfJvG5lopyYW1LRp5FvU6fRpwbMQm16wwYoCVU71crPRwJ7oITPr62FOiHeLzNt4dJkcVMDke3Q00LZhLTgqt";
-var Secret_Key =
-	"sk_test_51Kt9oSCnmso28bfJ8EKLGYNsZAt1qy9KjCtp3fncIbfgRCkzF59rKmZKXdhvupqxfbWcwEYFVR4Tesqsft8xhDpx00g7gCIL70";
-const stripe = require("stripe")(Secret_Key);
-
+const bodyParser = require("body-parser");
 const {
 	checkAuthenticated,
 	checkNotAuthenticated,
 } = require("./middlewares/auth");
 const initializePassport = require("./passport-config");
 const rdv = require("./models/rdv");
-const { unregisterDecorator } = require("handlebars/runtime");
 initializePassport(
 	passport,
 	async (email) => {
@@ -77,14 +65,17 @@ app.use(passport.initialize());
 // pour activer session du passport
 app.use(passport.session());
 
+// pour activer methodeOverride
 app.use(methodOverride("_method"));
+
+// pour parse json
+app.use(bodyParser.json());
 
 // pour charger la page d'accueil
 app.get("/", (req, res) => {
 	res.render("index", {
 		titrePage: "Accueil",
 		titreSite: titreSite,
-		ConnectedUser: currentlyConnectedUser,
 	});
 });
 
@@ -93,7 +84,6 @@ app.get("/connexion", checkNotAuthenticated, (req, res) => {
 	res.render("connexion", {
 		titrePage: "Connexion",
 		titreSite: titreSite,
-		ConnectedUser: currentlyConnectedUser,
 	});
 	if (checkNotAuthenticated) {
 		currentlyConnectedUser = null;
@@ -105,150 +95,65 @@ app.get("/inscription", checkNotAuthenticated, (req, res) => {
 	res.render("inscription", {
 		titrePage: "Inscription",
 		titreSite: titreSite,
-		ConnectedUser: currentlyConnectedUser,
 	});
 });
 
 app.get("/rdv/confirm/:rdvid", checkAuthenticated, async (req, res) => {
 	frlid = req.params.rdvid;
 
-	var thisrdv = await Rdv.findOneAndUpdate(
+	var thatrdv = await Rdv.findOneAndUpdate(
 		{ _id: frlid, docteur_id: currentlyConnectedUser._id, confirme: false },
 		{ confirme: true }
 	);
 
-	var doctor = await User.findOne({ _id: thisrdv.docteur_id });
-	var userofrdv = await User.findOne({ _id: thisrdv.client_id });
-	var today = thisrdv.date;
-	var dd = String(today.getDate() + 1).padStart(2, "0");
-	var yyyy = today.getFullYear();
-	var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-
-	today = mm + "/" + dd + "/" + yyyy;
-	sendEmail(
-		userofrdv.email,
-		"Rendez-vous confirmé.",
-		{
-			uname: userofrdv.first_name + " " + userofrdv.last_name,
-			name: doctor.first_name + " " + doctor.last_name,
-			rdvdate: today,
-			rdvtime: thisrdv.heure,
-		},
-		"./rdvapproved.handlebars"
-	);
-
-
-    res.redirect("/rendezvous");
+	res.redirect("/");
 });
 
 app.get("/rdv/refuse/:rdvid", checkAuthenticated, async (req, res) => {
 	frlid = req.params.rdvid;
 
-	var thisrdv = await Rdv.findOne({
+	var thatrdv = await Rdv.findOneAndDelete({
 		_id: frlid,
 		docteur_id: currentlyConnectedUser._id,
 		confirme: false,
 	});
 
-	var doctor = await User.findOne({ _id: thisrdv.docteur_id });
-	var userofrdv = await User.findOne({ _id: thisrdv.client_id });
-
-	sendEmail(
-		userofrdv.email,
-		"Rendez-vous annulé.",
-		{
-			uname: userofrdv.first_name + " " + userofrdv.last_name,
-			name: doctor.first_name + " " + doctor.last_name,
-		},
-		"./rdvcanceled.handlebars"
-	);
-
-	var thisrdv = await Rdv.findOneAndDelete({
-		_id: frlid,
-		docteur_id: currentlyConnectedUser._id,
-		confirme: false,
-	});
-
-
-    res.redirect("/rendezvous");
-});
-app.get("/services", (req, res) => {
-	Service.find({}, function (err, services) {
-		res.render("services", {
-			titrePage: "Services",
-			titreSite: titreSite,
-			ListServices: services,
-			ConnectedUser: currentlyConnectedUser,
-		});
-	});
-});
-app.post("/services", checkAuthenticated, (req, res) => {
-	var id = req.body.prix;
-
-	Service.findOne({ _id: id }, function (err, service) {
-		if (currentlyConnectedUser.user_type == "client") {
-			User.find({ user_type: "docteur" }, function (err, users) {
-				res.render("rendezvous", {
-					titrePage: "Prise de Rendez-Vous",
-					titreSite: titreSite,
-					ListDocteur: users,
-					key: Publishable_Key,
-					serv: service,
-					ConnectedUser: currentlyConnectedUser,
-				});
-			});
-		} else if (currentlyConnectedUser.user_type == "docteur") {
-			Rdv.find(
-				{ docteur_id: currentlyConnectedUser._id, confirme: false },
-				function (err, rdvs) {
-					User.find({}, function (err, us) {
-						res.render("publicrdv", {
-							titrePage: "Prise de rendez-vous",
-							titreSite: titreSite,
-							rdv: rdvs,
-							users: us,
-							ConnectedUser: currentlyConnectedUser,
-						});
-					});
-				}
-			);
-		} else if (currentlyConnectedUser.user_type == "admin") {
-		}
-	});
+	res.redirect("/");
 });
 
 app.get("/rendezvous", checkAuthenticated, (req, res) => {
-	if (currentlyConnectedUser.user_type == "docteur") {
+	if (currentlyConnectedUser.user_type == "client") {
+		User.find({ user_type: "docteur" }, function (err, users) {
+			res.render("rendezvous", {
+				titrePage: "Prise de Rendez-Vous",
+				titreSite: titreSite,
+				ListDocteur: users,
+			});
+		});
+	} else if (currentlyConnectedUser.user_type == "docteur") {
 		Rdv.find(
 			{ docteur_id: currentlyConnectedUser._id, confirme: false },
 			function (err, rdvs) {
-				User.find({}, function (err, us) {
-					
-				console.log(rdvs.length);
-					res.render("publicrdv", {
-						titrePage: "Prise de Rendez-Vous",
-						titreSite: titreSite,
-						rdv: rdvs,
-						users: us,
-						ConnectedUser: currentlyConnectedUser,
-					});
+				res.render("publicrdv", {
+					titrePage: "Prise de Rendez-Vous",
+					titreSite: titreSite,
+					rdv: rdvs,
 				});
 			}
 		);
-	} else {
-		res.redirect("/");
+	} else if (currentlyConnectedUser.user_type == "admin") {
 	}
 });
 
-// DEBUG
-app.get("/TestDebug", checkAuthenticated, async (req, res) => {
+app.get("/lol", checkAuthenticated, async (req, res) => {
 	const confirm = new Confirms({
 		client_id: currentlyConnectedUser._id,
 		type: "mdp",
 		newpass: "mdp",
-		ConnectedUser: currentlyConnectedUser,
 	});
+
 	await confirm.save();
+
 	res.redirect("/");
 });
 
@@ -258,24 +163,22 @@ app.get("/mailchange/:confirmid", checkAuthenticated, (req, res) => {
 			titrePage: "Prise de Rendez-Vous",
 			titreSite: titreSite,
 			ListDocteur: users,
-			ConnectedUser: currentlyConnectedUser,
 		});
 	});
 });
-/*
+
 app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 	d_id = req.body.nom_doc;
 	const userFound = await User.findOne({ _id: d_id, user_type: "docteur" });
+
 	if (userFound) {
 		var startdate = req.body.tripstart;
 		var time = req.body.time;
-		console.log("DocteurTrouvé");
 
 		Rdv.findOne(
 			{ date: startdate, docteur_id: d_id, heure: time },
 			async function (err, Rendezvous) {
 				if (Rendezvous == null) {
-					console.log("Aucun RDV");
 					Rdv.findOne(
 						{
 							date: startdate,
@@ -284,7 +187,6 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 						},
 						async function (err, crdv) {
 							if (crdv == null) {
-								console.log("Aucun RDV client");
 								try {
 									const rdv = new Rdv({
 										docteur_id: d_id,
@@ -307,35 +209,53 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 											currentlyConnectedUser.last_name
 									);
 
-									res.redirect("/profil");
+									res.redirect("/");
 								} catch (error) {
 									console.log(error);
-									res.redirect("/profil");
+									res.redirect("/rendezvous");
 								}
 							} else {
 								console.log(
 									"Rendez-Vous existe déja dans la plage horaire pour le client"
 								);
-								res.redirect("/profil");
+								res.redirect("/rendezvous");
 							}
 						}
 					);
 				} else {
-					alert(
-						"Rendez-Vous existe déja dans la plage horaire pour le docteur"
-					);
 					console.log(
 						"Rendez-Vous existe déja dans la plage horaire pour le docteur"
 					);
-					res.redirect("/profil");
+					res.redirect("/rendezvous");
 				}
 			}
 		);
+
+		/*
+		 */
 	} else {
 		res.redirect("/");
 	}
 });
-*/
+
+// pour verifier la connexion
+/*
+ app.post(
+	 "/connexion",
+	 checkNotAuthenticated,
+	 passport.authenticate("local", {
+		 successRedirect: "/profil",
+		 failureRedirect: "/connexion",
+		 failureFlash: true,
+ 
+ 
+ 
+	 })
+ 
+ 
+ 
+ );
+ */
 app.post(
 	"/connexion",
 	StoreUser,
@@ -357,7 +277,6 @@ app.post(
 		failureRedirect: "/connexion",
 		failureFlash: true,
 	}),
-	checkAuthenticated,
 	async (req, res) => {}
 );
 
@@ -409,7 +328,6 @@ app.delete("/deconnexion", (req, res) => {
 	req.logOut();
 	res.redirect("/connexion");
 });
-
 app.post("/annuler_rdv", async (req, res) => {
 	s_rdv = req.body.selected_rdv;
 
@@ -420,59 +338,34 @@ app.post("/annuler_rdv", async (req, res) => {
 				currentlyConnectedUser.password
 			)
 		) {
-			var thisrdv = await Rdv.findOne({ _id: s_rdv });
-			var doctor = await User.findOne({ _id: thisrdv.docteur_id });
-			var userofrdv = await User.findOne({ _id: thisrdv.client_id });
-
-			sendEmail(
-				userofrdv.email,
-				"Rendez-vous annulé.",
-				{
-					uname: userofrdv.first_name + " " + userofrdv.last_name,
-					name: doctor.first_name + " " + doctor.last_name,
-				},
-				"./rdvcanceled.handlebars"
-			);
-
 			var thisrdv = await Rdv.findOneAndDelete({ _id: s_rdv });
+
 			res.redirect("/profil");
 			console.log("Bon MDP");
 		} else {
-			//alert("Mot De Passe Erroné.");
 			res.redirect("/profil");
 			console.log("Mauvais MDP");
 		}
 	} catch (err) {
-		return err;
+		return done(e);
 	}
 });
 
-function convertDate(inputFormat) {
-	function pad(s) {
-		return s < 10 ? "0" + s : s;
-	}
-	var d = new Date(inputFormat);
-	return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join("/");
-}
-
 // pour charger le profil de l'utilisateur apres une connexion reussie
 app.get("/profil/", checkAuthenticated, (req, res) => {
-    //const userFound = await User.findOne({ email });
-    Rdv.find({ client_id: currentlyConnectedUser._id, confirme : true}, function(err, RDVs) {
-		User.find({}, function(err, us) {
-        res.render("profil", {
-            titrePage: titreSite,
-            titreSite: titreSite,
-            name: currentlyConnectedUser.first_name +
-                " " +
-                currentlyConnectedUser.last_name,
-            Cuser: currentlyConnectedUser,
-            userFound_rdv: RDVs,
-            ConnectedUser: currentlyConnectedUser,
-			users: us,
-        });
+	//const userFound = await User.findOne({ email });
+	Rdv.find({ client_id: currentlyConnectedUser._id }, function (err, RDVs) {
+		res.render("profil", {
+			titrePage: titreSite,
+			titreSite: titreSite,
+			name:
+				currentlyConnectedUser.first_name +
+				" " +
+				currentlyConnectedUser.last_name,
+			Cuser: currentlyConnectedUser,
+			userFound_rdv: RDVs,
+		});
 	});
-    });
 });
 
 // ajax
@@ -480,111 +373,11 @@ app.get("/recherche", (req, res) => {
 	res.render("recherche", {
 		titrePage: "Recherche",
 		titreSite: titreSite,
-		ConnectedUser: currentlyConnectedUser,
 	});
 });
 
-
-
-// reset password
-
-app.post("/resetPassword", checkNotAuthenticated, async (req, res) => {
-	if (req.body.password != req.body.passwordc) {
-		alert("Les mots de passes ne sont pas les mêmes.");
-	} else {
-		const userFound = await User.findOne({ email: req.body.email });
-
-		if (!userFound) {
-			req.flash(
-				"error",
-				"Cet utilisateur n'existe pas avec cette adresse courriel."
-			);
-		} else {
-			const confirmcurrent = new Confirmes({
-				client_id: userFound._id,
-				type: "forgotpassword",
-				newpass: req.body.password,
-			});
-			var confirm = await confirmcurrent.save();
-
-			const link = `${process.env.CLIENT_URL}/resetPass/` + confirm._id;
-			sendEmail(
-				userFound.email,
-				"Rénitialisation du mot de passe envoyée",
-				{ name: userFound.first_name, link: link },
-				"./requeteResetPassword.handlebars"
-			);
-		}
-	}
-	res.redirect("/");
-});
-
-app.get("/changepass", checkAuthenticated, async (req, res) => {
-	res.render("changepass", {
-		
-		titrePage: "Changement de mot de passe",
-		titreSite: titreSite,
-		ConnectedUser: currentlyConnectedUser,
-	});
-});
-
-app.post("/changepass", checkAuthenticated, async (req, res) => {
-	if (req.body.newpass != req.body.confirmnewpass) {
-		alert("Les mots de passes ne sont pas les mêmes.");
-	} else {
-		if (
-			await bcrypt.compare(
-				req.body.oldpass,
-				currentlyConnectedUser.password
-			)
-		) {
-			console.log("tkt");
-			const hashednewPass = await bcrypt.hash(req.body.newpass, 10);
-
-			currentlyConnectedUser.password = hashednewPass;
-
-			const temp = await User.findOneAndUpdate(
-				{ _id: currentlyConnectedUser._id },
-				{ password: hashednewPass }
-			);
-			console.log("fini?");
-		}
-	}
-	res.redirect("/profil");
-});
-
-
-
-
-app.get("/resetPass/:cid", checkNotAuthenticated, async (req, res) => {
-	console.log(req.params.cid);
-	var confirmid = req.params.cid;
-	const objectid = confirmid;
-	var confirmation = await Confirmes.findOne({ _id: objectid });
-
-	const hashNewpass = await bcrypt.hash(confirmation.newpass, 10);
-	console.log(hashNewpass);
-	await User.findOneAndUpdate(
-		{ _id: confirmation.client_id },
-		{ password: hashNewpass }
-	);
-
-	await Confirmes.findOneAndDelete({ _id: confirmid });
-	res.redirect("/profil");
-});
-
-app.get("/resetPassword", checkNotAuthenticated, async (req, res) => {
-	res.render("resetPassword", {
-		titrePage: "Réinitialisation du mot de passe",
-		titreSite: titreSite,
-		ConnectedUser: currentlyConnectedUser,
-	});
-});
-
-// stripe
 app.post("/getUtilisateurs", async (req, res) => {
-	let payload = req.body.temp.trim();
-	console.log(payload);
+	let payload = req.body.payload.trim();
 	let search = await User.find({
 		email: { $regex: new RegExp("^" + payload + ".*", "i") },
 	}).exec();
@@ -592,98 +385,6 @@ app.post("/getUtilisateurs", async (req, res) => {
 	res.send({ payload: search });
 });
 
-app.use(bodyparser.urlencoded({ extended: false }));
-app.use(bodyparser.json());
-
-app.post("/payment", checkAuthenticated, async (req, res) => {
-	console.log("La page marche déja");
-	d_id = req.body.nom_doc;
-	total = req.body.prix;
-	console.log(d_id);
-	const userFound = await User.findOne({ _id: d_id});
-	console.log(userFound);
-	if (userFound) {
-		console.log("Rdv marche?");
-		var startdate = req.body.tripstart;
-		var time = req.body.time;
-
-		Rdv.findOne(
-			{ date: startdate, docteur_id: d_id, heure: time },
-			async function (err, Rendezvous) {
-				console.log(Rendezvous);
-				if (Rendezvous == null) {
-					Rdv.findOne(
-						{
-							date: startdate,
-							client_id: currentlyConnectedUser._id,
-							heure: time,
-						},
-						async function (err, crdv) {
-							console.log(crdv);
-							if (crdv == null) {
-								console.log("aucun rdv à cet heure");
-								try {
-									const rdv = new Rdv({
-										docteur_id: d_id,
-										client_id: currentlyConnectedUser._id,
-										type: req.body.type,
-										date: startdate,
-										heure: time,
-									});
-
-									await rdv.save();
-									console.log(
-										"RDV with docteur : " +
-											userFound.first_name +
-											" " +
-											userFound.last_name +
-											" | Client : " +
-											currentlyConnectedUser.first_name +
-											" " +
-											currentlyConnectedUser.last_name
-									);
-
-									stripe.customers
-										.create({
-											email: req.body.stripeEmail,
-											source: req.body.stripeToken,
-											name:
-												currentlyConnectedUser.first_name +
-												" " +
-												currentlyConnectedUser.last_name,
-										})
-										.then((customer) => {
-											return stripe.charges.create({
-												amount: total * 100,
-												description: "Rendez vous ",
-												currency: "CAD",
-												customer: customer.id,
-											});
-										})
-										.then((charge) => {
-											res.redirect("/");
-										});
-								} catch (error) {
-									console.log(error);
-									res.redirect("/profil");
-								}
-							} else {
-								res.redirect("/profil");
-							}
-						}
-					);
-				} else {
-					console.log(
-						"Rendez-Vous existe déja dans la plage horaire pour le docteur"
-					);
-					res.redirect("/profil");
-				}
-			}
-		);
-	} else {
-		res.redirect("/");
-	}
-});
 // Connexion à MongoDB
 mongoose
 	.connect("mongodb://127.0.0.1:27017/eac", {
@@ -695,8 +396,5 @@ mongoose
 			console.log("listening on port 3000");
 		});
 	});
-// 
-// liaison bdd local
-// mongodb://127.0.0.1:27017/eac
-// cloud 
+
 // mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
