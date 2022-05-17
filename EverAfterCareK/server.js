@@ -730,7 +730,7 @@ app.post("/payment", checkAuthenticated, async (req, res) => {
 });
 // Connexion à MongoDB
 mongoose
-	.connect("mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac", {
+	.connect("mongodb://127.0.0.1:27017/eac", {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
 	})
@@ -742,3 +742,5 @@ mongoose
 // 
 // liaison bdd local
 // mongodb://127.0.0.1:27017/eac
+// cloud 
+// mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
