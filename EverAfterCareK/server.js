@@ -373,6 +373,7 @@ app.get("/recherche", (req, res) => {
 	res.render("recherche", {
 		titrePage: "Recherche",
 		titreSite: titreSite,
+		ConnectedUser: currentlyConnectedUser,
 	});
 });
 
