@@ -223,6 +223,8 @@ app.get("/rendezvous", checkAuthenticated, (req, res) => {
 			{ docteur_id: currentlyConnectedUser._id, confirme: false },
 			function (err, rdvs) {
 				User.find({}, function (err, us) {
+					
+				console.log(rdvs.length);
 					res.render("publicrdv", {
 						titrePage: "Prise de Rendez-Vous",
 						titreSite: titreSite,
@@ -260,18 +262,20 @@ app.get("/mailchange/:confirmid", checkAuthenticated, (req, res) => {
 		});
 	});
 });
-
+/*
 app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 	d_id = req.body.nom_doc;
 	const userFound = await User.findOne({ _id: d_id, user_type: "docteur" });
 	if (userFound) {
 		var startdate = req.body.tripstart;
 		var time = req.body.time;
+		console.log("DocteurTrouvé");
 
 		Rdv.findOne(
 			{ date: startdate, docteur_id: d_id, heure: time },
 			async function (err, Rendezvous) {
 				if (Rendezvous == null) {
+					console.log("Aucun RDV");
 					Rdv.findOne(
 						{
 							date: startdate,
@@ -280,6 +284,7 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 						},
 						async function (err, crdv) {
 							if (crdv == null) {
+								console.log("Aucun RDV client");
 								try {
 									const rdv = new Rdv({
 										docteur_id: d_id,
@@ -330,6 +335,7 @@ app.post("/rendezvous", checkAuthenticated, async (req, res) => {
 		res.redirect("/");
 	}
 });
+*/
 app.post(
 	"/connexion",
 	StoreUser,
@@ -478,14 +484,7 @@ app.get("/recherche", (req, res) => {
 	});
 });
 
-app.post("/getUtilisateurs", async (req, res) => {
-	let payload = req.body.payload.trim();
-	let search = await User.find({
-		email: { $regex: new RegExp("^" + payload + ".*", "i") },
-	}).exec();
-	search = search.slice(0, 10);
-	res.send({ payload: search });
-});
+
 
 // reset password
 
@@ -522,6 +521,7 @@ app.post("/resetPassword", checkNotAuthenticated, async (req, res) => {
 
 app.get("/changepass", checkAuthenticated, async (req, res) => {
 	res.render("changepass", {
+		
 		titrePage: "Changement de mot de passe",
 		titreSite: titreSite,
 		ConnectedUser: currentlyConnectedUser,
@@ -547,60 +547,14 @@ app.post("/changepass", checkAuthenticated, async (req, res) => {
 				{ _id: currentlyConnectedUser._id },
 				{ password: hashednewPass }
 			);
+			console.log("fini?");
 		}
 	}
 	res.redirect("/profil");
 });
 
-app.get("/resetPass/:cid", checkNotAuthenticated, async (req, res) => {
-	console.log(req.params.cid);
-	var confirmid = req.params.cid;
-	const objectid = confirmid;
-	var confirmation = await Confirmes.findOne({ _id: objectid });
 
-	const hashNewpass = await bcrypt.hash(confirmation.newpass, 10);
-	console.log(hashNewpass);
-	await User.findOneAndUpdate(
-		{ _id: confirmation.client_id },
-		{ password: hashNewpass }
-	);
 
-	await Confirmes.findOneAndDelete({ _id: confirmid });
-
-	res.redirect("/");
-});
-
-app.get("/changepass", checkAuthenticated, async (req, res) => {
-	res.render("changepass", {
-		titrePage: "Changement de mot de passe",
-		titreSite: titreSite,
-		ConnectedUser: currentlyConnectedUser,
-	});
-});
-
-app.post("/changepass", checkAuthenticated, async (req, res) => {
-	if (req.body.newpass != req.body.confirmnewpass) {
-		alert("Les mots de passes ne sont pas les mêmes.");
-	} else {
-		if (
-			await bcrypt.compare(
-				req.body.oldpass,
-				currentlyConnectedUser.password
-			)
-		) {
-			console.log("tkt");
-			const hashednewPass = await bcrypt.hash(req.body.newpass, 10);
-
-			currentlyConnectedUser.password = hashednewPass;
-
-			const temp = await User.findOneAndUpdate(
-				{ _id: currentlyConnectedUser._id },
-				{ password: hashednewPass }
-			);
-		}
-	}
-	res.redirect("/profil");
-});
 
 app.get("/resetPass/:cid", checkNotAuthenticated, async (req, res) => {
 	console.log(req.params.cid);
@@ -646,8 +600,10 @@ app.post("/payment", checkAuthenticated, async (req, res) => {
 	d_id = req.body.nom_doc;
 	total = req.body.prix;
 	console.log(d_id);
-	const userFound = await User.findOne({ _id: d_id, user_type: "docteur" });
+	const userFound = await User.findOne({ _id: d_id});
+	console.log(userFound);
 	if (userFound) {
+		console.log("Rdv marche?");
 		var startdate = req.body.tripstart;
 		var time = req.body.time;
 
