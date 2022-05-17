@@ -29,6 +29,7 @@
                 body: JSON.stringify({ payload: e.value })
             }).then(res => res.json()).then(data => {
                 let payload = data.payload;
+                console.log(data.payload);
                 searchResults.innerHTML = '';
                 if (payload.length < 1) {
                     searchResults.innerHTML = '<p>Pas d\'utilisateur trouve</p>';

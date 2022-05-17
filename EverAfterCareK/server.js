@@ -388,7 +388,7 @@ app.post("/getUtilisateurs", async (req, res) => {
 
 // Connexion à MongoDB
 mongoose
-	.connect("mongodb://127.0.0.1:27017/eac", {
+	.connect("mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac", {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
 	})
@@ -399,3 +399,5 @@ mongoose
 	});
 
 // mongodb+srv://eac:eac@eac.igvhj.mongodb.net/eac
+// mongodb://127.0.0.1:27017/eac
+
